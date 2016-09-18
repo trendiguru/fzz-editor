@@ -14,6 +14,16 @@ export default class Login extends Component {
             onAuthenticate: PropTypes.func.isRequired
         };
     }
+    componentDidMount () {
+        return fetch(`${API_URL}/users/me`)
+        .then(res => res.json())
+        .then(res => {
+            if (res.email) {
+                this.props.onAuthenticate(res);
+            }
+        });
+    }
+
     login () {
         let {email, password} = this.state;
         return fetch(`${API_URL}/authenticate`, {
