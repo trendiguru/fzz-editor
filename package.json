@@ -1,0 +1,68 @@
+{
+  "name": "fzz-editor3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+      "start": "webpack --colors --progress --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "globals": {
+      "React": false,
+      "ReactDOM": false
+    },
+    "env": {
+      "es6": true,
+      "node": true,
+      "browser": true
+    },
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    },
+    "plugins": [
+      "react"
+    ],
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "rules": {
+      "indent": [
+        2,
+        4
+      ],
+      "quotes": [
+        2,
+        "single"
+      ],
+      "linebreak-style": [
+        2,
+        "unix"
+      ],
+      "semi": [
+        2,
+        "always"
+      ]
+    }
+  },
+  "devDependencies": {
+    "express": "^4.14.0"
+  },
+  "dependencies": {
+    "jsonpath": "^0.2.7",
+    "whatwg-fetch": "^1.0.0"
+  }
+}
