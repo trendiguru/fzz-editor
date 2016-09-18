@@ -1,5 +1,6 @@
 import React, {PropTypes, Component} from 'react';
 import parseImage from '../modules/parse-image';
+import Login from './login';
 import Search from './search';
 import Collection from './collection';
 import Image from './image';
@@ -10,6 +11,7 @@ export default class App extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            user: undefined,
             images: {},
         };
     }
@@ -78,6 +80,9 @@ export default class App extends Component {
         }
     }
     render () {
+        if (!this.state.user) {
+            return <Login onAuthenticate={user => this.setState({user})} />;
+        }
         return <div>
             <Search />
             <Collection ref="collection" source={this.state} query="images" editor={Image} template={node => <img src={node.image_urls[0]} />} />
