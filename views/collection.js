@@ -1,6 +1,8 @@
 import React, {PropTypes, Component} from 'react';
 import findPathToValue from '../modules/path';
 import {API_URL} from '../constants';
+import MDIcon from './md-icon';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class Collection extends Component {
     constructor (props) {
@@ -46,45 +48,52 @@ export default class Collection extends Component {
     }
     render () {
         let {selected} = this.state;
-        let {editable, title, template, source, query} = this.props;
-        let nodes = Object.entries(source[query]).reverse().map(([key, node], i) => {
-            let editor;
-            let edit;
-            let tile;
-            let close;
-
-            if (i === selected) {
-                editor = React.createElement(this.props.editor, Object.assign({}, node, {
-                    origin: node,
-                    key: i
-                }));
-                close = <button onClick={this.unselect.bind(this)}>close</button>;
-            }
-            else if (editable || editable === undefined) {
-                edit = <button onClick={this.select.bind(this, i)}>edit</button>;
-            }
-
-            if (title) {
-                tile = <span>{node[title]}</span>;
-            }
-            else if (template) {
-                tile = template.call(this, node);
-            }
-
-            return <li key={i}>
-                {tile}
-                {edit}
-                {close}
-                <button onClick={this.remove.bind(this, key)}>remove</button>
-                {editor}
-            </li>;
-        });
-        return <ul>{nodes}</ul>;
+        let {editable, title, template = (node) => <span>{node[title]}</span>, source, query} = this.props;
+        let nodes;
+        if (selected !== undefined) {
+            let selectedNode = source[query][selected];
+            nodes = [
+                <li key={selected}>
+                    <span>
+                        {template.call(this, selectedNode)}
+                        <aside>
+                            <button onClick={this.unselect.bind(this)}>
+                                <MDIcon>close</MDIcon>
+                            </button>
+                        </aside>
+                    </span>
+                    {React.createElement(this.props.editor, Object.assign({}, selectedNode, {
+                        origin: selectedNode,
+                    }))}
+                </li>
+            ];
+        }
+        else {
+            nodes = Object.entries(source[query]).reverse().map(([key, node]) => {
+                let remove = <button onClick={this.remove.bind(this, key)}>
+                        <MDIcon>delete</MDIcon>
+                    </button>;
+                let edit;
+                if (editable || editable === undefined) {
+                    edit = <button onClick={this.select.bind(this, key)}>
+                        <MDIcon>edit</MDIcon>
+                    </button>;
+                }
+                return <li key={key}>
+                    <span>
+                        {template.call(this, node)}
+                        <aside>{edit}{remove}</aside>
+                    </span>
+                </li>;
+            });
+        }
+        return <ReactCSSTransitionGroup
+            component="ul"
+            transitionName="collection-item"
+            transitionEnterTimeout={400}
+            transitionLeaveTimeout={400}
+        >{nodes}</ReactCSSTransitionGroup>;
     }
 }
 
-Object.entries = Object.entries || (
-    object => {
-        console.log(object);
-        return Object.keys(object).map(key => [key, object[key]]);
-    });
+Object.entries = Object.entries || (object => Object.keys(object).map(key => [key, object[key]]));

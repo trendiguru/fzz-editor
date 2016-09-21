@@ -1,0 +1,74 @@
+ul {
+    li {
+        overflow: hidden;
+        margin: 1em;
+
+        & > *:first-child {
+            @include card (2);
+            min-width: 10em;
+            min-height: 10em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+
+            aside {
+                position: absolute;
+                top: 0;
+                right: 0;
+
+                button {
+                    @include card (1);
+                    width: 1.5em;
+                    height: 1.5em;
+                    padding: .25em;
+                    background: #fff;
+                    font-size: 1.25em;
+                    border-radius: 50%;
+                    margin: .5em .5em 0 0;
+                }
+            }
+        }
+
+        &.editor {
+            display: block;
+            background: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+    }
+}
+
+.collection-item {
+    &-enter {
+        max-width: 0;
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(4em);
+
+        &-active {
+            max-height: 9999px;
+            max-width: 9999px;
+            opacity: 1;
+            transform: translateY(0em);
+            transition: all .4s;
+        }
+    }
+    &-leave {
+        max-height: 9999px;
+        max-width: 9999px;
+        opacity: 1;
+        transform: translateY(0em);
+
+        &-active {
+            max-width: 0;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(4em);
+            transition: all .4s;
+        }
+    }
+}

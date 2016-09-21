@@ -26,7 +26,7 @@ export default class Login extends Component {
 
     login () {
         let {email, password} = this.state;
-        return fetch(`${API_URL}/authenticate`, {
+        return fetch(`${API_URL}/login`, {
             method: 'POST',
             body: JSON.stringify({email, password})
         })

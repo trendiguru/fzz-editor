@@ -1,6 +1,7 @@
 import React from 'react';
 import Editor from './editor';
 import Collection from './collection';
+import MDIcon from './md-icon';
 import {API_URL} from '../constants';
 
 export class Item extends Editor {
@@ -18,20 +19,36 @@ export class Item extends Editor {
     }
     render () {
         let collections = Object.keys(this.props.similar_results).map((collection, i) => {
+            let tile;
             let results;
-            let close;
-            let show;
             if (collection === this.state.selected) {
-                results = <Collection source={this.props.similar_results} query={collection} template={node => <img src={node.images.XLarge} />} editable={false} />;
-                close = <button onClick={this.unselect.bind(this)}>close</button>;
+                tile = <span>
+                    <span>{collection}</span>
+                    <aside>
+                        <button onClick={this.unselect.bind(this)}>
+                            <MDIcon>close</MDIcon>
+                        </button>
+                    </aside>
+                </span>;
+                results = <Collection
+                            source={this.props.similar_results}
+                            query={collection}
+                            template={node => <img src={node.images.XLarge} />}
+                            editable={false}
+                        />;
             }
             else {
-                show = <button onClick={this.select.bind(this, collection)}>show</button>;
+                tile = <span onClick={this.select.bind(this, collection)}>
+                    {collection}
+                    <aside>
+                        <button onClick={this.select.bind(this)}>
+                            <MDIcon>edit</MDIcon>
+                        </button>
+                    </aside>
+                </span>;
             }
             return <li key={i}>
-                {collection}
-                {show}
-                {close}
+                {tile}
                 {results}
             </li>;
         });

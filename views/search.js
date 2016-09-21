@@ -16,9 +16,12 @@ export default class Search extends Component {
     query (query) {
         let {getImageByURL, selectImage} = this.context;
         this.setState({query});
-        getImageByURL(query).then((image) => selectImage(image.image_id));
+        getImageByURL(query).then((image) => {
+            console.log(image);
+            selectImage(image.image_id);
+        });
     }
     render () {
-        return <input type="text" placeholder="Edit Image from URL" onChange={e => this.query(e.target.value)} />;
+        return <input id="search" type="text" placeholder="Edit Image from URL" onChange={e => this.query(e.target.value)} />;
     }
 }
