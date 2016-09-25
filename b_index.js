@@ -23926,7 +23926,7 @@
 	            var email = _state.email;
 	            var password = _state.password;
 	
-	            return fetch('https://editor-dot-test-paper-doll.appspot.com/editor/login', {
+	            return fetch('https://editor-dot-test-paper-doll.appspot.com/login', {
 	                method: 'POST',
 	                body: JSON.stringify({ email: email, password: password })
 	            }).then(function (res) {

@@ -21,7 +21,7 @@ export default class Login extends Component {
     }
     login () {
         let {email, password} = this.state;
-        return fetch('https://editor-dot-test-paper-doll.appspot.com/editor/login', {
+        return fetch('https://editor-dot-test-paper-doll.appspot.com/login', {
             method: 'POST',
             body: JSON.stringify({email, password})
         })
