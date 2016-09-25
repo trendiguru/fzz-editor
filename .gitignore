@@ -1,7 +1,4 @@
 .DS_Store
 */.DS_Store
 node_modules/
-b_*
-login/
-main.css
 *.map
