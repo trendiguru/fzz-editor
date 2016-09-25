@@ -23935,7 +23935,7 @@
 	                return res.json();
 	            }).then(function () {
 	                return _this2.props.onAuthenticate(true);
-	            }).reject(function () {
+	            }).catch(function () {
 	                return _this2.setState({ error: true });
 	            });
 	        }

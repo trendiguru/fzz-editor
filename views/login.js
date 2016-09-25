@@ -28,7 +28,7 @@ export default class Login extends Component {
         })
         .then(res => res.json())
         .then(() => this.props.onAuthenticate(true))
-        .reject(() => this.setState({error: true}));
+        .catch(() => this.setState({error: true}));
     }
     render () {
         return <div>
