@@ -166,7 +166,7 @@
 	        value: function getImage(image, callback) {
 	            var _this3 = this;
 	
-	            return Promise.all([fetch(_constants.API_URL + '/' + image.image_id, { credentials: 'same-origin' }).then(function (res) {
+	            return Promise.all([fetch(_constants.API_URL + '/' + image.image_id, { credentials: 'include' }).then(function (res) {
 	                return res.json();
 	            }), getImageElement(image.image_urls[0])]).then(function (_ref) {
 	                var _ref2 = _slicedToArray(_ref, 2);
@@ -181,7 +181,7 @@
 	        value: function getImageByURL(url) {
 	            var _this4 = this;
 	
-	            return Promise.all([fetch(_constants.API_URL + '?image_url=' + url, { credentials: 'same-origin' }).then(function (res) {
+	            return Promise.all([fetch(_constants.API_URL + '?image_url=' + url, { credentials: 'include' }).then(function (res) {
 	                return res.json();
 	            }), getImageElement(url)]).then(function (_ref3) {
 	                var _ref4 = _slicedToArray(_ref3, 2);
@@ -202,7 +202,7 @@
 	            var number = arguments.length <= 0 || arguments[0] === undefined ? 10 : arguments[0];
 	
 	            return fetch(_constants.API_URL + '?last=' + number, {
-	                credentials: 'same-origin'
+	                credentials: 'include'
 	            }).then(function (res) {
 	                return res.json();
 	            }).then(function (_ref5) {
@@ -4704,7 +4704,7 @@
 	                delete _this2.props.source[_this2.props.query][key];
 	                fetch([_constants.API_URL].concat(_toConsumableArray(path), [key]).join('/'), {
 	                    method: 'DELETE',
-	                    credentials: 'same-origin'
+	                    credentials: 'include'
 	                });
 	                return images;
 	            });
@@ -23285,7 +23285,7 @@
 	                fetch([_constants.API_URL].concat(_toConsumableArray(_this4.path)).join('/'), {
 	                    method: 'PATCH',
 	                    body: JSON.stringify({ data: { gender: gender } }),
-	                    credentials: 'same-origin'
+	                    credentials: 'include'
 	                });
 	                return clone;
 	            });
@@ -23944,7 +23944,7 @@
 	            return fetch('https://editor-dot-test-paper-doll.appspot.com/login', {
 	                method: 'POST',
 	                body: JSON.stringify({ email: email, password: password }),
-	                credentials: 'same-origin'
+	                credentials: 'include'
 	            }).then(function () {
 	                return onAuthenticate(true);
 	            }).catch(function () {

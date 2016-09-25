@@ -42,7 +42,7 @@ export default class Collection extends Component {
             delete this.props.source[this.props.query][key];
             fetch([API_URL, ...path, key].join('/'), {
                 method: 'DELETE',
-                credentials: 'same-origin'
+                credentials: 'include'
             });
             return images;
         });
