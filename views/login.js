@@ -23,7 +23,8 @@ export default class Login extends Component {
         let {props: {onAuthenticate}, state: {email, password}} = this;
         return fetch('https://editor-dot-test-paper-doll.appspot.com/login', {
             method: 'POST',
-            body: JSON.stringify({email, password})
+            body: JSON.stringify({email, password}),
+            credentials: 'same-origin'
         })
         .then(() => onAuthenticate(true))
         .catch(() => this.setState({error: true}));

@@ -166,7 +166,7 @@
 	        value: function getImage(image, callback) {
 	            var _this3 = this;
 	
-	            return Promise.all([fetch(_constants.API_URL + '/' + image.image_id).then(function (res) {
+	            return Promise.all([fetch(_constants.API_URL + '/' + image.image_id, { credentials: 'same-origin' }).then(function (res) {
 	                return res.json();
 	            }), getImageElement(image.image_urls[0])]).then(function (_ref) {
 	                var _ref2 = _slicedToArray(_ref, 2);
@@ -181,7 +181,7 @@
 	        value: function getImageByURL(url) {
 	            var _this4 = this;
 	
-	            return Promise.all([fetch(_constants.API_URL + '?image_url=' + url).then(function (res) {
+	            return Promise.all([fetch(_constants.API_URL + '?image_url=' + url, { credentials: 'same-origin' }).then(function (res) {
 	                return res.json();
 	            }), getImageElement(url)]).then(function (_ref3) {
 	                var _ref4 = _slicedToArray(_ref3, 2);
@@ -201,7 +201,9 @@
 	
 	            var number = arguments.length <= 0 || arguments[0] === undefined ? 10 : arguments[0];
 	
-	            return fetch(_constants.API_URL + '?last=' + number).then(function (res) {
+	            return fetch(_constants.API_URL + '?last=' + number, {
+	                credentials: 'same-origin'
+	            }).then(function (res) {
 	                return res.json();
 	            }).then(function (_ref5) {
 	                var _ref5$data = _ref5.data;
@@ -4701,7 +4703,8 @@
 	                var path = images !== _this2.props.source[_this2.props.query] ? (0, _path2.default)(_this2.context.images, _this2.props.source[_this2.props.query]) : [];
 	                delete _this2.props.source[_this2.props.query][key];
 	                fetch([_constants.API_URL].concat(_toConsumableArray(path), [key]).join('/'), {
-	                    method: 'DELETE'
+	                    method: 'DELETE',
+	                    credentials: 'same-origin'
 	                });
 	                return images;
 	            });
@@ -23281,7 +23284,8 @@
 	                });
 	                fetch([_constants.API_URL].concat(_toConsumableArray(_this4.path)).join('/'), {
 	                    method: 'PATCH',
-	                    body: JSON.stringify({ data: { gender: gender } })
+	                    body: JSON.stringify({ data: { gender: gender } }),
+	                    credentials: 'same-origin'
 	                });
 	                return clone;
 	            });
@@ -23939,7 +23943,8 @@
 	
 	            return fetch('https://editor-dot-test-paper-doll.appspot.com/login', {
 	                method: 'POST',
-	                body: JSON.stringify({ email: email, password: password })
+	                body: JSON.stringify({ email: email, password: password }),
+	                credentials: 'same-origin'
 	            }).then(function () {
 	                return onAuthenticate(true);
 	            }).catch(function () {

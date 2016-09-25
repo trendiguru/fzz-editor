@@ -48,14 +48,14 @@ export default class App extends Component {
     }
     getImage (image, callback) {
         return Promise.all([
-            fetch(`${API_URL}/${image.image_id}`).then(res => res.json()),
+            fetch(`${API_URL}/${image.image_id}`, {credentials: 'same-origin'}).then(res => res.json()),
             getImageElement(image.image_urls[0])
         ])
         .then(([{data: image}, element]) => this.setImage(Object.assign(parseImage(image), {element}), callback));
     }
     getImageByURL (url) {
         return Promise.all([
-            fetch(`${API_URL}?image_url=${url}`).then(res => res.json()),
+            fetch(`${API_URL}?image_url=${url}`, {credentials: 'same-origin'}).then(res => res.json()),
             getImageElement(url)
         ])
         .then(([{data: image}, element]) => {
@@ -65,7 +65,9 @@ export default class App extends Component {
         });
     }
     getLastImages (number = 10) {
-        return fetch(`${API_URL}?last=${number}`)
+        return fetch(`${API_URL}?last=${number}`, {
+            credentials: 'same-origin'
+        })
         .then(res => res.json())
         .then(({data = []}) => {
             for (let image of data) {

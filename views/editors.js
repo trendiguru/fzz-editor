@@ -69,7 +69,8 @@ export class Person extends Editor {
             });
             fetch([API_URL, ...this.path].join('/'), {
                 method: 'PATCH',
-                body: JSON.stringify({data: {gender}})
+                body: JSON.stringify({data: {gender}}),
+                credentials: 'same-origin'
             });
             return clone;
         });
