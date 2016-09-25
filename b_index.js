@@ -233,17 +233,27 @@
 	            });
 	        }
 	    }, {
+	        key: 'componentDidUpdate',
+	        value: function componentDidUpdate() {
+	            var images = this.state.images;
+	
+	            if (!Object.keys(images).length) {
+	                this.getLastImages();
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this6 = this;
+	
 	            var state = this.state;
 	            var user = this.state.user;
-	            var setState = this.setState;
 	
 	            if (!user) {
 	                return _react2.default.createElement(_login2.default, { handshake: function handshake() {
 	                        return fetch(_constants.API_URL + '?last=10');
 	                    }, onAuthenticate: function onAuthenticate(user) {
-	                        return setState({ user: user });
+	                        return _this6.setState({ user: user });
 	                    } });
 	            }
 	            return _react2.default.createElement(
@@ -23922,6 +23932,7 @@
 	        value: function login() {
 	            var _this2 = this;
 	
+	            var onAuthenticate = this.props.onAuthenticate;
 	            var _state = this.state;
 	            var email = _state.email;
 	            var password = _state.password;
@@ -23930,7 +23941,7 @@
 	                method: 'POST',
 	                body: JSON.stringify({ email: email, password: password })
 	            }).then(function () {
-	                return _this2.props.onAuthenticate(true);
+	                return onAuthenticate(true);
 	            }).catch(function () {
 	                return _this2.setState({ error: true });
 	            });

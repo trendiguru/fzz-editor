@@ -79,10 +79,16 @@ export default class App extends Component {
             return collection.select.bind(collection);
         }
     }
+    componentDidUpdate () {
+        let {state: {images}} = this;
+        if (!Object.keys(images).length) {
+            this.getLastImages();
+        }
+    }
     render () {
-        let {state, state: {user}, setState} = this;
+        let {state, state: {user}} = this;
         if (!user) {
-            return <Login handshake={() => fetch(`${API_URL}?last=10`)} onAuthenticate={user => setState({user})} />;
+            return <Login handshake={() => fetch(`${API_URL}?last=10`)} onAuthenticate={user => this.setState({user})} />;
         }
         return <div>
             <header>

@@ -20,12 +20,12 @@ export default class Login extends Component {
         handshake().then(() => onAuthenticate(true));
     }
     login () {
-        let {email, password} = this.state;
+        let {props: {onAuthenticate}, state: {email, password}} = this;
         return fetch('https://editor-dot-test-paper-doll.appspot.com/login', {
             method: 'POST',
             body: JSON.stringify({email, password})
         })
-        .then(() => this.props.onAuthenticate(true))
+        .then(() => onAuthenticate(true))
         .catch(() => this.setState({error: true}));
     }
     render () {
