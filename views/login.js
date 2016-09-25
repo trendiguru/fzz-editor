@@ -25,7 +25,6 @@ export default class Login extends Component {
             method: 'POST',
             body: JSON.stringify({email, password})
         })
-        .then(res => res.json())
         .then(() => this.props.onAuthenticate(true))
         .catch(() => this.setState({error: true}));
     }

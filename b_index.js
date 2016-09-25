@@ -23929,8 +23929,6 @@
 	            return fetch('https://editor-dot-test-paper-doll.appspot.com/login', {
 	                method: 'POST',
 	                body: JSON.stringify({ email: email, password: password })
-	            }).then(function (res) {
-	                return res.json();
 	            }).then(function () {
 	                return _this2.props.onAuthenticate(true);
 	            }).catch(function () {
