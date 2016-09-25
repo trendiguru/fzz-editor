@@ -4598,11 +4598,11 @@
 	            var onAuthenticate = _props.onAuthenticate;
 	
 	            handshake().then(function (res) {
-	                return console.log(res);
+	                return console.log('ok', res);
 	            }).then(function () {
 	                return onAuthenticate(true);
 	            }).catch(function (err) {
-	                return console.log(err);
+	                return console.log('err', err);
 	            });
 	        }
 	    }, {
