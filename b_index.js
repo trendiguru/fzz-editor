@@ -4709,8 +4709,7 @@
 	
 	            this.setState({ query: _query });
 	            getImageByURL(_query).then(function (image) {
-	                console.log(image);
-	                selectImage(image.image_id);
+	                return selectImage(image.image_id);
 	            });
 	        }
 	    }, {
