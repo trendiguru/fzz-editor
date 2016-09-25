@@ -32,16 +32,19 @@ export default class Image extends Component {
         };
     }
     render () {
-        let {image_urls, element} = this.props;
-        return <Collection source={this.props} query="people" editor={Person} template={function (node) {
-            if (element) {
-                let {face} = node;
-                const SIZE = 200;
-                return <Face size={SIZE} delta={Math.floor(SIZE / face[2])} face={face} image={{element, image_urls}} />;
-            }
-            else {
-                return {};
-            }
-        }} />;
+        let {props: {image_urls, element}} = this;
+        return <div>
+            <img id="reference" src={image_urls[0]} />
+            <Collection source={this.props} query="people" editor={Person} template={function (node) {
+                if (element) {
+                    let {face} = node;
+                    const SIZE = 200;
+                    return <Face size={SIZE} delta={Math.floor(SIZE / face[2])} face={face} image={{element, image_urls}} />;
+                }
+                else {
+                    return {};
+                }
+            }} />
+        </div>;
     }
 }

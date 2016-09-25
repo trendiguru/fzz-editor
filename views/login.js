@@ -6,24 +6,20 @@ export default class Login extends Component {
         super(...arguments);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            error: false
         };
     }
     static get propTypes () {
         return {
+            handshake: PropTypes.func.isRequired,
             onAuthenticate: PropTypes.func.isRequired
         };
     }
     componentDidMount () {
-        return fetch(`${API_URL}/users/me`)
-        .then(res => res.json())
-        .then(res => {
-            if (res.email) {
-                this.props.onAuthenticate(res);
-            }
-        });
+        let {props: {handshake, onAuthenticate}} = this;
+        handshake().then(() => onAuthenticate(true));
     }
-
     login () {
         let {email, password} = this.state;
         return fetch(`${API_URL}/login`, {
@@ -31,10 +27,12 @@ export default class Login extends Component {
             body: JSON.stringify({email, password})
         })
         .then(res => res.json())
-        .then(user => this.props.onAuthenticate(user));
+        .then(() => this.props.onAuthenticate(true))
+        .reject(() => this.setState({error: true}));
     }
     render () {
         return <div>
+            {this.state.error ? 'The given username and password combination doesn\'t match' : ''}
             <input type="email" onChange={e => this.setState({email: e.target.value})} value={this.state.email} />
             <input type="password" onChange={e => this.setState({password: e.target.value})} value={this.state.password} />
             <button onClick={this.login.bind(this)}>Login</button>

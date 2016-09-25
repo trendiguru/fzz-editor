@@ -1,6 +1,6 @@
 import React, {PropTypes, Component} from 'react';
 import parseImage from '../modules/parse-image';
-// import Login from './login';
+import Login from './login';
 import Search from './search';
 import Collection from './collection';
 import Image from './image';
@@ -74,20 +74,21 @@ export default class App extends Component {
         });
     }
     get selectImage () {
-        let {collection} = this.refs;
+        let {refs: {collection}} = this;
         if (collection) {
             return collection.select.bind(collection);
         }
     }
     render () {
-        // if (!this.state.user) {
-        //     return <Login onAuthenticate={user => this.setState({user})} />;
-        // }
+        let {state, state: {user}, setState} = this;
+        if (!user) {
+            return <Login handshake={() => fetch(`${API_URL}?last=10`)} onAuthenticate={user => setState({user})} />;
+        }
         return <div>
             <header>
                 <Search />
             </header>
-            <Collection ref="collection" source={this.state} query="images" editor={Image} template={node => <img src={node.image_urls[0]} />} />
+            <Collection ref="collection" source={state} query="images" editor={Image} template={node => <img src={node.image_urls[0]} />} />
         </div>;
     }
 }
