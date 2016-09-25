@@ -90,7 +90,7 @@ export default class App extends Component {
     render () {
         let {state, state: {user}} = this;
         if (!user) {
-            return <Login handshake={() => fetch(`${API_URL}?last=10`)} onAuthenticate={user => this.setState({user})} />;
+            return <Login handshake={fetch.bind(null, `${API_URL}?last=10`)} onAuthenticate={user => this.setState({user})} />;
         }
         return <div>
             <header>
