@@ -4598,11 +4598,11 @@
 	            var onAuthenticate = _props.onAuthenticate;
 	
 	            handshake().then(function (res) {
-	                return console.log('ok', res);
+	                if (res.status >= 400 || res.status < 500) {
+	                    throw new Error(res.statusText);
+	                }
 	            }).then(function () {
 	                return onAuthenticate(true);
-	            }).catch(function (err) {
-	                return console.log('err', err);
 	            });
 	        }
 	    }, {
