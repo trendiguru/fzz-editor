@@ -23882,8 +23882,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _constants = __webpack_require__(41);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23928,7 +23926,7 @@
 	            var email = _state.email;
 	            var password = _state.password;
 	
-	            return fetch(_constants.API_URL + '/login', {
+	            return fetch('https://editor-dot-test-paper-doll.appspot.com/editor/login', {
 	                method: 'POST',
 	                body: JSON.stringify({ email: email, password: password })
 	            }).then(function (res) {

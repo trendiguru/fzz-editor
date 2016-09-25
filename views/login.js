@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import {API_URL} from '../constants';
 
 export default class Login extends Component {
     constructor () {
@@ -22,7 +21,7 @@ export default class Login extends Component {
     }
     login () {
         let {email, password} = this.state;
-        return fetch(`${API_URL}/login`, {
+        return fetch('https://editor-dot-test-paper-doll.appspot.com/editor/login', {
             method: 'POST',
             body: JSON.stringify({email, password})
         })
