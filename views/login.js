@@ -20,7 +20,7 @@ export default class Login extends Component {
         handshake()
         .then(res => console.log(res))
         .then(() => onAuthenticate(true))
-        .catch(err => console.log(res));
+        .catch(err => console.log(err));
     }
     login () {
         let {props: {onAuthenticate}, state: {email, password}} = this;
