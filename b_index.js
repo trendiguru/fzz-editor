@@ -23276,6 +23276,18 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	function Result(props) {
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('img', { src: props.images.XLarge })
+	    );
+	}
+	
+	Result.propTypes = {
+	    images: _react.PropTypes.object
+	};
+	
 	var Item = exports.Item = function (_Editor) {
 	    _inherits(Item, _Editor);
 	
@@ -23332,6 +23344,7 @@
 	                        )
 	                    );
 	                    results = _react2.default.createElement(_reactAbsoluteGrid2.default, {
+	                        displayObject: _react2.default.createElement(Result, null),
 	                        items: Object.values(_this2.props.similar_results[collection]),
 	                        dragEnabled: true
 	                    });

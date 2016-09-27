@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import Editor from './editor';
 import Collection from './collection';
 import MDIcon from './md-icon';
 import {API_URL} from '../constants';
 import AbsoluteGrid from 'react-absolute-grid';
+
+function Result (props) {
+    return <div><img src={props.images.XLarge} /></div>;
+}
+
+Result.propTypes = {
+    images: PropTypes.object
+};
 
 export class Item extends Editor {
     constructor (props) {
@@ -32,6 +40,7 @@ export class Item extends Editor {
                     </aside>
                 </span>;
                 results = <AbsoluteGrid
+                    displayObject={<Result />}
                     items={Object.values(this.props.similar_results[collection])}
                     dragEnabled={true}
                 />;
