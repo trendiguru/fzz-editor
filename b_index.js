@@ -23358,16 +23358,11 @@
 	    }, {
 	        key: 'remove',
 	        value: function remove(collection, i) {
-	            console.log(collection, i);
-	            // this.setState({
-	            //     results: Object.assign(this.state.results, {
-	            //         [collection]: Object.assign(this.state.results[collection], {
-	            //             [i]: Object.assign(this.state.results[collection][i], {
-	            //                 filtered: true
-	            //             })
-	            //         })
-	            //     })
-	            // });
+	            this.setState({
+	                results: Object.assign(this.state.results, _defineProperty({}, collection, Object.assign(this.state.results[collection], _defineProperty({}, i, Object.assign(this.state.results[collection][i], {
+	                    filtered: true
+	                })))))
+	            });
 	        }
 	    }, {
 	        key: 'render',

@@ -41,16 +41,15 @@ export class Item extends Editor {
         this.setState({selected});
     }
     remove (collection, i) {
-        console.log(collection, i);
-        // this.setState({
-        //     results: Object.assign(this.state.results, {
-        //         [collection]: Object.assign(this.state.results[collection], {
-        //             [i]: Object.assign(this.state.results[collection][i], {
-        //                 filtered: true
-        //             })
-        //         })
-        //     })
-        // });
+        this.setState({
+            results: Object.assign(this.state.results, {
+                [collection]: Object.assign(this.state.results[collection], {
+                    [i]: Object.assign(this.state.results[collection][i], {
+                        filtered: true
+                    })
+                })
+            })
+        });
     }
     render () {
         let collections = Object.keys(this.props.similar_results).map((collection, i) => {
