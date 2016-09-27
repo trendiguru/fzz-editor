@@ -23324,15 +23324,19 @@
 	
 	        var _this2 = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 	
-	        _this2.state = {
-	            selected: undefined,
-	            results: Object.entries(_this2.props.similar_results[collection]).map(function (_ref) {
+	        var results = {};
+	        for (var collection in props.similar_results) {
+	            results[collection] = Object.entries(props.similar_results[collection]).map(function (_ref) {
 	                var _ref2 = _slicedToArray(_ref, 2);
 	
 	                var key = _ref2[0];
 	                var value = _ref2[1];
 	                return Object.assign({}, value, { key: key, filtered: false });
-	            })
+	            });
+	        }
+	        _this2.state = {
+	            selected: undefined,
+	            results: results
 	        };
 	        return _this2;
 	    }
@@ -23349,11 +23353,11 @@
 	        }
 	    }, {
 	        key: 'remove',
-	        value: function remove(i) {
+	        value: function remove(collection, i) {
 	            this.setState({
-	                results: Object.assign(this.state.results, _defineProperty({}, i, Object.assign(this.state.results[i], {
+	                results: Object.assign(this.state.results, _defineProperty({}, collection, Object.assign(this.state.results[collection], _defineProperty({}, i, Object.assign(this.state.results[collection][i], {
 	                    filtered: true
-	                })))
+	                })))))
 	            });
 	        }
 	    }, {
@@ -23388,7 +23392,7 @@
 	                        )
 	                    );
 	                    results = _react2.default.createElement(_reactAbsoluteGrid2.default, {
-	                        displayObject: _react2.default.createElement(Result, { onRemove: _this3.remove.bind(_this3) }),
+	                        displayObject: _react2.default.createElement(Result, { onRemove: _this3.remove.bind(_this3, collection) }),
 	                        items: _this3.state.results,
 	                        dragEnabled: true
 	                    });

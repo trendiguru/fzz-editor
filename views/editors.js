@@ -25,9 +25,13 @@ Result.propTypes = {
 export class Item extends Editor {
     constructor (props) {
         super(props);
+        let results = {};
+        for (let collection in props.similar_results) {
+            results[collection] = Object.entries(props.similar_results[collection]).map(([key, value]) => Object.assign({}, value, {key, filtered: false}));
+        }
         this.state = {
             selected: undefined,
-            results: Object.entries(this.props.similar_results[collection]).map(([key, value]) => Object.assign({}, value, {key, filtered: false}))
+            results
         };
     }
     unselect () {
@@ -36,11 +40,13 @@ export class Item extends Editor {
     select (selected) {
         this.setState({selected});
     }
-    remove (i) {
+    remove (collection, i) {
         this.setState({
             results: Object.assign(this.state.results, {
-                [i]: Object.assign(this.state.results[i], {
-                    filtered: true
+                [collection]: Object.assign(this.state.results[collection], {
+                    [i]: Object.assign(this.state.results[collection][i], {
+                        filtered: true
+                    })
                 })
             })
         });
@@ -59,7 +65,7 @@ export class Item extends Editor {
                     </aside>
                 </span>;
                 results = <AbsoluteGrid
-                    displayObject={<Result onRemove={this.remove.bind(this)} />}
+                    displayObject={<Result onRemove={this.remove.bind(this, collection)} />}
                     items={this.state.results}
                     dragEnabled={true}
                 />;
