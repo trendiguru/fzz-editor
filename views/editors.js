@@ -11,7 +11,9 @@ class Result extends Component {
             width: '100%',
             height: '100%',
             backgroundImage: `url(${this.props.item.images.XLarge})`,
-            backgroundSize: 'contain'
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
         }}>
             <button onClick={() => this.props.onRemove(this.props.index)}>
                 <MDIcon>delete</MDIcon>

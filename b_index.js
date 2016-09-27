@@ -23298,7 +23298,9 @@
 	                        width: '100%',
 	                        height: '100%',
 	                        backgroundImage: 'url(' + this.props.item.images.XLarge + ')',
-	                        backgroundSize: 'contain'
+	                        backgroundSize: 'contain',
+	                        backgroundPosition: 'center',
+	                        backgroundRepeat: 'no-repeat'
 	                    } },
 	                _react2.default.createElement(
 	                    'button',
