@@ -23290,6 +23290,7 @@
 	    _createClass(Result, [{
 	        key: 'render',
 	        value: function render() {
+	            console.log(this.props.index);
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -23354,6 +23355,7 @@
 	    }, {
 	        key: 'remove',
 	        value: function remove(collection, i) {
+	            console.log(collection, i);
 	            this.setState({
 	                results: Object.assign(this.state.results, _defineProperty({}, collection, Object.assign(this.state.results[collection], _defineProperty({}, i, Object.assign(this.state.results[collection][i], {
 	                    filtered: true
