@@ -1,16 +1,18 @@
-import React, {PropTypes} from 'react';
+import React, {Component, PropTypes} from 'react';
 import Editor from './editor';
 import Collection from './collection';
 import MDIcon from './md-icon';
 import {API_URL} from '../constants';
 import AbsoluteGrid from 'react-absolute-grid';
 
-function Result (props) {
-    return <div><img src={props.images.XLarge} /></div>;
+class Result extends Component {
+    render ({item}) {
+        return <div><img src={item.images.XLarge} /></div>;
+    }
 }
 
 Result.propTypes = {
-    images: PropTypes.object
+    item: PropTypes.object
 };
 
 export class Item extends Editor {
