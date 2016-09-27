@@ -23294,7 +23294,12 @@
 	
 	            return _react2.default.createElement(
 	                'div',
-	                { style: { backgroundImage: 'url(' + this.props.item.images.XLarge + ')', backgroundSize: 'contain' } },
+	                { style: {
+	                        width: '100%',
+	                        height: '100%',
+	                        backgroundImage: 'url(' + this.props.item.images.XLarge + ')',
+	                        backgroundSize: 'contain'
+	                    } },
 	                _react2.default.createElement(
 	                    'button',
 	                    { onClick: function onClick() {
