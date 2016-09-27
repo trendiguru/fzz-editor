@@ -23398,7 +23398,11 @@
 	                    results = _react2.default.createElement(_reactAbsoluteGrid2.default, {
 	                        displayObject: _react2.default.createElement(Result, { onRemove: _this4.remove.bind(_this4, collection) }),
 	                        items: _this4.state.results[collection],
-	                        dragEnabled: true
+	                        responsive: true,
+	                        dragEnabled: true,
+	                        onMove: function onMove(from, to) {
+	                            return console.log(from, to);
+	                        }
 	                    });
 	                    // <Collection
 	                    //             template={node => <img src={node.images.XLarge} />}

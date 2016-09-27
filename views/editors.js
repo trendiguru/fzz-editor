@@ -67,7 +67,9 @@ export class Item extends Editor {
                 results = <AbsoluteGrid
                     displayObject={<Result onRemove={this.remove.bind(this, collection)} />}
                     items={this.state.results[collection]}
+                    responsive={true}
                     dragEnabled={true}
+                    onMove={(from, to) => console.log(from, to)}
                 />;
                 // <Collection
                 //             template={node => <img src={node.images.XLarge} />}
