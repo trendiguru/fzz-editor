@@ -3,6 +3,7 @@ import Editor from './editor';
 import Collection from './collection';
 import MDIcon from './md-icon';
 import {API_URL} from '../constants';
+import AbsoluteGrid from 'react-absolute-grid';
 
 export class Item extends Editor {
     constructor (props) {
@@ -30,12 +31,14 @@ export class Item extends Editor {
                         </button>
                     </aside>
                 </span>;
-                results = <Collection
-                            source={this.props.similar_results}
-                            query={collection}
-                            template={node => <img src={node.images.XLarge} />}
-                            editable={false}
-                        />;
+                results = <AbsoluteGrid
+                    items={this.props.similar_results[collection]}
+                    dragEnabled={true}
+                />;
+                // <Collection
+                //             template={node => <img src={node.images.XLarge} />}
+                //             editable={false}
+                //         />
             }
             else {
                 tile = <span onClick={this.select.bind(this, collection)}>
