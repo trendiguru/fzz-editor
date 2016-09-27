@@ -43,7 +43,7 @@ export class Item extends Editor {
                 </span>;
                 results = <AbsoluteGrid
                     displayObject={<Result />}
-                    items={Object.values(this.props.similar_results[collection])}
+                    items={Object.entries(this.props.similar_results[collection]).map(([key, value]) => Object.assign({}, value, {key}))}
                     dragEnabled={true}
                 />;
                 // <Collection
