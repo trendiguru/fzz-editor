@@ -8,7 +8,7 @@ import AbsoluteGrid from 'react-absolute-grid';
 class Result extends Component {
     render () {
         return <div>
-            <button onClick={this.props.onRemove.bind(this.props.index)}>
+            <button onClick={() => this.props.onRemove(this.props.index)}>
                 <MDIcon>delete</MDIcon>
             </button>
             <img src={this.props.item.images.XLarge} />

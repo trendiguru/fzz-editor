@@ -23290,12 +23290,16 @@
 	    _createClass(Result, [{
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
 	                _react2.default.createElement(
 	                    'button',
-	                    { onClick: this.props.onRemove.bind(this.props.index) },
+	                    { onClick: function onClick() {
+	                            return _this2.props.onRemove(_this2.props.index);
+	                        } },
 	                    _react2.default.createElement(
 	                        _mdIcon2.default,
 	                        null,
@@ -23322,7 +23326,7 @@
 	    function Item(props) {
 	        _classCallCheck(this, Item);
 	
-	        var _this2 = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
+	        var _this3 = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 	
 	        var results = {};
 	        for (var collection in props.similar_results) {
@@ -23334,11 +23338,11 @@
 	                return Object.assign({}, value, { key: key, filtered: false });
 	            });
 	        }
-	        _this2.state = {
+	        _this3.state = {
 	            selected: undefined,
 	            results: results
 	        };
-	        return _this2;
+	        return _this3;
 	    }
 	
 	    _createClass(Item, [{
@@ -23368,12 +23372,12 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this3 = this;
+	            var _this4 = this;
 	
 	            var collections = Object.keys(this.props.similar_results).map(function (collection, i) {
 	                var tile = void 0;
 	                var results = void 0;
-	                if (collection === _this3.state.selected) {
+	                if (collection === _this4.state.selected) {
 	                    tile = _react2.default.createElement(
 	                        'span',
 	                        null,
@@ -23387,7 +23391,7 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: _this3.unselect.bind(_this3) },
+	                                { onClick: _this4.unselect.bind(_this4) },
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
@@ -23397,8 +23401,8 @@
 	                        )
 	                    );
 	                    results = _react2.default.createElement(_reactAbsoluteGrid2.default, {
-	                        displayObject: _react2.default.createElement(Result, { onRemove: _this3.remove.bind(_this3, collection) }),
-	                        items: _this3.state.results[collection],
+	                        displayObject: _react2.default.createElement(Result, { onRemove: _this4.remove.bind(_this4, collection) }),
+	                        items: _this4.state.results[collection],
 	                        dragEnabled: true
 	                    });
 	                    // <Collection
@@ -23408,14 +23412,14 @@
 	                } else {
 	                    tile = _react2.default.createElement(
 	                        'span',
-	                        { onClick: _this3.select.bind(_this3, collection) },
+	                        { onClick: _this4.select.bind(_this4, collection) },
 	                        collection,
 	                        _react2.default.createElement(
 	                            'aside',
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: _this3.select.bind(_this3) },
+	                                { onClick: _this4.select.bind(_this4) },
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
@@ -23455,13 +23459,13 @@
 	    _createClass(Person, [{
 	        key: 'changeGender',
 	        value: function changeGender(gender) {
-	            var _this5 = this;
+	            var _this6 = this;
 	
 	            this.set(function (image) {
 	                var clone = Object.assign({}, image, {
-	                    people: Object.assign({}, image.people, _defineProperty({}, _this5.props._id, Object.assign({}, image.people[_this5.props._id], { gender: gender })))
+	                    people: Object.assign({}, image.people, _defineProperty({}, _this6.props._id, Object.assign({}, image.people[_this6.props._id], { gender: gender })))
 	                });
-	                fetch([_constants.API_URL].concat(_toConsumableArray(_this5.path)).join('/'), {
+	                fetch([_constants.API_URL].concat(_toConsumableArray(_this6.path)).join('/'), {
 	                    method: 'PATCH',
 	                    body: JSON.stringify({ data: { gender: gender } }),
 	                    credentials: 'include'
@@ -23472,7 +23476,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this6 = this;
+	            var _this7 = this;
 	
 	            var gender = this.props.gender;
 	
@@ -23482,7 +23486,7 @@
 	                _react2.default.createElement(
 	                    'select',
 	                    { value: gender, onChange: function onChange(e) {
-	                            return _this6.changeGender(e.target.value);
+	                            return _this7.changeGender(e.target.value);
 	                        } },
 	                    _react2.default.createElement(
 	                        'option',
