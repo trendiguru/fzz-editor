@@ -7,7 +7,7 @@ import AbsoluteGrid from 'react-absolute-grid';
 
 class Result extends Component {
     render () {
-        console.log(this.props.index);
+        console.log(this.props);
         return <div>
             <button onClick={this.props.onRemove.bind(this.props.index)}>
                 <MDIcon>delete</MDIcon>
@@ -43,15 +43,15 @@ export class Item extends Editor {
     }
     remove (collection, i) {
         console.log(collection, i);
-        this.setState({
-            results: Object.assign(this.state.results, {
-                [collection]: Object.assign(this.state.results[collection], {
-                    [i]: Object.assign(this.state.results[collection][i], {
-                        filtered: true
-                    })
-                })
-            })
-        });
+        // this.setState({
+        //     results: Object.assign(this.state.results, {
+        //         [collection]: Object.assign(this.state.results[collection], {
+        //             [i]: Object.assign(this.state.results[collection][i], {
+        //                 filtered: true
+        //             })
+        //         })
+        //     })
+        // });
     }
     render () {
         let collections = Object.keys(this.props.similar_results).map((collection, i) => {
@@ -66,7 +66,6 @@ export class Item extends Editor {
                         </button>
                     </aside>
                 </span>;
-                console.log(this.state.results[collection]);
                 results = <AbsoluteGrid
                     displayObject={<Result onRemove={this.remove.bind(this, collection)} />}
                     items={this.state.results[collection]}

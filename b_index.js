@@ -23290,7 +23290,7 @@
 	    _createClass(Result, [{
 	        key: 'render',
 	        value: function render() {
-	            console.log(this.props.index);
+	            console.log(this.props);
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -23356,11 +23356,15 @@
 	        key: 'remove',
 	        value: function remove(collection, i) {
 	            console.log(collection, i);
-	            this.setState({
-	                results: Object.assign(this.state.results, _defineProperty({}, collection, Object.assign(this.state.results[collection], _defineProperty({}, i, Object.assign(this.state.results[collection][i], {
-	                    filtered: true
-	                })))))
-	            });
+	            // this.setState({
+	            //     results: Object.assign(this.state.results, {
+	            //         [collection]: Object.assign(this.state.results[collection], {
+	            //             [i]: Object.assign(this.state.results[collection][i], {
+	            //                 filtered: true
+	            //             })
+	            //         })
+	            //     })
+	            // });
 	        }
 	    }, {
 	        key: 'render',
@@ -23393,7 +23397,6 @@
 	                            )
 	                        )
 	                    );
-	                    console.log(_this3.state.results[collection]);
 	                    results = _react2.default.createElement(_reactAbsoluteGrid2.default, {
 	                        displayObject: _react2.default.createElement(Result, { onRemove: _this3.remove.bind(_this3, collection) }),
 	                        items: _this3.state.results[collection],
