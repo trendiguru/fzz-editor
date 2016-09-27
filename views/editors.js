@@ -32,7 +32,7 @@ export class Item extends Editor {
                     </aside>
                 </span>;
                 results = <AbsoluteGrid
-                    items={this.props.similar_results[collection]}
+                    items={Object.values(this.props.similar_results[collection])}
                     dragEnabled={true}
                 />;
                 // <Collection

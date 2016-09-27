@@ -23332,7 +23332,7 @@
 	                        )
 	                    );
 	                    results = _react2.default.createElement(_reactAbsoluteGrid2.default, {
-	                        items: _this2.props.similar_results[collection],
+	                        items: Object.values(_this2.props.similar_results[collection]),
 	                        dragEnabled: true
 	                    });
 	                    // <Collection
