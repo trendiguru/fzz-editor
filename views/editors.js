@@ -7,12 +7,19 @@ import AbsoluteGrid from 'react-absolute-grid';
 
 class Result extends Component {
     render () {
-        return <div><img src={this.props.item.images.XLarge} /></div>;
+        return <div>
+            <button onClick={this.props.onRemove.bind(this.props.index)}>
+                <MDIcon>delete</MDIcon>
+            </button>
+            <img src={this.props.item.images.XLarge} />
+        </div>;
     }
 }
 
 Result.propTypes = {
-    item: PropTypes.object
+    item: PropTypes.object,
+    onRemove: PropTypes.func,
+    index: PropTypes.number
 };
 
 export class Item extends Editor {
@@ -20,6 +27,7 @@ export class Item extends Editor {
         super(props);
         this.state = {
             selected: undefined,
+            results: Object.entries(this.props.similar_results[collection]).map(([key, value]) => Object.assign({}, value, {key, filtered: false}))
         };
     }
     unselect () {
@@ -27,6 +35,15 @@ export class Item extends Editor {
     }
     select (selected) {
         this.setState({selected});
+    }
+    remove (i) {
+        this.setState({
+            results: Object.assign(this.state.results, {
+                [i]: Object.assign(this.state.results[i], {
+                    filtered: true
+                })
+            })
+        });
     }
     render () {
         let collections = Object.keys(this.props.similar_results).map((collection, i) => {
@@ -42,8 +59,8 @@ export class Item extends Editor {
                     </aside>
                 </span>;
                 results = <AbsoluteGrid
-                    displayObject={<Result />}
-                    items={Object.entries(this.props.similar_results[collection]).map(([key, value]) => Object.assign({}, value, {key}))}
+                    displayObject={<Result onRemove={this.remove.bind(this)} />}
+                    items={this.state.results}
                     dragEnabled={true}
                 />;
                 // <Collection

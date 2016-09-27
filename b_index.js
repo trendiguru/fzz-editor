@@ -23293,6 +23293,15 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
+	                _react2.default.createElement(
+	                    'button',
+	                    { onClick: this.props.onRemove.bind(this.props.index) },
+	                    _react2.default.createElement(
+	                        _mdIcon2.default,
+	                        null,
+	                        'delete'
+	                    )
+	                ),
 	                _react2.default.createElement('img', { src: this.props.item.images.XLarge })
 	            );
 	        }
@@ -23302,7 +23311,9 @@
 	}(_react.Component);
 	
 	Result.propTypes = {
-	    item: _react.PropTypes.object
+	    item: _react.PropTypes.object,
+	    onRemove: _react.PropTypes.func,
+	    index: _react.PropTypes.number
 	};
 	
 	var Item = exports.Item = function (_Editor) {
@@ -23314,7 +23325,14 @@
 	        var _this2 = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 	
 	        _this2.state = {
-	            selected: undefined
+	            selected: undefined,
+	            results: Object.entries(_this2.props.similar_results[collection]).map(function (_ref) {
+	                var _ref2 = _slicedToArray(_ref, 2);
+	
+	                var key = _ref2[0];
+	                var value = _ref2[1];
+	                return Object.assign({}, value, { key: key, filtered: false });
+	            })
 	        };
 	        return _this2;
 	    }
@@ -23328,6 +23346,15 @@
 	        key: 'select',
 	        value: function select(selected) {
 	            this.setState({ selected: selected });
+	        }
+	    }, {
+	        key: 'remove',
+	        value: function remove(i) {
+	            this.setState({
+	                results: Object.assign(this.state.results, _defineProperty({}, i, Object.assign(this.state.results[i], {
+	                    filtered: true
+	                })))
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -23361,14 +23388,8 @@
 	                        )
 	                    );
 	                    results = _react2.default.createElement(_reactAbsoluteGrid2.default, {
-	                        displayObject: _react2.default.createElement(Result, null),
-	                        items: Object.entries(_this3.props.similar_results[collection]).map(function (_ref) {
-	                            var _ref2 = _slicedToArray(_ref, 2);
-	
-	                            var key = _ref2[0];
-	                            var value = _ref2[1];
-	                            return Object.assign({}, value, { key: key });
-	                        }),
+	                        displayObject: _react2.default.createElement(Result, { onRemove: _this3.remove.bind(_this3) }),
+	                        items: _this3.state.results,
 	                        dragEnabled: true
 	                    });
 	                    // <Collection
