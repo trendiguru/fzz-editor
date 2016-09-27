@@ -7,11 +7,10 @@ import AbsoluteGrid from 'react-absolute-grid';
 
 class Result extends Component {
     render () {
-        return <div>
+        return <div style={{backgroundImage: `url(${this.props.item.images.XLarge})`, backgroundSize: 'contain'}}>
             <button onClick={() => this.props.onRemove(this.props.index)}>
                 <MDIcon>delete</MDIcon>
             </button>
-            <img src={this.props.item.images.XLarge} />
         </div>;
     }
 }

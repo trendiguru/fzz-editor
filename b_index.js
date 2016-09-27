@@ -23294,7 +23294,7 @@
 	
 	            return _react2.default.createElement(
 	                'div',
-	                null,
+	                { style: { backgroundImage: 'url(' + this.props.item.images.XLarge + ')', backgroundSize: 'contain' } },
 	                _react2.default.createElement(
 	                    'button',
 	                    { onClick: function onClick() {
@@ -23305,8 +23305,7 @@
 	                        null,
 	                        'delete'
 	                    )
-	                ),
-	                _react2.default.createElement('img', { src: this.props.item.images.XLarge })
+	                )
 	            );
 	        }
 	    }]);
