@@ -7,7 +7,6 @@ import AbsoluteGrid from 'react-absolute-grid';
 
 class Result extends Component {
     render () {
-        console.log(this.props);
         return <div>
             <button onClick={this.props.onRemove.bind(this.props.index)}>
                 <MDIcon>delete</MDIcon>
