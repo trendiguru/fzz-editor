@@ -23289,13 +23289,11 @@
 	
 	    _createClass(Result, [{
 	        key: 'render',
-	        value: function render(_ref) {
-	            var item = _ref.item;
-	
+	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement('img', { src: item.images.XLarge })
+	                _react2.default.createElement('img', { src: this.props.item.images.XLarge })
 	            );
 	        }
 	    }]);
@@ -23364,11 +23362,11 @@
 	                    );
 	                    results = _react2.default.createElement(_reactAbsoluteGrid2.default, {
 	                        displayObject: _react2.default.createElement(Result, null),
-	                        items: Object.entries(_this3.props.similar_results[collection]).map(function (_ref2) {
-	                            var _ref3 = _slicedToArray(_ref2, 2);
+	                        items: Object.entries(_this3.props.similar_results[collection]).map(function (_ref) {
+	                            var _ref2 = _slicedToArray(_ref, 2);
 	
-	                            var key = _ref3[0];
-	                            var value = _ref3[1];
+	                            var key = _ref2[0];
+	                            var value = _ref2[1];
 	                            return Object.assign({}, value, { key: key });
 	                        }),
 	                        dragEnabled: true

@@ -6,8 +6,8 @@ import {API_URL} from '../constants';
 import AbsoluteGrid from 'react-absolute-grid';
 
 class Result extends Component {
-    render ({item}) {
-        return <div><img src={item.images.XLarge} /></div>;
+    render () {
+        return <div><img src={this.props.item.images.XLarge} /></div>;
     }
 }
 
