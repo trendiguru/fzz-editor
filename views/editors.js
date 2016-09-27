@@ -64,6 +64,7 @@ export class Item extends Editor {
                         </button>
                     </aside>
                 </span>;
+                console.log(this.state.results[collection]);
                 results = <AbsoluteGrid
                     displayObject={<Result onRemove={this.remove.bind(this, collection)} />}
                     items={this.state.results[collection]}

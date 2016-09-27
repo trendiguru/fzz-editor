@@ -23391,6 +23391,7 @@
 	                            )
 	                        )
 	                    );
+	                    console.log(_this3.state.results[collection]);
 	                    results = _react2.default.createElement(_reactAbsoluteGrid2.default, {
 	                        displayObject: _react2.default.createElement(Result, { onRemove: _this3.remove.bind(_this3, collection) }),
 	                        items: _this3.state.results[collection],
