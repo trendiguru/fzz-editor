@@ -3,7 +3,7 @@ import Editor from './editor';
 import Collection from './collection';
 import MDIcon from './md-icon';
 import {API_URL} from '../constants';
-import AbsoluteGrid from 'react-absolute-grid';
+import ReactGridLayout from 'react-grid-layout';
 
 class Result extends Component {
     render () {
@@ -31,13 +31,8 @@ Result.propTypes = {
 export class Item extends Editor {
     constructor (props) {
         super(props);
-        let results = {};
-        for (let collection in props.similar_results) {
-            results[collection] = Object.entries(props.similar_results[collection]).map(([key, value]) => Object.assign({}, value, {key, filtered: false}));
-        }
         this.state = {
             selected: undefined,
-            results
         };
     }
     unselect () {
@@ -58,7 +53,8 @@ export class Item extends Editor {
         });
     }
     render () {
-        let collections = Object.keys(this.props.similar_results).map((collection, i) => {
+        let {props: {similar_results}} = this;
+        let collections = Object.keys(similar_results).map((collection, i) => {
             let tile;
             let results;
             if (collection === this.state.selected) {
@@ -70,17 +66,13 @@ export class Item extends Editor {
                         </button>
                     </aside>
                 </span>;
-                results = <AbsoluteGrid
-                    displayObject={<Result onRemove={this.remove.bind(this, collection)} />}
-                    items={this.state.results[collection]}
-                    responsive={true}
-                    dragEnabled={true}
-                    onMove={(from, to) => console.log(from, to)}
-                />;
-                // <Collection
-                //             template={node => <img src={node.images.XLarge} />}
-                //             editable={false}
-                //         />
+                results = <ReactGridLayout>
+                    {Object.entries(similar_results[collection]).map(([id, result]) =>
+                        <div key={id}>
+                            <button><MDIcon>delete</MDIcon></button>
+                            <img src={result.images.XLarge} />
+                        </div>)}
+                </ReactGridLayout>;
             }
             else {
                 tile = <span onClick={this.select.bind(this, collection)}>
