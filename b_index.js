@@ -23349,7 +23349,7 @@
 	                        _reactGridLayout2.default,
 	                        { layout: Array(result_entries.length).fill(1).map(function (a, i) {
 	                                return {
-	                                    i: i,
+	                                    i: String(i),
 	                                    x: i % 3,
 	                                    y: Math.floor(i / 3),
 	                                    w: 1,
@@ -23363,7 +23363,7 @@
 	                            var result = _ref2[1];
 	                            return _react2.default.createElement(
 	                                'li',
-	                                { key: i },
+	                                { key: String(i) },
 	                                _react2.default.createElement(
 	                                    'span',
 	                                    null,

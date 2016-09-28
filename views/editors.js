@@ -45,14 +45,14 @@ export class Item extends Editor {
                 </span>;
                 let result_entries = Object.entries(similar_results[collection]);
                 results = <ReactGridLayout layout={Array(result_entries.length).fill(1).map((a, i) => ({
-                    i,
+                    i: String(i),
                     x: i % 3,
                     y: Math.floor(i / 3),
                     w: 1,
                     h: 1
                 }))} cols={3} rowHeight={200} width={this.width}>
                     {result_entries.map(([id, result], i) =>
-                        <li key={i}>
+                        <li key={String(i)}>
                             <span>
                                 <aside><button><MDIcon>delete</MDIcon></button></aside>
                                 <span><img src={result.images.XLarge} /></span>
