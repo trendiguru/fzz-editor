@@ -56,7 +56,7 @@ export class Item extends Editor {
                             <div>
                                 <aside><button><MDIcon>delete</MDIcon></button></aside>
                                 <div>
-                                    <div className="img" style={{backgroundImage: result.images.XLarge}} />
+                                    <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
                                 </div>
                             </div>
                         </div>)}

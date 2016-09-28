@@ -23384,7 +23384,7 @@
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        null,
-	                                        _react2.default.createElement('div', { className: 'img', style: { backgroundImage: result.images.XLarge } })
+	                                        _react2.default.createElement('div', { className: 'img', style: { backgroundImage: 'url(' + result.images.XLarge + ')' } })
 	                                    )
 	                                )
 	                            );
