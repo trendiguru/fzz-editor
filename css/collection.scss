@@ -2,6 +2,7 @@ ul {
     li {
         overflow: hidden;
         margin: 1em;
+        display: block;
 
         &:only-child {
             width: 100%;

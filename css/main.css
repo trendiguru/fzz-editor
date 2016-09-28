@@ -60,7 +60,8 @@ header {
 
 ul li {
   overflow: hidden;
-  margin: 1em; }
+  margin: 1em;
+  display: block; }
   ul li:only-child {
     width: 100%;
     margin: 1em 0; }
