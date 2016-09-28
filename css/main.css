@@ -105,7 +105,8 @@ header {
     height: 100%;
     background-size: contain;
     background-position: center;
-    background-repeat: no-repeat; }
+    background-repeat: no-repeat;
+    position: absolute; }
 
 .collection-item-enter {
   max-width: 0;
