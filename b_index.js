@@ -23348,7 +23348,10 @@
 	                    results = _react2.default.createElement(
 	                        _reactGridLayout2.default,
 	                        { layout: Array(result_entries.length).fill(1).map(function (a, i) {
-	                                return {
+	                                return console.log({
+	                                    x: i % 3,
+	                                    y: Math.floor(i / 3)
+	                                }) && {
 	                                    x: i % 3,
 	                                    y: Math.floor(i / 3)
 	                                };

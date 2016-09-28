@@ -44,10 +44,13 @@ export class Item extends Editor {
                     </aside>
                 </span>;
                 let result_entries = Object.entries(similar_results[collection]);
-                results = <ReactGridLayout layout={Array(result_entries.length).fill(1).map((a, i) => ({
+                results = <ReactGridLayout layout={Array(result_entries.length).fill(1).map((a, i) => console.log({
                     x: i % 3,
                     y: Math.floor(i / 3)
-                }))} cols={3} rowHeight={200} width={this.width}>
+                }) && {
+                    x: i % 3,
+                    y: Math.floor(i / 3)
+                })} cols={3} rowHeight={200} width={this.width}>
                     {result_entries.map(([id, result]) =>
                         <li key={id}>
                             <span>
