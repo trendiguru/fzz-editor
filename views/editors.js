@@ -43,8 +43,12 @@ export class Item extends Editor {
                         </button>
                     </aside>
                 </span>;
-                results = <ReactGridLayout cols={3} rowHeight={200} width={this.width}>
-                    {Object.entries(similar_results[collection]).map(([id, result]) =>
+                let result_entries = Object.entries(similar_results[collection]);
+                results = <ReactGridLayout layout={Array(result_entries.length).map((a, i) => ({
+                    x: i % 3,
+                    y: Math.floor(i / 3)
+                }))} cols={3} rowHeight={200} width={this.width}>
+                    {result_entries.map(([id, result]) =>
                         <li key={id}>
                             <span>
                                 <aside><button><MDIcon>delete</MDIcon></button></aside>

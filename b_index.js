@@ -23344,10 +23344,16 @@
 	                            )
 	                        )
 	                    );
+	                    var result_entries = Object.entries(similar_results[collection]);
 	                    results = _react2.default.createElement(
 	                        _reactGridLayout2.default,
-	                        { cols: 3, rowHeight: 200, width: _this2.width },
-	                        Object.entries(similar_results[collection]).map(function (_ref) {
+	                        { layout: Array(result_entries.length).map(function (a, i) {
+	                                return {
+	                                    x: i % 3,
+	                                    y: Math.floor(i / 3)
+	                                };
+	                            }), cols: 3, rowHeight: 200, width: _this2.width },
+	                        result_entries.map(function (_ref) {
 	                            var _ref2 = _slicedToArray(_ref, 2);
 	
 	                            var id = _ref2[0];
