@@ -23323,10 +23323,10 @@
 	                var results = void 0;
 	                if (collection === _this2.state.selected) {
 	                    tile = _react2.default.createElement(
-	                        'span',
+	                        'div',
 	                        null,
 	                        _react2.default.createElement(
-	                            'span',
+	                            'div',
 	                            null,
 	                            collection
 	                        ),
@@ -23365,7 +23365,7 @@
 	                                'li',
 	                                { key: String(i) },
 	                                _react2.default.createElement(
-	                                    'span',
+	                                    'div',
 	                                    null,
 	                                    _react2.default.createElement(
 	                                        'aside',
@@ -23381,7 +23381,7 @@
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        'span',
+	                                        'div',
 	                                        null,
 	                                        _react2.default.createElement('img', { src: result.images.XLarge })
 	                                    )
@@ -23391,7 +23391,7 @@
 	                    );
 	                } else {
 	                    tile = _react2.default.createElement(
-	                        'span',
+	                        'div',
 	                        { onClick: _this2.select.bind(_this2, collection) },
 	                        collection,
 	                        _react2.default.createElement(
@@ -23410,15 +23410,15 @@
 	                    );
 	                }
 	                return _react2.default.createElement(
-	                    'li',
-	                    { key: i },
+	                    'div',
+	                    { className: 'list-item', key: i },
 	                    tile,
 	                    results
 	                );
 	            });
 	            return _react2.default.createElement(
-	                'ul',
-	                { ref: 'root' },
+	                'div',
+	                { className: 'list', ref: 'root' },
 	                collections
 	            );
 	        }

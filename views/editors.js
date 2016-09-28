@@ -35,14 +35,14 @@ export class Item extends Editor {
             let tile;
             let results;
             if (collection === this.state.selected) {
-                tile = <span>
-                    <span>{collection}</span>
+                tile = <div>
+                    <div>{collection}</div>
                     <aside>
                         <button onClick={this.unselect.bind(this)}>
                             <MDIcon>close</MDIcon>
                         </button>
                     </aside>
-                </span>;
+                </div>;
                 let result_entries = Object.entries(similar_results[collection]);
                 results = <ReactGridLayout layout={Array(result_entries.length).fill(1).map((a, i) => ({
                     i: String(i),
@@ -53,29 +53,29 @@ export class Item extends Editor {
                 }))} cols={3} rowHeight={200} width={this.width}>
                     {result_entries.map(([id, result], i) =>
                         <li key={String(i)}>
-                            <span>
+                            <div>
                                 <aside><button><MDIcon>delete</MDIcon></button></aside>
-                                <span><img src={result.images.XLarge} /></span>
-                            </span>
+                                <div><img src={result.images.XLarge} /></div>
+                            </div>
                         </li>)}
                 </ReactGridLayout>;
             }
             else {
-                tile = <span onClick={this.select.bind(this, collection)}>
+                tile = <div onClick={this.select.bind(this, collection)}>
                     {collection}
                     <aside>
                         <button onClick={this.select.bind(this)}>
                             <MDIcon>edit</MDIcon>
                         </button>
                     </aside>
-                </span>;
+                </div>;
             }
-            return <li key={i}>
+            return <div className="list-item" key={i}>
                 {tile}
                 {results}
-            </li>;
+            </div>;
         });
-        return <ul ref="root">{collections}</ul>;
+        return <div className="list" ref="root">{collections}</div>;
     }
 }
 

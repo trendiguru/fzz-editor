@@ -8,12 +8,7 @@ input, button {
 button {
   cursor: pointer; }
 
-ul {
-  padding: 0;
-  list-style: none;
-  margin: 0; }
-
-li {
+.list-item {
   display: inline-block;
   position: relative; }
 
@@ -58,13 +53,13 @@ header {
     header #search:hover, header #search:focus {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23); }
 
-ul li {
+.list .list-item {
   overflow: hidden;
   margin: 1em; }
-  ul li:only-child {
+  .list .list-item:only-child {
     width: 100%;
     margin: 1em 0; }
-  ul li > *:first-child {
+  .list .list-item > *:first-child {
     padding: 0;
     overflow: hidden;
     background-color: #fff;
@@ -78,13 +73,13 @@ ul li {
     justify-content: center;
     position: relative;
     cursor: pointer; }
-    ul li > *:first-child:hover, ul li > *:first-child:focus {
+    .list .list-item > *:first-child:hover, .list .list-item > *:first-child:focus {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16); }
-    ul li > *:first-child aside {
+    .list .list-item > *:first-child aside {
       position: absolute;
       top: 0;
       right: 0; }
-      ul li > *:first-child aside button {
+      .list .list-item > *:first-child aside button {
         padding: 0;
         overflow: hidden;
         background-color: #fff;
@@ -98,14 +93,14 @@ ul li {
         font-size: 1.25em;
         border-radius: 50%;
         margin: .5em .5em 0 0; }
-        ul li > *:first-child aside button:hover, ul li > *:first-child aside button:focus {
+        .list .list-item > *:first-child aside button:hover, .list .list-item > *:first-child aside button:focus {
           box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24); }
-  ul li .react-grid-layout *:first-child {
+  .list .list-item .react-grid-layout *:first-child {
     display: flex; }
-  ul li.editor {
+  .list .list-item.editor {
     display: block;
     background: none; }
-  ul li img {
+  .list .list-item img {
     max-width: 100%;
     max-height: 100%; }
 
