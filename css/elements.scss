@@ -1,10 +1,10 @@
 div[data-reactroot] {
-    & > ul {
+    & > .list {
         display: flex;
         flex-wrap: wrap;
         max-width: calc(100% - 22em);
 
-        & > li {
+        & > .list-item {
             min-height: 0;
             margin: 0 1em 1em 0;
 

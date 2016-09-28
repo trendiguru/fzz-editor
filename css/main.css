@@ -128,17 +128,17 @@ header {
     transform: translateY(4em);
     transition: all .4s; }
 
-div[data-reactroot] > ul {
+div[data-reactroot] > .list {
   display: flex;
   flex-wrap: wrap;
   max-width: calc(100% - 22em); }
-  div[data-reactroot] > ul > li {
+  div[data-reactroot] > .list > .list-item {
     min-height: 0;
     margin: 0 1em 1em 0; }
-    div[data-reactroot] > ul > li > div {
+    div[data-reactroot] > .list > .list-item > div {
       overflow: hidden;
       margin: auto; }
-      div[data-reactroot] > ul > li > div > img {
+      div[data-reactroot] > .list > .list-item > div > img {
         max-width: 30em;
         max-height: 30em; }
 
