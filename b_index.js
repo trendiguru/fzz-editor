@@ -4830,7 +4830,7 @@
 	            var _props$template = _props.template;
 	            var template = _props$template === undefined ? function (node) {
 	                return _react2.default.createElement(
-	                    'span',
+	                    'div',
 	                    null,
 	                    node[title]
 	                );
@@ -4845,7 +4845,7 @@
 	                    'li',
 	                    { key: selected },
 	                    _react2.default.createElement(
-	                        'span',
+	                        'div',
 	                        null,
 	                        template.call(this, selectedNode),
 	                        _react2.default.createElement(
@@ -4898,7 +4898,7 @@
 	                        'li',
 	                        { key: key },
 	                        _react2.default.createElement(
-	                            'span',
+	                            'div',
 	                            null,
 	                            template.call(_this3, node),
 	                            _react2.default.createElement(

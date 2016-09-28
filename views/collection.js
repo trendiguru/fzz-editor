@@ -49,20 +49,20 @@ export default class Collection extends Component {
     }
     render () {
         let {selected} = this.state;
-        let {editable, title, template = (node) => <span>{node[title]}</span>, source, query} = this.props;
+        let {editable, title, template = (node) => <div>{node[title]}</div>, source, query} = this.props;
         let nodes;
         if (selected !== undefined) {
             let selectedNode = source[query][selected];
             nodes = [
                 <li key={selected}>
-                    <span>
+                    <div>
                         {template.call(this, selectedNode)}
                         <aside>
                             <button onClick={this.unselect.bind(this)}>
                                 <MDIcon>close</MDIcon>
                             </button>
                         </aside>
-                    </span>
+                    </div>
                     {React.createElement(this.props.editor, Object.assign({}, selectedNode, {
                         origin: selectedNode,
                     }))}
@@ -81,10 +81,10 @@ export default class Collection extends Component {
                     </button>;
                 }
                 return <li key={key}>
-                    <span>
+                    <div>
                         {template.call(this, node)}
                         <aside>{edit}{remove}</aside>
-                    </span>
+                    </div>
                 </li>;
             });
         }
