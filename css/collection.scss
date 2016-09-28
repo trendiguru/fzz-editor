@@ -2,7 +2,6 @@ ul {
     li {
         overflow: hidden;
         margin: 1em;
-        display: block;
 
         &:only-child {
             width: 100%;
@@ -34,6 +33,12 @@ ul {
                     border-radius: 50%;
                     margin: .5em .5em 0 0;
                 }
+            }
+        }
+
+        .react-grid-layout {
+            *:first-child {
+                display: flex;
             }
         }
 
