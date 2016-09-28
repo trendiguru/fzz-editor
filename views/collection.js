@@ -89,7 +89,8 @@ export default class Collection extends Component {
             });
         }
         return <ReactCSSTransitionGroup
-            component="ul"
+            component="div"
+            className="list"
             transitionName="collection-item"
             transitionEnterTimeout={400}
             transitionLeaveTimeout={400}

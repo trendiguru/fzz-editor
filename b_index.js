@@ -4914,7 +4914,8 @@
 	            return _react2.default.createElement(
 	                _reactAddonsCssTransitionGroup2.default,
 	                {
-	                    component: 'ul',
+	                    component: 'div',
+	                    className: 'list',
 	                    transitionName: 'collection-item',
 	                    transitionEnterTimeout: 400,
 	                    transitionLeaveTimeout: 400
