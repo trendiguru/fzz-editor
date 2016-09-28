@@ -62,7 +62,8 @@ ul li {
   overflow: hidden;
   margin: 1em; }
   ul li:only-child {
-    width: 100%; }
+    width: 100%;
+    margin: 1em 0; }
   ul li > *:first-child {
     padding: 0;
     overflow: hidden;

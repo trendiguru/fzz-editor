@@ -23304,11 +23304,11 @@
 	        }
 	    }, {
 	        key: 'remove',
-	        value: function remove(collection, i) {
+	        value: function remove(collection, index) {
 	            this.setState({
-	                results: Object.assign(this.state.results, _defineProperty({}, collection, Object.assign(this.state.results[collection], _defineProperty({}, i, Object.assign(this.state.results[collection][i], {
-	                    filtered: true
-	                })))))
+	                results: Object.assign(this.state.results, _defineProperty({}, collection, this.state.results[collection].filter(function (a, i) {
+	                    return i !== index;
+	                })))
 	            });
 	        }
 	    }, {
@@ -23353,18 +23353,30 @@
 	                            var id = _ref2[0];
 	                            var result = _ref2[1];
 	                            return _react2.default.createElement(
-	                                'div',
+	                                'li',
 	                                { key: id },
 	                                _react2.default.createElement(
-	                                    'button',
+	                                    'span',
 	                                    null,
 	                                    _react2.default.createElement(
-	                                        _mdIcon2.default,
+	                                        'aside',
 	                                        null,
-	                                        'delete'
+	                                        _react2.default.createElement(
+	                                            'button',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                _mdIcon2.default,
+	                                                null,
+	                                                'delete'
+	                                            )
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'span',
+	                                        null,
+	                                        _react2.default.createElement('img', { src: result.images.XLarge })
 	                                    )
-	                                ),
-	                                _react2.default.createElement('img', { src: result.images.XLarge })
+	                                )
 	                            );
 	                        })
 	                    );

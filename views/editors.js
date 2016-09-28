@@ -18,14 +18,10 @@ export class Item extends Editor {
     select (selected) {
         this.setState({selected});
     }
-    remove (collection, i) {
+    remove (collection, index) {
         this.setState({
             results: Object.assign(this.state.results, {
-                [collection]: Object.assign(this.state.results[collection], {
-                    [i]: Object.assign(this.state.results[collection][i], {
-                        filtered: true
-                    })
-                })
+                [collection]: this.state.results[collection].filter((a, i) => i !== index)
             })
         });
     }
@@ -49,10 +45,12 @@ export class Item extends Editor {
                 </span>;
                 results = <ReactGridLayout cols={3} rowHeight={200} width={this.width}>
                     {Object.entries(similar_results[collection]).map(([id, result]) =>
-                        <div key={id}>
-                            <button><MDIcon>delete</MDIcon></button>
-                            <img src={result.images.XLarge} />
-                        </div>)}
+                        <li key={id}>
+                            <span>
+                                <aside><button><MDIcon>delete</MDIcon></button></aside>
+                                <span><img src={result.images.XLarge} /></span>
+                            </span>
+                        </li>)}
                 </ReactGridLayout>;
             }
             else {
