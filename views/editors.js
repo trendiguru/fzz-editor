@@ -52,6 +52,10 @@ export class Item extends Editor {
             })
         });
     }
+    get width () {
+        let {refs: {root}} = this;
+        return root ? root.clientWidth : 1;
+    }
     render () {
         let {props: {similar_results}} = this;
         let collections = Object.keys(similar_results).map((collection, i) => {
@@ -66,7 +70,7 @@ export class Item extends Editor {
                         </button>
                     </aside>
                 </span>;
-                results = <ReactGridLayout>
+                results = <ReactGridLayout width={this.width}>
                     {Object.entries(similar_results[collection]).map(([id, result]) =>
                         <div key={id}>
                             <button><MDIcon>delete</MDIcon></button>
@@ -89,7 +93,7 @@ export class Item extends Editor {
                 {results}
             </li>;
         });
-        return <ul>{collections}</ul>;
+        return <ul ref="root">{collections}</ul>;
     }
 }
 

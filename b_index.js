@@ -23394,7 +23394,7 @@
 	                    );
 	                    results = _react2.default.createElement(
 	                        _reactGridLayout2.default,
-	                        null,
+	                        { width: _this4.width },
 	                        Object.entries(similar_results[collection]).map(function (_ref) {
 	                            var _ref2 = _slicedToArray(_ref, 2);
 	
@@ -23445,9 +23445,16 @@
 	            });
 	            return _react2.default.createElement(
 	                'ul',
-	                null,
+	                { ref: 'root' },
 	                collections
 	            );
+	        }
+	    }, {
+	        key: 'width',
+	        get: function get() {
+	            var root = this.refs.root;
+	
+	            return root ? root.clientWidth : 1;
 	        }
 	    }]);
 	
