@@ -23373,7 +23373,7 @@
 	                                        null,
 	                                        _react2.default.createElement(
 	                                            'button',
-	                                            null,
+	                                            { onClick: _this2.remove.bind(_this2, collection, i) },
 	                                            _react2.default.createElement(
 	                                                _mdIcon2.default,
 	                                                null,

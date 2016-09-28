@@ -54,7 +54,7 @@ export class Item extends Editor {
                     {result_entries.map(([id, result], i) =>
                         <div className="list-item" key={String(i)}>
                             <div>
-                                <aside><button><MDIcon>delete</MDIcon></button></aside>
+                                <aside><button onClick={this.remove.bind(this, collection, i)}><MDIcon>delete</MDIcon></button></aside>
                                 <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
                             </div>
                         </div>)}
