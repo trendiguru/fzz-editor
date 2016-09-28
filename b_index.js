@@ -23351,7 +23351,9 @@
 	                                return {
 	                                    i: i,
 	                                    x: i % 3,
-	                                    y: Math.floor(i / 3)
+	                                    y: Math.floor(i / 3),
+	                                    w: 1,
+	                                    h: 1
 	                                };
 	                            }), cols: 3, rowHeight: 200, width: _this2.width },
 	                        result_entries.map(function (_ref, i) {
