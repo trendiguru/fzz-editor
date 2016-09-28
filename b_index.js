@@ -23363,8 +23363,8 @@
 	                            var id = _ref2[0];
 	                            var result = _ref2[1];
 	                            return _react2.default.createElement(
-	                                'li',
-	                                { key: String(i) },
+	                                'div',
+	                                { className: 'list-item', key: String(i) },
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    null,

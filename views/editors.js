@@ -52,12 +52,12 @@ export class Item extends Editor {
                     h: 1
                 }))} cols={3} rowHeight={200} width={this.width}>
                     {result_entries.map(([id, result], i) =>
-                        <li key={String(i)}>
+                        <div className="list-item" key={String(i)}>
                             <div>
                                 <aside><button><MDIcon>delete</MDIcon></button></aside>
                                 <div><img src={result.images.XLarge} /></div>
                             </div>
-                        </li>)}
+                        </div>)}
                 </ReactGridLayout>;
             }
             else {
