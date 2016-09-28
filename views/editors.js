@@ -1,32 +1,9 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
 import Editor from './editor';
 import Collection from './collection';
 import MDIcon from './md-icon';
 import {API_URL} from '../constants';
 import ReactGridLayout from 'react-grid-layout';
-
-class Result extends Component {
-    render () {
-        return <div style={{
-            width: '100%',
-            height: '100%',
-            backgroundImage: `url(${this.props.item.images.XLarge})`,
-            backgroundSize: 'contain',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-        }}>
-            <button onClick={() => this.props.onRemove(this.props.index)}>
-                <MDIcon>delete</MDIcon>
-            </button>
-        </div>;
-    }
-}
-
-Result.propTypes = {
-    item: PropTypes.object,
-    onRemove: PropTypes.func,
-    index: PropTypes.number
-};
 
 export class Item extends Editor {
     constructor (props) {

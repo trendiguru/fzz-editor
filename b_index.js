@@ -23278,66 +23278,18 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Result = function (_Component) {
-	    _inherits(Result, _Component);
-	
-	    function Result() {
-	        _classCallCheck(this, Result);
-	
-	        return _possibleConstructorReturn(this, (Result.__proto__ || Object.getPrototypeOf(Result)).apply(this, arguments));
-	    }
-	
-	    _createClass(Result, [{
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { style: {
-	                        width: '100%',
-	                        height: '100%',
-	                        backgroundImage: 'url(' + this.props.item.images.XLarge + ')',
-	                        backgroundSize: 'contain',
-	                        backgroundPosition: 'center',
-	                        backgroundRepeat: 'no-repeat'
-	                    } },
-	                _react2.default.createElement(
-	                    'button',
-	                    { onClick: function onClick() {
-	                            return _this2.props.onRemove(_this2.props.index);
-	                        } },
-	                    _react2.default.createElement(
-	                        _mdIcon2.default,
-	                        null,
-	                        'delete'
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Result;
-	}(_react.Component);
-	
-	Result.propTypes = {
-	    item: _react.PropTypes.object,
-	    onRemove: _react.PropTypes.func,
-	    index: _react.PropTypes.number
-	};
-	
 	var Item = exports.Item = function (_Editor) {
 	    _inherits(Item, _Editor);
 	
 	    function Item(props) {
 	        _classCallCheck(this, Item);
 	
-	        var _this3 = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 	
-	        _this3.state = {
+	        _this.state = {
 	            selected: undefined
 	        };
-	        return _this3;
+	        return _this;
 	    }
 	
 	    _createClass(Item, [{
@@ -23362,14 +23314,14 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this4 = this;
+	            var _this2 = this;
 	
 	            var similar_results = this.props.similar_results;
 	
 	            var collections = Object.keys(similar_results).map(function (collection, i) {
 	                var tile = void 0;
 	                var results = void 0;
-	                if (collection === _this4.state.selected) {
+	                if (collection === _this2.state.selected) {
 	                    tile = _react2.default.createElement(
 	                        'span',
 	                        null,
@@ -23383,7 +23335,7 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: _this4.unselect.bind(_this4) },
+	                                { onClick: _this2.unselect.bind(_this2) },
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
@@ -23394,7 +23346,7 @@
 	                    );
 	                    results = _react2.default.createElement(
 	                        _reactGridLayout2.default,
-	                        { cols: 3, rowHeight: 200, width: _this4.width },
+	                        { cols: 3, rowHeight: 200, width: _this2.width },
 	                        Object.entries(similar_results[collection]).map(function (_ref) {
 	                            var _ref2 = _slicedToArray(_ref, 2);
 	
@@ -23419,14 +23371,14 @@
 	                } else {
 	                    tile = _react2.default.createElement(
 	                        'span',
-	                        { onClick: _this4.select.bind(_this4, collection) },
+	                        { onClick: _this2.select.bind(_this2, collection) },
 	                        collection,
 	                        _react2.default.createElement(
 	                            'aside',
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: _this4.select.bind(_this4) },
+	                                { onClick: _this2.select.bind(_this2) },
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
@@ -23473,13 +23425,13 @@
 	    _createClass(Person, [{
 	        key: 'changeGender',
 	        value: function changeGender(gender) {
-	            var _this6 = this;
+	            var _this4 = this;
 	
 	            this.set(function (image) {
 	                var clone = Object.assign({}, image, {
-	                    people: Object.assign({}, image.people, _defineProperty({}, _this6.props._id, Object.assign({}, image.people[_this6.props._id], { gender: gender })))
+	                    people: Object.assign({}, image.people, _defineProperty({}, _this4.props._id, Object.assign({}, image.people[_this4.props._id], { gender: gender })))
 	                });
-	                fetch([_constants.API_URL].concat(_toConsumableArray(_this6.path)).join('/'), {
+	                fetch([_constants.API_URL].concat(_toConsumableArray(_this4.path)).join('/'), {
 	                    method: 'PATCH',
 	                    body: JSON.stringify({ data: { gender: gender } }),
 	                    credentials: 'include'
@@ -23490,7 +23442,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this7 = this;
+	            var _this5 = this;
 	
 	            var gender = this.props.gender;
 	
@@ -23500,7 +23452,7 @@
 	                _react2.default.createElement(
 	                    'select',
 	                    { value: gender, onChange: function onChange(e) {
-	                            return _this7.changeGender(e.target.value);
+	                            return _this5.changeGender(e.target.value);
 	                        } },
 	                    _react2.default.createElement(
 	                        'option',

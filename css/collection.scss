@@ -3,6 +3,10 @@ ul {
         overflow: hidden;
         margin: 1em;
 
+        &:only-child {
+            width: 100%;
+        }
+
         & > *:first-child {
             @include card (2);
             min-width: 10em;
