@@ -54,7 +54,7 @@ export default class Collection extends Component {
         if (selected !== undefined) {
             let selectedNode = source[query][selected];
             nodes = [
-                <li key={selected}>
+                <div className="list-item" key={selected}>
                     <div>
                         {template.call(this, selectedNode)}
                         <aside>
@@ -66,7 +66,7 @@ export default class Collection extends Component {
                     {React.createElement(this.props.editor, Object.assign({}, selectedNode, {
                         origin: selectedNode,
                     }))}
-                </li>
+                </div>
             ];
         }
         else {
@@ -80,12 +80,12 @@ export default class Collection extends Component {
                         <MDIcon>edit</MDIcon>
                     </button>;
                 }
-                return <li key={key}>
+                return <div className="list-item" key={key}>
                     <div>
                         {template.call(this, node)}
                         <aside>{edit}{remove}</aside>
                     </div>
-                </li>;
+                </div>;
             });
         }
         return <ReactCSSTransitionGroup

@@ -4842,8 +4842,8 @@
 	            if (selected !== undefined) {
 	                var selectedNode = source[query][selected];
 	                nodes = [_react2.default.createElement(
-	                    'li',
-	                    { key: selected },
+	                    'div',
+	                    { className: 'list-item', key: selected },
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
@@ -4895,8 +4895,8 @@
 	                        );
 	                    }
 	                    return _react2.default.createElement(
-	                        'li',
-	                        { key: key },
+	                        'div',
+	                        { className: 'list-item', key: key },
 	                        _react2.default.createElement(
 	                            'div',
 	                            null,
