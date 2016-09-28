@@ -23347,7 +23347,7 @@
 	                    var result_entries = Object.entries(similar_results[collection]);
 	                    results = _react2.default.createElement(
 	                        _reactGridLayout2.default,
-	                        { layout: Array(result_entries.length).map(function (a, i) {
+	                        { layout: Array(result_entries.length).fill(1).map(function (a, i) {
 	                                return {
 	                                    x: i % 3,
 	                                    y: Math.floor(i / 3)
