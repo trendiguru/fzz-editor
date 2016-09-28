@@ -44,15 +44,13 @@ export class Item extends Editor {
                     </aside>
                 </span>;
                 let result_entries = Object.entries(similar_results[collection]);
-                results = <ReactGridLayout layout={Array(result_entries.length).fill(1).map((a, i) => console.log({
+                results = <ReactGridLayout layout={Array(result_entries.length).fill(1).map((a, i) => ({
+                    i,
                     x: i % 3,
                     y: Math.floor(i / 3)
-                }) && {
-                    x: i % 3,
-                    y: Math.floor(i / 3)
-                })} cols={3} rowHeight={200} width={this.width}>
-                    {result_entries.map(([id, result]) =>
-                        <li key={id}>
+                }))} cols={3} rowHeight={200} width={this.width}>
+                    {result_entries.map(([id, result], i) =>
+                        <li key={i}>
                             <span>
                                 <aside><button><MDIcon>delete</MDIcon></button></aside>
                                 <span><img src={result.images.XLarge} /></span>

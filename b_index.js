@@ -23348,22 +23348,20 @@
 	                    results = _react2.default.createElement(
 	                        _reactGridLayout2.default,
 	                        { layout: Array(result_entries.length).fill(1).map(function (a, i) {
-	                                return console.log({
-	                                    x: i % 3,
-	                                    y: Math.floor(i / 3)
-	                                }) && {
+	                                return {
+	                                    i: i,
 	                                    x: i % 3,
 	                                    y: Math.floor(i / 3)
 	                                };
 	                            }), cols: 3, rowHeight: 200, width: _this2.width },
-	                        result_entries.map(function (_ref) {
+	                        result_entries.map(function (_ref, i) {
 	                            var _ref2 = _slicedToArray(_ref, 2);
 	
 	                            var id = _ref2[0];
 	                            var result = _ref2[1];
 	                            return _react2.default.createElement(
 	                                'li',
-	                                { key: id },
+	                                { key: i },
 	                                _react2.default.createElement(
 	                                    'span',
 	                                    null,
