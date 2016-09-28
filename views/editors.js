@@ -55,9 +55,7 @@ export class Item extends Editor {
                         <div className="list-item" key={String(i)}>
                             <div>
                                 <aside><button><MDIcon>delete</MDIcon></button></aside>
-                                <div>
-                                    <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
-                                </div>
+                                <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
                             </div>
                         </div>)}
                 </ReactGridLayout>;
