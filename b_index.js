@@ -23394,7 +23394,7 @@
 	                    );
 	                    results = _react2.default.createElement(
 	                        _reactGridLayout2.default,
-	                        { width: _this4.width },
+	                        { cols: 3, rowHeight: 200, width: _this4.width },
 	                        Object.entries(similar_results[collection]).map(function (_ref) {
 	                            var _ref2 = _slicedToArray(_ref, 2);
 	

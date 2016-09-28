@@ -70,7 +70,7 @@ export class Item extends Editor {
                         </button>
                     </aside>
                 </span>;
-                results = <ReactGridLayout width={this.width}>
+                results = <ReactGridLayout cols={3} rowHeight={200} width={this.width}>
                     {Object.entries(similar_results[collection]).map(([id, result]) =>
                         <div key={id}>
                             <button><MDIcon>delete</MDIcon></button>
