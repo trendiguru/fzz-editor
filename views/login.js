@@ -31,7 +31,7 @@ export default class Login extends Component {
         return fetch('https://editor-dot-test-paper-doll.appspot.com/login', {
             method: 'POST',
             body: JSON.stringify({email, password}),
-            //credentials: 'include'
+            credentials: 'include'
         })
         .then(() => onAuthenticate(true))
         .catch(() => this.setState({error: true}));
