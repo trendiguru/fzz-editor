@@ -18,12 +18,13 @@ export default class Login extends Component {
     componentDidMount () {
         let {props: {handshake, onAuthenticate}} = this;
         handshake()
-        .then(res => {
+        .then((res) => {
             if (res.status >= 400 || res.status < 500) {
                 throw new Error(res.statusText);
             }
         })
-        .then(() => onAuthenticate(true));
+        .then(() => onAuthenticate(true))
+        .catch(() => onAuthenticate(false));
     }
     login () {
         let {props: {onAuthenticate}, state: {email, password}} = this;
