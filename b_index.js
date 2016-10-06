@@ -23350,7 +23350,8 @@
 	                    var result_entries = Object.entries(similar_results[collection]);
 	                    results = _react2.default.createElement(
 	                        _reactGridLayout2.default,
-	                        { layout: Array(result_entries.length).fill(1).map(function (a, i) {
+	                        {
+	                            layout: Array(result_entries.length).fill(1).map(function (a, i) {
 	                                return {
 	                                    i: String(i),
 	                                    x: i % 3,
@@ -23358,7 +23359,12 @@
 	                                    w: 1,
 	                                    h: 1
 	                                };
-	                            }), cols: 3, rowHeight: 200, width: _this2.width },
+	                            }),
+	                            cols: 3,
+	                            rowHeight: 200,
+	                            width: _this2.width,
+	                            onLayoutChange: console.log.bind(console)
+	                        },
 	                        result_entries.map(function (_ref, i) {
 	                            var _ref2 = _slicedToArray(_ref, 2);
 	

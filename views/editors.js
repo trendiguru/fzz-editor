@@ -44,13 +44,19 @@ export class Item extends Editor {
                     </aside>
                 </div>;
                 let result_entries = Object.entries(similar_results[collection]);
-                results = <ReactGridLayout layout={Array(result_entries.length).fill(1).map((a, i) => ({
-                    i: String(i),
-                    x: i % 3,
-                    y: Math.floor(i / 3),
-                    w: 1,
-                    h: 1
-                }))} cols={3} rowHeight={200} width={this.width}>
+                results = <ReactGridLayout
+                    layout={Array(result_entries.length).fill(1).map((a, i) => ({
+                        i: String(i),
+                        x: i % 3,
+                        y: Math.floor(i / 3),
+                        w: 1,
+                        h: 1
+                    }))}
+                    cols={3}
+                    rowHeight={200}
+                    width={this.width}
+                    onLayoutChange={console.log.bind(console)}
+                >
                     {result_entries.map(([id, result], i) =>
                         <div className="list-item" key={String(i)}>
                             <div>
