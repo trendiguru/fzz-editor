@@ -46,7 +46,7 @@ export class Item extends Editor {
                     <div>{collection}</div>
                     <aside>
                         <button onClick={this.unselect.bind(this)}>
-                            <MDIcon>close</MDIcon>
+                            <MDIcon>keyboard_arrow_up</MDIcon>
                         </button>
                     </aside>
                 </div>;

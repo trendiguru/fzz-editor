@@ -4860,7 +4860,7 @@
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
-	                                    'close'
+	                                    'keyboard_arrow_up'
 	                                )
 	                            )
 	                        )
@@ -23359,7 +23359,7 @@
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
-	                                    'close'
+	                                    'keyboard_arrow_up'
 	                                )
 	                            )
 	                        )

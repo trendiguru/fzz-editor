@@ -59,7 +59,7 @@ export default class Collection extends Component {
                         {template.call(this, selectedNode)}
                         <aside>
                             <button onClick={this.unselect.bind(this)}>
-                                <MDIcon>close</MDIcon>
+                                <MDIcon>keyboard_arrow_up</MDIcon>
                             </button>
                         </aside>
                     </div>
