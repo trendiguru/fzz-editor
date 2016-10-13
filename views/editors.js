@@ -6,10 +6,17 @@ import {API_URL} from '../constants';
 import ReactGridLayout from 'react-grid-layout';
 
 export class Item extends Editor {
-    constructor (props) {
-        super(props);
+    constructor ({similar_results}) {
+        super(...arguments);
         this.state = {
             selected: undefined,
+            layout: Object.entries(similar_results).map(([id, result], i) => ({
+                i: id,
+                x: i % 3,
+                y: Math.floor(i / 3),
+                w: 1,
+                h: 1,
+            }))
         };
     }
     unselect () {
@@ -30,7 +37,7 @@ export class Item extends Editor {
         return root ? root.clientWidth : 1;
     }
     render () {
-        let {props: {similar_results}} = this;
+        let {props: {similar_results}, state: {layout}} = this;
         let collections = Object.keys(similar_results).map((collection, i) => {
             let tile;
             let results;
@@ -45,17 +52,11 @@ export class Item extends Editor {
                 </div>;
                 let result_entries = Object.entries(similar_results[collection]);
                 results = <ReactGridLayout
-                    layout={Array(result_entries.length).fill(1).map((a, i) => ({
-                        i: String(i),
-                        x: i % 3,
-                        y: Math.floor(i / 3),
-                        w: 1,
-                        h: 1
-                    }))}
+                    layout={layout}
                     cols={3}
                     rowHeight={200}
                     width={this.width}
-                    onLayoutChange={console.log.bind(console)}
+                    onLayoutChange={layout => this.setState({layout})}
                 >
                     {result_entries.map(([id, result], i) =>
                         <div className="list-item" key={String(i)}>

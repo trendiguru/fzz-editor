@@ -252,7 +252,7 @@
 	            var user = this.state.user;
 	
 	            if (!user) {
-	                return _react2.default.createElement(_login2.default, { handshake: fetch.bind(null, _constants.API_URL + '?last=10'), onAuthenticate: function onAuthenticate(user) {
+	                return _react2.default.createElement(_login2.default, { handshake: fetch.bind(null, _constants.API_URL + '?last=10', { credentials: 'include' }), onAuthenticate: function onAuthenticate(user) {
 	                        return _this6.setState({ user: user });
 	                    } });
 	            }
@@ -4598,9 +4598,10 @@
 	            var onAuthenticate = _props.onAuthenticate;
 	
 	            handshake().then(function (res) {
-	                if (res.status >= 400 || res.status < 500) {
+	                if (res.status >= 400 && res.status < 500) {
 	                    throw new Error(res.statusText);
 	                }
+	                return res;
 	            }).then(function () {
 	                return onAuthenticate(true);
 	            }).catch(function () {
@@ -23284,13 +23285,28 @@
 	var Item = exports.Item = function (_Editor) {
 	    _inherits(Item, _Editor);
 	
-	    function Item(props) {
+	    function Item(_ref) {
+	        var similar_results = _ref.similar_results;
+	
 	        _classCallCheck(this, Item);
 	
-	        var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).apply(this, arguments));
 	
 	        _this.state = {
-	            selected: undefined
+	            selected: undefined,
+	            layout: Object.entries(similar_results).map(function (_ref2, i) {
+	                var _ref3 = _slicedToArray(_ref2, 2);
+	
+	                var id = _ref3[0];
+	                var result = _ref3[1];
+	                return {
+	                    i: id,
+	                    x: i % 3,
+	                    y: Math.floor(i / 3),
+	                    w: 1,
+	                    h: 1
+	                };
+	            })
 	        };
 	        return _this;
 	    }
@@ -23320,6 +23336,7 @@
 	            var _this2 = this;
 	
 	            var similar_results = this.props.similar_results;
+	            var layout = this.state.layout;
 	
 	            var collections = Object.keys(similar_results).map(function (collection, i) {
 	                var tile = void 0;
@@ -23351,25 +23368,19 @@
 	                    results = _react2.default.createElement(
 	                        _reactGridLayout2.default,
 	                        {
-	                            layout: Array(result_entries.length).fill(1).map(function (a, i) {
-	                                return {
-	                                    i: String(i),
-	                                    x: i % 3,
-	                                    y: Math.floor(i / 3),
-	                                    w: 1,
-	                                    h: 1
-	                                };
-	                            }),
+	                            layout: layout,
 	                            cols: 3,
 	                            rowHeight: 200,
 	                            width: _this2.width,
-	                            onLayoutChange: console.log.bind(console)
+	                            onLayoutChange: function onLayoutChange(layout) {
+	                                return _this2.setState({ layout: layout });
+	                            }
 	                        },
-	                        result_entries.map(function (_ref, i) {
-	                            var _ref2 = _slicedToArray(_ref, 2);
+	                        result_entries.map(function (_ref4, i) {
+	                            var _ref5 = _slicedToArray(_ref4, 2);
 	
-	                            var id = _ref2[0];
-	                            var result = _ref2[1];
+	                            var id = _ref5[0];
+	                            var result = _ref5[1];
 	                            return _react2.default.createElement(
 	                                'div',
 	                                { className: 'list-item', key: String(i) },

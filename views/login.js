@@ -19,9 +19,10 @@ export default class Login extends Component {
         let {props: {handshake, onAuthenticate}} = this;
         handshake()
         .then((res) => {
-            if (res.status >= 400 || res.status < 500) {
+            if (res.status >= 400 && res.status < 500) {
                 throw new Error(res.statusText);
             }
+            return res;
         })
         .then(() => onAuthenticate(true))
         .catch(() => onAuthenticate(false));
