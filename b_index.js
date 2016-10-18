@@ -31630,11 +31630,9 @@
 	        }
 	    }, {
 	        key: 'remove',
-	        value: function remove(collection, index) {
+	        value: function remove(collection, id) {
 	            this.set(function (item) {
-	                item[collection] = item[collection].filter(function (result, i) {
-	                    return i !== index;
-	                });
+	                delete item.similar_results[collection][id];
 	                return item;
 	            }, {
 	                method: 'DELETE'
@@ -31659,7 +31657,6 @@
 	            var _this2 = this;
 	
 	            var similar_results = this.props.similar_results;
-	            var remove = this.remove;
 	
 	            var collections = Object.keys(similar_results).map(function (collection, i) {
 	                var tile = void 0;
@@ -31697,7 +31694,7 @@
 	                            return Object.assign({}, result, { id: id, index: i });
 	                        }),
 	                        itemKey: 'id',
-	                        template: CollectionCard({ collection: collection, remove: remove }),
+	                        template: CollectionCard({ collection: collection, remove: _this2.remove.bind(_this2) }),
 	                        onMoveEnd: _this2.updateResultList.bind(_this2, collection)
 	                    });
 	                } else {
@@ -31828,7 +31825,7 @@
 	                        'button',
 	                        { onClick: function onClick(e) {
 	                                block(e);
-	                                remove(collection, result.index);
+	                                remove(collection, result.id);
 	                            } },
 	                        _react2.default.createElement(
 	                            _mdIcon2.default,

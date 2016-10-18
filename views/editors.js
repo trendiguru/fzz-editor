@@ -17,10 +17,10 @@ export class Item extends Editor {
     select (selected) {
         this.setState({selected});
     }
-    remove (collection, index) {
+    remove (collection, id) {
         this.set(
             item => {
-                item[collection] = item[collection].filter((result, i) => i !== index);
+                delete item.similar_results[collection][id];
                 return item;
             },
             {
@@ -47,7 +47,7 @@ export class Item extends Editor {
         return root ? root.clientWidth : 1;
     }
     render () {
-        let {props: {similar_results}, remove} = this;
+        let {props: {similar_results}} = this;
         let collections = Object.keys(similar_results).map((collection, i) => {
             let tile;
             let results;
@@ -64,7 +64,7 @@ export class Item extends Editor {
                 results = <DraggableList
                     list={result_entries.map(([id, result], i) => Object.assign({}, result, {id, index: i}))}
                     itemKey="id"
-                    template={CollectionCard({collection, remove})}
+                    template={CollectionCard({collection, remove: ::this.remove})}
                     onMoveEnd={this.updateResultList.bind(this, collection)}
                 />;
             }
@@ -129,7 +129,7 @@ function CollectionCard ({collection, remove}) {
             <div style={{width: '100%', height: '100%'}}>
                 <aside><button onClick={(e) => {
                     block(e);
-                    remove(collection, result.index);
+                    remove(collection, result.id);
                 }}><MDIcon>delete</MDIcon></button></aside>
                 <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
             </div>
