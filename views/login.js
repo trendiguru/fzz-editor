@@ -1,19 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 
 export default class Login extends Component {
-    constructor () {
-        super(...arguments);
-        this.state = {
-            email: '',
-            password: '',
-            error: false
-        };
+    static propTypes = {
+        handshake: PropTypes.func.isRequired,
+        onAuthenticate: PropTypes.func.isRequired
     }
-    static get propTypes () {
-        return {
-            handshake: PropTypes.func.isRequired,
-            onAuthenticate: PropTypes.func.isRequired
-        };
+    state = {
+        email: '',
+        password: '',
+        error: false
     }
     componentDidMount () {
         let {props: {handshake, onAuthenticate}} = this;
@@ -26,6 +21,10 @@ export default class Login extends Component {
         })
         .then(() => onAuthenticate(true))
         .catch(() => onAuthenticate(false));
+        addEventListener('keydown', this.onKeyDown);
+    }
+    componentWillUnmount () {
+        removeEventListener('keydown', this.onKeyDown);
     }
     login () {
         let {props: {onAuthenticate}, state: {email, password}} = this;
@@ -36,6 +35,11 @@ export default class Login extends Component {
         })
         .then(() => onAuthenticate(true))
         .catch(() => this.setState({error: true}));
+    }
+    onKeyDown ({keyCode}) {
+        if (keyCode === 13) {
+            return this.login();
+        }
     }
     render () {
         return <div>

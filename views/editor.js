@@ -1,5 +1,9 @@
 import {PropTypes, Component} from 'react';
 import findPathToValue from '../modules/path';
+import {JSONPath} from 'jsonpath/jsonpath';
+import {api as API_URL} from '../package.json';
+
+let jp = new JSONPath();
 
 export default class Editor extends Component {
     componentWillMount () {
@@ -7,7 +11,7 @@ export default class Editor extends Component {
     }
     static get contextTypes () {
         return {
-            setImage: PropTypes.func.isRequired,
+            setImages: PropTypes.func.isRequired,
             images: PropTypes.object.isRequired,
             image: PropTypes.object.isRequired,
         };
@@ -17,7 +21,13 @@ export default class Editor extends Component {
             origin: PropTypes.object.isRequired
         };
     }
-    set (transform, callback) {
-        return this.context.setImage(transform(this.context.image), callback);
+    set (transform, fetchSettings, callback) {
+        fetch([API_URL, ...this.path].join('/'), Object.assign(fetchSettings, {
+            credentials: 'include'
+        }));
+        return this.context.setImages(images => {
+            jp.apply(images, jp.stringify(['$'].concat(this.path)), transform);
+            return images;
+        }, callback);
     }
 }

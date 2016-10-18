@@ -9,6 +9,11 @@ module.exports = {
                 loader: 'babel'
             },
             {
+                test: /\.json/,
+                exclude: /node_modules/,
+                loader: 'json'
+            },
+            {
                 test: /\.scss/,
                 include: /css/,
                 loader: ExtractTextPlugin.extract([
@@ -22,7 +27,7 @@ module.exports = {
         new ExtractTextPlugin('[name]')
     ],
     entry: {
-        'b_index.js': './index.js',
+        'b_index.js': ['core-js', 'web-core', './index.js'],
         './css/main.css': './css/main.scss'
     },
     output: {

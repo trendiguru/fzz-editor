@@ -1,22 +1,14 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import DraggableList from 'react-draggable-list';
 import Editor from './editor';
 import Collection from './collection';
 import MDIcon from './md-icon';
-import {API_URL} from '../constants';
-import ReactGridLayout from 'react-grid-layout';
 
 export class Item extends Editor {
-    constructor ({similar_results}) {
+    constructor () {
         super(...arguments);
         this.state = {
             selected: undefined,
-            layout: Object.entries(similar_results).map(([id, result], i) => ({
-                i: id,
-                x: i % 3,
-                y: Math.floor(i / 3),
-                w: 1,
-                h: 1,
-            }))
         };
     }
     unselect () {
@@ -26,22 +18,41 @@ export class Item extends Editor {
         this.setState({selected});
     }
     remove (collection, index) {
-        this.setState({
-            results: Object.assign(this.state.results, {
-                [collection]: this.state.results[collection].filter((a, i) => i !== index)
-            })
-        });
+        this.set(
+            item => {
+                item[collection] = item[collection].filter((result, i) => i !== index);
+                return item;
+            },
+            {
+                method: 'DELETE',
+            }
+        );
+    }
+    updateResultList (collection, list) {
+        this.set(
+            item => {
+                item[collection] = list;
+                return item;
+            },
+            {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    data: {list}
+                })
+            }
+        );
     }
     get width () {
         let {refs: {root}} = this;
         return root ? root.clientWidth : 1;
     }
     render () {
-        let {props: {similar_results}, state: {layout}} = this;
+        let {props: {similar_results}, remove} = this;
         let collections = Object.keys(similar_results).map((collection, i) => {
             let tile;
             let results;
             if (collection === this.state.selected) {
+                let result_entries = Object.entries(similar_results[collection]);
                 tile = <div>
                     <div>{collection}</div>
                     <aside>
@@ -50,22 +61,12 @@ export class Item extends Editor {
                         </button>
                     </aside>
                 </div>;
-                let result_entries = Object.entries(similar_results[collection]);
-                results = <ReactGridLayout
-                    layout={layout}
-                    cols={3}
-                    rowHeight={200}
-                    width={this.width}
-                    onLayoutChange={layout => this.setState({layout})}
-                >
-                    {result_entries.map(([id, result], i) =>
-                        <div className="list-item" key={String(i)}>
-                            <div>
-                                <aside><button onClick={this.remove.bind(this, collection, i)}><MDIcon>delete</MDIcon></button></aside>
-                                <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
-                            </div>
-                        </div>)}
-                </ReactGridLayout>;
+                results = <DraggableList
+                    list={result_entries.map(([id, result], i) => Object.assign({}, result, {id, index: i}))}
+                    itemKey="id"
+                    template={CollectionCard({collection, remove})}
+                    onMoveEnd={this.updateResultList.bind(this, collection)}
+                />;
             }
             else {
                 tile = <div onClick={this.select.bind(this, collection)}>
@@ -91,19 +92,18 @@ export class Person extends Editor {
         super(props);
     }
     changeGender (gender) {
-        this.set(image => {
-            let clone = Object.assign({}, image, {
-                people: Object.assign({}, image.people, {
-                    [this.props._id]: Object.assign({}, image.people[this.props._id], {gender})
-                })
-            });
-            fetch([API_URL, ...this.path].join('/'), {
+        this.set(
+            person => {
+                person.gender = gender;
+                return person;
+            },
+            {
                 method: 'PATCH',
-                body: JSON.stringify({data: {gender}}),
-                credentials: 'include'
-            });
-            return clone;
-        });
+                body: {
+                    data: {gender}
+                }
+            }
+        );
     }
     render () {
         let {gender} = this.props;
@@ -115,4 +115,34 @@ export class Person extends Editor {
             <Collection source={this.props} query="items" title="category" editor={Item} />
         </div>;
     }
+}
+
+function CollectionCard ({collection, remove}) {
+    function Card ({item: result, dragHandle}) {
+        return dragHandle(<div className="list-item" key={result.id} style={{
+            margin: '0',
+            width: '24em',
+            height: '12em',
+            display: 'block',
+            overflow: 'visible'
+        }}>
+            <div style={{width: '100%', height: '100%'}}>
+                <aside><button onClick={(e) => {
+                    block(e);
+                    remove(collection, result.index);
+                }}><MDIcon>delete</MDIcon></button></aside>
+                <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
+            </div>
+        </div>);
+    }
+    Card.propTypes = {
+        item: PropTypes.object,
+        dragHandle: PropTypes.func
+    };
+    return Card;
+}
+
+function block (e) {
+    e.preventDefault();
+    e.stopPropagation();
 }

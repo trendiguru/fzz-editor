@@ -1,34 +1,27 @@
 import React, {PropTypes, Component} from 'react';
 import findPathToValue from '../modules/path';
-import {API_URL} from '../constants';
+import {api as API_URL} from '../package.json';
 import MDIcon from './md-icon';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class Collection extends Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            selected: undefined,
-        };
+    static contextTypes = {
+        images: PropTypes.object.isRequired,
+        setImages: PropTypes.func.isRequired
     }
-    static get contextTypes () {
-        return {
-            images: PropTypes.object.isRequired,
-            setImages: PropTypes.func.isRequired
-        };
+    static propTypes = {
+        source: PropTypes.object.isRequired,
+        query: PropTypes.string.isRequired,
+        title: PropTypes.string,
+        template: PropTypes.func,
+        editor: PropTypes.func,
+        editable: PropTypes.bool
     }
-    static get propTypes () {
-        return {
-            source: PropTypes.object.isRequired,
-            query: PropTypes.string.isRequired,
-            title: PropTypes.string,
-            template: PropTypes.func,
-            editor: PropTypes.func,
-            editable: PropTypes.bool
-        };
+    state = {
+        selected: undefined,
     }
     unselect () {
-        this.setState({selected: undefined});
+        this.select(undefined);
     }
     select (selected) {
         this.setState({selected});
@@ -48,8 +41,16 @@ export default class Collection extends Component {
         });
     }
     render () {
-        let {selected} = this.state;
-        let {editable, title, template = (node) => <div>{node[title]}</div>, source, query} = this.props;
+        let {
+            state: {selected},
+            props: {
+                title,
+                query,
+                source,
+                editable,
+                template = (node) => <div>{node[title]}</div>,
+            }
+        } = this;
         let nodes;
         if (selected !== undefined) {
             let selectedNode = source[query][selected];
@@ -97,5 +98,3 @@ export default class Collection extends Component {
         >{nodes}</ReactCSSTransitionGroup>;
     }
 }
-
-Object.entries = Object.entries || (object => Object.keys(object).map(key => [key, object[key]]));
