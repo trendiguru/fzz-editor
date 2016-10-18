@@ -30168,8 +30168,8 @@
 	
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                this.state.error ? 'The given username and password combination doesn\'t match' : '',
+	                { id: 'login' },
+	                _react2.default.createElement('img', { src: '/img/logo.svg' }),
 	                _react2.default.createElement('input', { type: 'email', onChange: function onChange(e) {
 	                        return _this3.setState({ email: e.target.value });
 	                    }, value: this.state.email }),
@@ -30180,7 +30180,8 @@
 	                    'button',
 	                    { onClick: this.login.bind(this) },
 	                    'Login'
-	                )
+	                ),
+	                this.state.error ? 'The given username and password combination doesn\'t match' : ''
 	            );
 	        }
 	    }]);

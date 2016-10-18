@@ -42,11 +42,12 @@ export default class Login extends Component {
         }
     }
     render () {
-        return <div>
-            {this.state.error ? 'The given username and password combination doesn\'t match' : ''}
+        return <div id="login">
+            <img src="/img/logo.svg" />
             <input type="email" onChange={e => this.setState({email: e.target.value})} value={this.state.email} />
             <input type="password" onChange={e => this.setState({password: e.target.value})} value={this.state.password} />
             <button onClick={this.login.bind(this)}>Login</button>
+            {this.state.error ? 'The given username and password combination doesn\'t match' : ''}
         </div>;
     }
 }
