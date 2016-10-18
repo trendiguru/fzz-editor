@@ -31521,14 +31521,13 @@
 	                null,
 	                _react2.default.createElement('img', { id: 'reference', src: image_urls[0] }),
 	                _react2.default.createElement(_collection2.default, { source: this.props, query: 'people', editor: _editors.Person, template: function template(node) {
-	                        if (element) {
-	                            var face = node.face;
-	
-	                            var SIZE = 200;
-	                            return _react2.default.createElement(_face2.default, { size: SIZE, delta: Math.floor(SIZE / face[2]), face: face, image: { element: element, image_urls: image_urls } });
-	                        } else {
+	                        if (!element) {
 	                            return {};
 	                        }
+	                        var face = node.face;
+	
+	                        var SIZE = 200;
+	                        return _react2.default.createElement(_face2.default, { size: SIZE, delta: Math.floor(SIZE / face[2]), face: face, image: { element: element, image_urls: image_urls } });
 	                    } })
 	            );
 	        }
@@ -31802,47 +31801,50 @@
 	    var collection = _ref3.collection;
 	    var remove = _ref3.remove;
 	
-	    function Card(_ref4) {
-	        var result = _ref4.item;
-	        var dragHandle = _ref4.dragHandle;
+	    return _react2.default.createClass({
+	        name: 'Card',
+	        propTypes: {
+	            item: _react.PropTypes.object,
+	            dragHandle: _react.PropTypes.func
+	        },
+	        render: function render() {
+	            var _props = this.props;
+	            var result = _props.item;
+	            var dragHandle = _props.dragHandle;
 	
-	        return dragHandle(_react2.default.createElement(
-	            'div',
-	            { className: 'list-item', key: result.id, style: {
-	                    margin: '0',
-	                    width: '24em',
-	                    height: '12em',
-	                    display: 'block',
-	                    overflow: 'visible'
-	                } },
-	            _react2.default.createElement(
+	            return dragHandle(_react2.default.createElement(
 	                'div',
-	                { style: { width: '100%', height: '100%' } },
+	                { className: 'list-item', key: result.id, style: {
+	                        margin: '0',
+	                        width: '24em',
+	                        height: '12em',
+	                        display: 'block',
+	                        overflow: 'visible'
+	                    } },
 	                _react2.default.createElement(
-	                    'aside',
-	                    null,
+	                    'div',
+	                    { style: { width: '100%', height: '100%' } },
 	                    _react2.default.createElement(
-	                        'button',
-	                        { onClick: function onClick(e) {
-	                                block(e);
-	                                remove(collection, result.id);
-	                            } },
+	                        'aside',
+	                        null,
 	                        _react2.default.createElement(
-	                            _mdIcon2.default,
-	                            null,
-	                            'delete'
+	                            'button',
+	                            { onClick: function onClick(e) {
+	                                    block(e);
+	                                    remove(collection, result.id);
+	                                } },
+	                            _react2.default.createElement(
+	                                _mdIcon2.default,
+	                                null,
+	                                'delete'
+	                            )
 	                        )
-	                    )
-	                ),
-	                _react2.default.createElement('div', { className: 'img', style: { backgroundImage: 'url(' + result.images.XLarge + ')' } })
-	            )
-	        ));
-	    }
-	    Card.propTypes = {
-	        item: _react.PropTypes.object,
-	        dragHandle: _react.PropTypes.func
-	    };
-	    return Card;
+	                    ),
+	                    _react2.default.createElement('div', { className: 'img', style: { backgroundImage: 'url(' + result.images.XLarge + ')' } })
+	                )
+	            ));
+	        }
+	    });
 	}
 	
 	function block(e) {

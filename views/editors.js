@@ -118,28 +118,31 @@ export class Person extends Editor {
 }
 
 function CollectionCard ({collection, remove}) {
-    function Card ({item: result, dragHandle}) {
-        return dragHandle(<div className="list-item" key={result.id} style={{
-            margin: '0',
-            width: '24em',
-            height: '12em',
-            display: 'block',
-            overflow: 'visible'
-        }}>
-            <div style={{width: '100%', height: '100%'}}>
-                <aside><button onClick={(e) => {
-                    block(e);
-                    remove(collection, result.id);
-                }}><MDIcon>delete</MDIcon></button></aside>
-                <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
-            </div>
-        </div>);
-    }
-    Card.propTypes = {
-        item: PropTypes.object,
-        dragHandle: PropTypes.func
-    };
-    return Card;
+    return React.createClass({
+        name: 'Card',
+        propTypes: {
+            item: PropTypes.object,
+            dragHandle: PropTypes.func
+        },
+        render () {
+            let {props: {item: result, dragHandle}} = this;
+            return dragHandle(<div className="list-item" key={result.id} style={{
+                margin: '0',
+                width: '24em',
+                height: '12em',
+                display: 'block',
+                overflow: 'visible'
+            }}>
+                <div style={{width: '100%', height: '100%'}}>
+                    <aside><button onClick={(e) => {
+                        block(e);
+                        remove(collection, result.id);
+                    }}><MDIcon>delete</MDIcon></button></aside>
+                    <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
+                </div>
+            </div>);
+        }
+    });
 }
 
 function block (e) {
