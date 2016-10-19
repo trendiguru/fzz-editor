@@ -14,7 +14,7 @@ export default class Person extends Editor {
                 return person;
             },
             {
-                method: 'PATCH',
+                method: 'PUT',
                 body: JSON.stringify({data: gender})
             }
         );

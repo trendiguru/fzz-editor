@@ -31659,7 +31659,7 @@
 	                person.gender = gender;
 	                return person;
 	            }, {
-	                method: 'PATCH',
+	                method: 'PUT',
 	                body: JSON.stringify({ data: gender })
 	            });
 	        }
