@@ -202,7 +202,9 @@ div[data-reactroot] > .list {
     font-size: 1.2em;
     display: block;
     margin: 0 auto .5em;
-    border-bottom: 1px solid black; }
+    border-bottom: 2px solid black; }
+    #login input:focus {
+      border-bottom-size: 3px; }
   #login button {
     width: 100%;
     padding: 1em 0;

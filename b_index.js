@@ -30146,6 +30146,11 @@
 	                method: 'POST',
 	                body: JSON.stringify({ email: email, password: password }),
 	                credentials: 'include'
+	            }).then(function (res) {
+	                if (res.status >= 400 && res.status < 500) {
+	                    throw new Error(res.statusText);
+	                }
+	                return res;
 	            }).then(function () {
 	                return onAuthenticate(true);
 	            }).catch(function () {
@@ -30172,10 +30177,10 @@
 	                _react2.default.createElement('img', { src: '/img/logo.svg' }),
 	                _react2.default.createElement('input', { type: 'email', onChange: function onChange(e) {
 	                        return _this3.setState({ email: e.target.value });
-	                    }, value: this.state.email }),
+	                    }, value: this.state.email, placeholder: 'email' }),
 	                _react2.default.createElement('input', { type: 'password', onChange: function onChange(e) {
 	                        return _this3.setState({ password: e.target.value });
-	                    }, value: this.state.password }),
+	                    }, value: this.state.password, placeholder: 'password' }),
 	                _react2.default.createElement(
 	                    'button',
 	                    { onClick: this.login.bind(this) },
@@ -31759,7 +31764,7 @@
 	            }, {
 	                method: 'PATCH',
 	                body: {
-	                    data: { gender: gender }
+	                    data: JSON.stringify({ data: gender })
 	                }
 	            });
 	        }
@@ -31774,22 +31779,30 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(
-	                    'select',
-	                    { value: gender, onChange: function onChange(e) {
+	                    'div',
+	                    null,
+	                    _react2.default.createElement('input', { checked: gender === 'Male', id: 'male', type: 'radio', onChange: function onChange(e) {
 	                            return _this4.changeGender(e.target.value);
-	                        } },
+	                        }, value: 'Male', name: 'gender' }),
 	                    _react2.default.createElement(
-	                        'option',
-	                        { value: 'Male' },
+	                        'label',
+	                        { htmlFor: 'male' },
 	                        'Male'
-	                    ),
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement('input', { checked: gender === 'Female', id: 'female', type: 'radio', onChange: function onChange(e) {
+	                            return _this4.changeGender(e.target.value);
+	                        }, value: 'Female', name: 'gender' }),
 	                    _react2.default.createElement(
-	                        'option',
-	                        { value: 'Female' },
+	                        'label',
+	                        { htmlFor: 'female' },
 	                        'Female'
 	                    )
 	                ),
-	                _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', editor: Item })
+	                _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, editor: Item })
 	            );
 	        }
 	    }]);
