@@ -31646,17 +31646,29 @@
 	var Person = function (_Editor) {
 	    _inherits(Person, _Editor);
 	
-	    function Person(props) {
+	    function Person() {
+	        var _ref;
+	
+	        var _temp, _this, _ret;
+	
 	        _classCallCheck(this, Person);
 	
-	        return _possibleConstructorReturn(this, (Person.__proto__ || Object.getPrototypeOf(Person)).call(this, props));
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+	
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Person.__proto__ || Object.getPrototypeOf(Person)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	            changedGender: false
+	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
 	    _createClass(Person, [{
 	        key: 'changeGender',
 	        value: function changeGender(gender) {
+	            this.setState({ changedGender: true });
 	            this.set(function (person) {
 	                person.gender = gender;
+	                delete person.items;
 	                return person;
 	            }, {
 	                method: 'PATCH',
@@ -31697,7 +31709,7 @@
 	                        'Female'
 	                    )
 	                ),
-	                _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, editor: _item2.default })
+	                this.state.changeGender ? _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, editor: _item2.default }) : 'Proccessing new gender'
 	            );
 	        }
 	    }]);

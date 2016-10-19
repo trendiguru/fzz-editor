@@ -4,13 +4,15 @@ import Collection from './collection';
 import Item from './item';
 
 export default class Person extends Editor {
-    constructor (props) {
-        super(props);
+    state = {
+        changedGender: false
     }
     changeGender (gender) {
+        this.setState({changedGender: true});
         this.set(
             person => {
                 person.gender = gender;
+                delete person.items;
                 return person;
             },
             {
@@ -30,7 +32,11 @@ export default class Person extends Editor {
                 <input checked={gender === 'Female'} id="female" type="radio" onChange={e => this.changeGender(e.target.value)} value="Female" name="gender" />
                 <label htmlFor="female">Female</label>
             </div>
-            <Collection source={this.props} query="items" title="category" addable={true} editor={Item} />
+            {
+                this.state.changeGender
+                ? <Collection source={this.props} query="items" title="category" addable={true} editor={Item} />
+                : 'Proccessing new gender'
+            }
         </div>;
     }
 }
