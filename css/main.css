@@ -201,7 +201,8 @@ div[data-reactroot] > .list {
     padding: .5em;
     font-size: 1.2em;
     display: block;
-    margin: 0 auto .5em; }
+    margin: 0 auto .5em;
+    border-bottom: 1px solid black; }
   #login button {
     width: 100%;
     padding: 1em 0;
