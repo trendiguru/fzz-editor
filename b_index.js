@@ -31709,7 +31709,7 @@
 	                        'Female'
 	                    )
 	                ),
-	                this.state.changeGender ? _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, editor: _item2.default }) : 'Proccessing new gender'
+	                this.state.changedGender ? 'Proccessing new gender' : _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, editor: _item2.default })
 	            );
 	        }
 	    }]);

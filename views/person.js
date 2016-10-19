@@ -33,9 +33,9 @@ export default class Person extends Editor {
                 <label htmlFor="female">Female</label>
             </div>
             {
-                this.state.changeGender
-                ? <Collection source={this.props} query="items" title="category" addable={true} editor={Item} />
-                : 'Proccessing new gender'
+                this.state.changedGender
+                ? 'Proccessing new gender'
+                : <Collection source={this.props} query="items" title="category" addable={true} editor={Item} />
             }
         </div>;
     }
