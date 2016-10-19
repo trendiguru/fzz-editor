@@ -12,7 +12,7 @@ export default class Results extends Editor {
             () => results,
             {
                 method: 'PUT',
-                body: JSON.stringify(results)
+                body: JSON.stringify({data: results})
             }
         );
     }
