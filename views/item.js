@@ -20,26 +20,28 @@ export default class Item extends Editor {
     get tiles () {
         let {props: {similar_results}, state: {selected}} = this;
         if (selected) {
-            return [
+            return <div className="list-item">
                 <div>
                     <div>{selected}</div>
                     <aside>
-                        <button onClick={this.unselect.bind(this)}>
+                        <button onClick={::this.unselect}>
                             <MDIcon>keyboard_arrow_up</MDIcon>
                         </button>
                     </aside>
-                </div>,
+                </div>
                 <Results origin={similar_results[selected]} />
-            ];
+            </div>;
         }
         return Object.keys(similar_results).map((collection) =>
-            <div key={collection} onClick={this.select.bind(this, collection)}>
-                {collection}
-                <aside>
-                    <button onClick={this.select.bind(this)}>
-                        <MDIcon>edit</MDIcon>
-                    </button>
-                </aside>
+            <div className="list-item" key={collection} onClick={this.select.bind(this, collection)}>
+                <div>
+                    {collection}
+                    <aside>
+                        <button onClick={::this.select}>
+                            <MDIcon>edit</MDIcon>
+                        </button>
+                    </aside>
+                </div>
             </div>
         );
     }

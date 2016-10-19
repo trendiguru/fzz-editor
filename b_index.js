@@ -29990,14 +29990,7 @@
 	exports.arrayToObject = arrayToObject;
 	function parseImage(image) {
 	    image.people = arrayToObject(image.people.map(function (person) {
-	        person.items = arrayToObject(person.items.map(function (item) {
-	            var similar_results = item.similar_results;
-	
-	            for (var collectionName in similar_results) {
-	                similar_results[collectionName] = arrayToObject(similar_results[collectionName], 'id');
-	            }
-	            return item;
-	        }), 'category');
+	        person.items = arrayToObject(person.items, 'category');
 	        return person;
 	    }), '_id');
 	    return image;
@@ -38461,44 +38454,53 @@
 	            var selected = this.state.selected;
 	
 	            if (selected) {
-	                return [_react2.default.createElement(
+	                return _react2.default.createElement(
 	                    'div',
-	                    null,
+	                    { className: 'list-item' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
-	                        selected
-	                    ),
-	                    _react2.default.createElement(
-	                        'aside',
-	                        null,
 	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: this.unselect.bind(this) },
+	                            'div',
+	                            null,
+	                            selected
+	                        ),
+	                        _react2.default.createElement(
+	                            'aside',
+	                            null,
 	                            _react2.default.createElement(
-	                                _mdIcon2.default,
-	                                null,
-	                                'keyboard_arrow_up'
+	                                'button',
+	                                { onClick: this.unselect.bind(this) },
+	                                _react2.default.createElement(
+	                                    _mdIcon2.default,
+	                                    null,
+	                                    'keyboard_arrow_up'
+	                                )
 	                            )
 	                        )
-	                    )
-	                ), _react2.default.createElement(_results2.default, { origin: similar_results[selected] })];
+	                    ),
+	                    _react2.default.createElement(_results2.default, { origin: similar_results[selected] })
+	                );
 	            }
 	            return Object.keys(similar_results).map(function (collection) {
 	                return _react2.default.createElement(
 	                    'div',
-	                    { key: collection, onClick: _this2.select.bind(_this2, collection) },
-	                    collection,
+	                    { className: 'list-item', key: collection, onClick: _this2.select.bind(_this2, collection) },
 	                    _react2.default.createElement(
-	                        'aside',
+	                        'div',
 	                        null,
+	                        collection,
 	                        _react2.default.createElement(
-	                            'button',
-	                            { onClick: _this2.select.bind(_this2) },
+	                            'aside',
+	                            null,
 	                            _react2.default.createElement(
-	                                _mdIcon2.default,
-	                                null,
-	                                'edit'
+	                                'button',
+	                                { onClick: _this2.select.bind(_this2) },
+	                                _react2.default.createElement(
+	                                    _mdIcon2.default,
+	                                    null,
+	                                    'edit'
+	                                )
 	                            )
 	                        )
 	                    )
@@ -38563,8 +38565,6 @@
 	});
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -38640,18 +38640,11 @@
 	
 	            var results = this.props.origin;
 	
-	            var result_entries = Object.entries(results);
 	            return _react2.default.createElement(_reactDraggableList2.default, {
-	                list: result_entries.map(function (_ref2, i) {
-	                    var _ref3 = _slicedToArray(_ref2, 2);
-	
-	                    var id = _ref3[0];
-	                    var result = _ref3[1];
-	                    return Object.assign({}, result, { id: id, index: i });
-	                }),
+	                list: results,
 	                itemKey: 'id',
 	                template: function template(props) {
-	                    return _react2.default.createElement(_result2.default, _extends({}, props, { remove: _this2.remove.bind(_this2, props.item.id), origin: props.item }));
+	                    return _react2.default.createElement(_result2.default, _extends({}, props, { remove: _this2.remove.bind(_this2), origin: props.item }));
 	                },
 	                onMoveEnd: this.update.bind(this)
 	            });

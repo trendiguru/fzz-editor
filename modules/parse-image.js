@@ -1,16 +1,7 @@
 export default function parseImage (image) {
     image.people = arrayToObject(
         image.people.map(person => {
-            person.items = arrayToObject(
-                person.items.map(item => {
-                    let {similar_results} = item;
-                    for (let collectionName in similar_results) {
-                        similar_results[collectionName] = arrayToObject(similar_results[collectionName], 'id');
-                    }
-                    return item;
-                }),
-                'category'
-            );
+            person.items = arrayToObject(person.items, 'category');
             return person;
         }),
         '_id'

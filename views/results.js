@@ -28,11 +28,10 @@ export default class Results extends Editor {
     }
     render () {
         let {props: {origin: results}} = this;
-        let result_entries = Object.entries(results);
         return <DraggableList
-            list={result_entries.map(([id, result], i) => Object.assign({}, result, {id, index: i}))}
+            list={results}
             itemKey="id"
-            template={(props) => <Result {...props} remove={this.remove.bind(this, props.item.id)} origin={props.item} />}
+            template={(props) => <Result {...props} remove={::this.remove} origin={props.item} />}
             onMoveEnd={::this.update}
         />;
     }
