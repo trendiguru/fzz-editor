@@ -31659,7 +31659,7 @@
 	                person.gender = gender;
 	                return person;
 	            }, {
-	                method: 'PUT',
+	                method: 'PATCH',
 	                body: JSON.stringify({ data: gender })
 	            });
 	        }
@@ -38475,9 +38475,9 @@
 	                item[collection] = list;
 	                return item;
 	            }, {
-	                method: 'PATCH',
+	                method: 'PUT',
 	                body: JSON.stringify({
-	                    data: { list: list }
+	                    data: list
 	                })
 	            });
 	        }

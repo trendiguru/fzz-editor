@@ -34,9 +34,9 @@ export default class Item extends Editor {
                 return item;
             },
             {
-                method: 'PATCH',
+                method: 'PUT',
                 body: JSON.stringify({
-                    data: {list}
+                    data: list
                 })
             }
         );
