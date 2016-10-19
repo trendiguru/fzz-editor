@@ -11,7 +11,7 @@ export default React.createClass({
     },
     render () {
         let {props: {item: result, dragHandle, remove}} = this;
-        return dragHandle(<div className="list-item" key={result.id} style={{
+        return <div className="list-item" key={result.id} style={{
             margin: '0',
             width: '24em',
             height: '12em',
@@ -20,20 +20,12 @@ export default React.createClass({
         }}>
             <div style={{width: '100%', height: '100%'}}>
                 <aside>
-                    <button style={{position: 'relative', zIndex: 1000}} onClick={(e) => {
-                        block(e);
-                        remove(result.id);
-                    }}>
+                    <button style={{position: 'relative', zIndex: 1000}} onClick={remove.bind(result.id)}>
                         <MDIcon>delete</MDIcon>
                     </button>
                 </aside>
-                <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
+                {dragHandle(<div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />)}
             </div>
-        </div>);
+        </div>;
     }
 });
-
-function block (e) {
-    e.preventDefault();
-    e.stopPropagation();
-}

@@ -9,7 +9,7 @@ div[data-reactroot] {
                 display: inline-block;
                 cursor: auto;
 
-                img {
+                & > img {
                     width: auto;
                     max-width: 30em;
                     max-height: 30em;

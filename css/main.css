@@ -140,7 +140,7 @@ div[data-reactroot] > .list {
     div[data-reactroot] > .list.selected > .list-item > *:first-child {
       display: inline-block;
       cursor: auto; }
-      div[data-reactroot] > .list.selected > .list-item > *:first-child img {
+      div[data-reactroot] > .list.selected > .list-item > *:first-child > img {
         width: auto;
         max-width: 30em;
         max-height: 30em; }

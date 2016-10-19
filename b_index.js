@@ -44337,7 +44337,7 @@
 	        var dragHandle = _props.dragHandle;
 	        var remove = _props.remove;
 	
-	        return dragHandle(_react2.default.createElement(
+	        return _react2.default.createElement(
 	            'div',
 	            { className: 'list-item', key: result.id, style: {
 	                    margin: '0',
@@ -44354,10 +44354,7 @@
 	                    null,
 	                    _react2.default.createElement(
 	                        'button',
-	                        { style: { position: 'relative', zIndex: 1000 }, onClick: function onClick(e) {
-	                                block(e);
-	                                remove(result.id);
-	                            } },
+	                        { style: { position: 'relative', zIndex: 1000 }, onClick: remove.bind(result.id) },
 	                        _react2.default.createElement(
 	                            _mdIcon2.default,
 	                            null,
@@ -44365,17 +44362,11 @@
 	                        )
 	                    )
 	                ),
-	                _react2.default.createElement('div', { className: 'img', style: { backgroundImage: 'url(' + result.images.XLarge + ')' } })
+	                dragHandle(_react2.default.createElement('div', { className: 'img', style: { backgroundImage: 'url(' + result.images.XLarge + ')' } }))
 	            )
-	        ));
+	        );
 	    }
 	});
-	
-	
-	function block(e) {
-	    e.preventDefault();
-	    e.stopPropagation();
-	}
 
 /***/ },
 /* 685 */
