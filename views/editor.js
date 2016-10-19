@@ -21,12 +21,12 @@ export default class Editor extends Component {
             origin: PropTypes.object.isRequired
         };
     }
-    set (transform, fetchSettings, callback) {
+    set (transform, fetchSettings, additionalKeys = [], callback) {
         fetch([API_URL, ...this.path].join('/'), Object.assign(fetchSettings, {
             credentials: 'include'
         }));
         return this.context.setImages(images => {
-            jp.apply(images, jp.stringify(['$'].concat(this.path)), transform);
+            jp.apply(images, jp.stringify(['$'].concat(this.path, additionalKeys)), transform);
             return images;
         }, callback);
     }
