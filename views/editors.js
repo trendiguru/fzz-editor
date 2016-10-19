@@ -100,7 +100,7 @@ export class Person extends Editor {
             {
                 method: 'PATCH',
                 body: {
-                    data: {gender}
+                    data: JSON.stringify({data: gender})
                 }
             }
         );
@@ -108,11 +108,15 @@ export class Person extends Editor {
     render () {
         let {gender} = this.props;
         return <div>
-            <select value={gender} onChange={e => this.changeGender(e.target.value)}>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select>
-            <Collection source={this.props} query="items" title="category" editor={Item} />
+            <div>
+                <input checked={gender === 'Male'} id="male" type="radio" onChange={e => this.changeGender(e.target.value)} value="Male" name="gender" />
+                <label htmlFor="male">Male</label>
+            </div>
+            <div>
+                <input checked={gender === 'Female'} id="female" type="radio" onChange={e => this.changeGender(e.target.value)} value="Female" name="gender" />
+                <label htmlFor="female">Female</label>
+            </div>
+            <Collection source={this.props} query="items" title="category" addable={true} editor={Item} />
         </div>;
     }
 }

@@ -1,8 +1,7 @@
 header {
     width: 100%;
-    position: fixed;
+    position: absolute;
     top: 0;
-    z-index: 10000;
     #search {
         @include card (3);
         width: calc(100% - 2em);
@@ -10,7 +9,12 @@ header {
         padding: .5em 1em;
         font-size: 1.2em;
         display: block;
-        margin: 2em auto;
+        top: 2em;
+        left: 0;
+        right: 0;
+        margin: auto;
+        position: fixed;
+        z-index: 10000;
     }
 
 }
