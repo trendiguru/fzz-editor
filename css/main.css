@@ -99,8 +99,6 @@ header {
         margin: .5em .5em 0 0; }
         .list .list-item > *:first-child aside button:hover, .list .list-item > *:first-child aside button:focus {
           box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24); }
-  .list .list-item .react-grid-layout *:first-child {
-    display: flex; }
   .list .list-item.editor {
     display: block;
     background: none; }
@@ -112,24 +110,23 @@ header {
     background-repeat: no-repeat;
     position: absolute; }
 
-.collection-item-enter {
-  max-width: 0;
-  max-height: 0;
-  opacity: 0;
-  transform: translateY(4em); }
-  .collection-item-enter-active {
-    max-height: 9999px;
-    max-width: 9999px;
-    opacity: 1;
-    transform: translateY(0em);
-    transition: all .4s; }
-
-.collection-item-leave {
+.collection-item {
   max-height: 9999px;
   max-width: 9999px;
   opacity: 1;
   transform: translateY(0em); }
-  .collection-item-leave-active {
+  .collection-item-enter {
+    max-width: 0;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(4em); }
+    .collection-item-enter-active {
+      max-height: 9999px;
+      max-width: 9999px;
+      opacity: 1;
+      transform: translateY(0em);
+      transition: all .4s; }
+  .collection-item-leave {
     max-width: 0;
     max-height: 0;
     opacity: 0;
@@ -137,18 +134,27 @@ header {
     transition: all .4s; }
 
 div[data-reactroot] > .list {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: calc(100% - 22em); }
-  div[data-reactroot] > .list > .list-item {
-    min-height: 0;
-    margin: 0 1em 1em 0; }
-    div[data-reactroot] > .list > .list-item > div {
-      overflow: hidden;
-      margin: auto; }
-      div[data-reactroot] > .list > .list-item > div > img {
+  column-count: 3; }
+  div[data-reactroot] > .list.selected {
+    column-count: 1; }
+    div[data-reactroot] > .list.selected > .list-item > *:first-child {
+      display: inline-block;
+      cursor: auto; }
+      div[data-reactroot] > .list.selected > .list-item > *:first-child img {
+        width: auto;
         max-width: 30em;
         max-height: 30em; }
+    div[data-reactroot] > .list.selected > .list-item:not(.selected) {
+      display: none; }
+  div[data-reactroot] > .list > .list-item {
+    width: 100%;
+    min-height: 0;
+    margin: 0 1em 1em 0;
+    display: block; }
+    div[data-reactroot] > .list > .list-item > div {
+      display: block; }
+      div[data-reactroot] > .list > .list-item > div > img {
+        width: 100%; }
 
 #reference {
   max-width: 20em;

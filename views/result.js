@@ -20,10 +20,12 @@ export default React.createClass({
         }}>
             <div style={{width: '100%', height: '100%'}}>
                 <aside>
-                    <button onClick={(e) => {
+                    <button style={{position: 'relative', zIndex: 1000}} onClick={(e) => {
                         block(e);
                         remove(result.id);
-                    }}><MDIcon>delete</MDIcon></button>
+                    }}>
+                        <MDIcon>delete</MDIcon>
+                    </button>
                 </aside>
                 <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
             </div>

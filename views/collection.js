@@ -40,7 +40,7 @@ export default class Collection extends Component {
             return images;
         });
     }
-    render () {
+    get tiles () {
         let {
             state: {selected},
             props: {
@@ -51,11 +51,10 @@ export default class Collection extends Component {
                 template = (node) => <div>{node[title]}</div>,
             }
         } = this;
-        let nodes;
-        if (selected !== undefined) {
+        if (selected) {
             let selectedNode = source[query][selected];
-            nodes = [
-                <div className="list-item" key={selected}>
+            return [
+                <div className="list-item selected" key={selected}>
                     <div>
                         {template.call(this, selectedNode)}
                         <aside>
@@ -70,31 +69,36 @@ export default class Collection extends Component {
                 </div>
             ];
         }
-        else {
-            nodes = Object.entries(source[query]).reverse().map(([key, node]) => {
-                let remove = <button onClick={this.remove.bind(this, key)}>
-                        <MDIcon>delete</MDIcon>
-                    </button>;
-                let edit;
-                if (editable || editable === undefined) {
-                    edit = <button onClick={this.select.bind(this, key)}>
-                        <MDIcon>edit</MDIcon>
-                    </button>;
-                }
-                return <div className="list-item" key={key}>
-                    <div>
-                        {template.call(this, node)}
-                        <aside>{edit}{remove}</aside>
-                    </div>
-                </div>;
-            });
-        }
+        return Object.entries(source[query])
+        .reverse()
+        .map(([key, node]) => {
+            let edit;
+            if (editable || editable === undefined) {
+                edit = <button onClick={this.select.bind(this, key)}>
+                    <MDIcon>edit</MDIcon>
+                </button>;
+            }
+            return <div className="list-item" key={key}>
+                <div>
+                    {template.call(this, node, key, this)}
+                    <aside>
+                        {edit}
+                        <button onClick={this.remove.bind(this, key)}>
+                            <MDIcon>delete</MDIcon>
+                        </button>
+                    </aside>
+                </div>
+            </div>;
+        });
+    }
+    render () {
+        let {state: {selected}} = this;
         return <ReactCSSTransitionGroup
             component="div"
-            className="list"
+            className={selected ? 'selected list' : 'list'}
             transitionName="collection-item"
             transitionEnterTimeout={400}
             transitionLeaveTimeout={400}
-        >{nodes}</ReactCSSTransitionGroup>;
+        >{this.tiles}</ReactCSSTransitionGroup>;
     }
 }

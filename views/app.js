@@ -86,7 +86,15 @@ export default class App extends Component {
             <header>
                 <Search />
             </header>
-            <Collection ref="collection" source={state} query="images" editor={Image} template={node => <img src={node.image_urls[0]} />} />
+            <Collection
+                ref="collection"
+                source={state}
+                query="images"
+                editor={Image}
+                template={function (node, key, collection) {
+                    return <img onClick={() => collection.select(key)} src={node.image_urls[0]} />;
+                }}
+            />
         </div>;
     }
 }

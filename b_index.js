@@ -29892,9 +29892,17 @@
 	                    null,
 	                    _react2.default.createElement(_search2.default, null)
 	                ),
-	                _react2.default.createElement(_collection2.default, { ref: 'collection', source: state, query: 'images', editor: _image2.default, template: function template(node) {
-	                        return _react2.default.createElement('img', { src: node.image_urls[0] });
-	                    } })
+	                _react2.default.createElement(_collection2.default, {
+	                    ref: 'collection',
+	                    source: state,
+	                    query: 'images',
+	                    editor: _image2.default,
+	                    template: function template(node, key, collection) {
+	                        return _react2.default.createElement('img', { onClick: function onClick() {
+	                                return collection.select(key);
+	                            }, src: node.image_urls[0] });
+	                    }
+	                })
 	            );
 	        }
 	    }, {
@@ -30357,6 +30365,23 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var selected = this.state.selected;
+	
+	            return _react2.default.createElement(
+	                _reactAddonsCssTransitionGroup2.default,
+	                {
+	                    component: 'div',
+	                    className: selected ? 'selected list' : 'list',
+	                    transitionName: 'collection-item',
+	                    transitionEnterTimeout: 400,
+	                    transitionLeaveTimeout: 400
+	                },
+	                this.tiles
+	            );
+	        }
+	    }, {
+	        key: 'tiles',
+	        get: function get() {
 	            var _this3 = this;
 	
 	            var selected = this.state.selected;
@@ -30374,12 +30399,11 @@
 	                );
 	            } : _props$template;
 	
-	            var nodes = void 0;
-	            if (selected !== undefined) {
+	            if (selected) {
 	                var selectedNode = source[query][selected];
-	                nodes = [_react2.default.createElement(
+	                return [_react2.default.createElement(
 	                    'div',
-	                    { className: 'list-item', key: selected },
+	                    { className: 'list-item selected', key: selected },
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
@@ -30402,62 +30426,49 @@
 	                        origin: selectedNode
 	                    }))
 	                )];
-	            } else {
-	                nodes = Object.entries(source[query]).reverse().map(function (_ref2) {
-	                    var _ref3 = _slicedToArray(_ref2, 2);
+	            }
+	            return Object.entries(source[query]).reverse().map(function (_ref2) {
+	                var _ref3 = _slicedToArray(_ref2, 2);
 	
-	                    var key = _ref3[0];
-	                    var node = _ref3[1];
+	                var key = _ref3[0];
+	                var node = _ref3[1];
 	
-	                    var remove = _react2.default.createElement(
+	                var edit = void 0;
+	                if (editable || editable === undefined) {
+	                    edit = _react2.default.createElement(
 	                        'button',
-	                        { onClick: _this3.remove.bind(_this3, key) },
+	                        { onClick: _this3.select.bind(_this3, key) },
 	                        _react2.default.createElement(
 	                            _mdIcon2.default,
 	                            null,
-	                            'delete'
+	                            'edit'
 	                        )
 	                    );
-	                    var edit = void 0;
-	                    if (editable || editable === undefined) {
-	                        edit = _react2.default.createElement(
-	                            'button',
-	                            { onClick: _this3.select.bind(_this3, key) },
-	                            _react2.default.createElement(
-	                                _mdIcon2.default,
-	                                null,
-	                                'edit'
-	                            )
-	                        );
-	                    }
-	                    return _react2.default.createElement(
+	                }
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'list-item', key: key },
+	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'list-item', key: key },
+	                        null,
+	                        template.call(_this3, node, key, _this3),
 	                        _react2.default.createElement(
-	                            'div',
+	                            'aside',
 	                            null,
-	                            template.call(_this3, node),
+	                            edit,
 	                            _react2.default.createElement(
-	                                'aside',
-	                                null,
-	                                edit,
-	                                remove
+	                                'button',
+	                                { onClick: _this3.remove.bind(_this3, key) },
+	                                _react2.default.createElement(
+	                                    _mdIcon2.default,
+	                                    null,
+	                                    'delete'
+	                                )
 	                            )
 	                        )
-	                    );
-	                });
-	            }
-	            return _react2.default.createElement(
-	                _reactAddonsCssTransitionGroup2.default,
-	                {
-	                    component: 'div',
-	                    className: 'list',
-	                    transitionName: 'collection-item',
-	                    transitionEnterTimeout: 400,
-	                    transitionLeaveTimeout: 400
-	                },
-	                nodes
-	            );
+	                    )
+	                );
+	            });
 	        }
 	    }]);
 	
@@ -44343,7 +44354,7 @@
 	                    null,
 	                    _react2.default.createElement(
 	                        'button',
-	                        { onClick: function onClick(e) {
+	                        { style: { position: 'relative', zIndex: 1000 }, onClick: function onClick(e) {
 	                                block(e);
 	                                remove(result.id);
 	                            } },

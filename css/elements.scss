@@ -1,20 +1,37 @@
 div[data-reactroot] {
     & > .list {
-        display: flex;
-        flex-wrap: wrap;
-        max-width: calc(100% - 22em);
+        column-count: 3;
 
-        & > .list-item {
-            min-height: 0;
-            margin: 0 1em 1em 0;
+        &.selected {
+            column-count: 1;
 
-            & > div {
-                overflow: hidden;
-                margin: auto;
+            & > .list-item > *:first-child {
+                display: inline-block;
+                cursor: auto;
 
-                & > img {
+                img {
+                    width: auto;
                     max-width: 30em;
                     max-height: 30em;
+                }
+            }
+
+            & > .list-item:not(.selected) {
+                display: none;
+            }
+        }
+
+        & > .list-item {
+            width: 100%;
+            min-height: 0;
+            margin: 0 1em 1em 0;
+            display: block;
+
+            & > div {
+                display: block;
+
+                & > img {
+                    width: 100%;
                 }
             }
         }
