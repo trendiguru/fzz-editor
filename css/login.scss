@@ -21,7 +21,10 @@
         }
         display: block;
         margin: 0 auto .5em;
-        border-bottom: 1px solid black;
+        border-bottom: 2px solid black;
+        &:focus {
+            border-bottom-size: 3px;
+        }
     }
     button {
         width: 100%;

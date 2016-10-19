@@ -33,6 +33,12 @@ export default class Login extends Component {
             body: JSON.stringify({email, password}),
             credentials: 'include'
         })
+        .then((res) => {
+            if (res.status >= 400 && res.status < 500) {
+                throw new Error(res.statusText);
+            }
+            return res;
+        })
         .then(() => onAuthenticate(true))
         .catch(() => this.setState({error: true}));
     }
@@ -44,8 +50,8 @@ export default class Login extends Component {
     render () {
         return <div id="login">
             <img src="/img/logo.svg" />
-            <input type="email" onChange={e => this.setState({email: e.target.value})} value={this.state.email} />
-            <input type="password" onChange={e => this.setState({password: e.target.value})} value={this.state.password} />
+            <input type="email" onChange={e => this.setState({email: e.target.value})} value={this.state.email} placeholder="email" />
+            <input type="password" onChange={e => this.setState({password: e.target.value})} value={this.state.password} placeholder="password" />
             <button onClick={this.login.bind(this)}>Login</button>
             {this.state.error ? 'The given username and password combination doesn\'t match' : ''}
         </div>;
