@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import Collection from './collection';
-import {Person} from './editors';
+import Person from './person';
 import Face from './face';
 
 export default class Image extends Component {
