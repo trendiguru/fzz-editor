@@ -31660,9 +31660,7 @@
 	                return person;
 	            }, {
 	                method: 'PATCH',
-	                body: {
-	                    data: JSON.stringify({ data: gender })
-	                }
+	                body: JSON.stringify({ data: gender })
 	            });
 	        }
 	    }, {
