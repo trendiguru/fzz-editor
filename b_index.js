@@ -44354,7 +44354,9 @@
 	                    null,
 	                    _react2.default.createElement(
 	                        'button',
-	                        { style: { position: 'relative', zIndex: 1000 }, onClick: remove.bind(result.id) },
+	                        { style: { position: 'relative', zIndex: 1000 }, onClick: function onClick() {
+	                                return remove(result.id);
+	                            } },
 	                        _react2.default.createElement(
 	                            _mdIcon2.default,
 	                            null,

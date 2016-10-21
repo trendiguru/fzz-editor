@@ -20,7 +20,7 @@ export default React.createClass({
         }}>
             <div style={{width: '100%', height: '100%'}}>
                 <aside>
-                    <button style={{position: 'relative', zIndex: 1000}} onClick={remove.bind(result.id)}>
+                    <button style={{position: 'relative', zIndex: 1000}} onClick={() => remove(result.id)}>
                         <MDIcon>delete</MDIcon>
                     </button>
                 </aside>
