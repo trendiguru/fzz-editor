@@ -31739,11 +31739,11 @@
 	            var additionalKeys = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 	            var callback = arguments[3];
 	
-	            fetch([_package.api].concat(_toConsumableArray(this.path)).join('/'), Object.assign(fetchSettings, {
+	            fetch([_package.api].concat(_toConsumableArray(this.path)).concat(additionalKeys).join('/'), Object.assign(fetchSettings, {
 	                credentials: 'include'
 	            }));
 	            return this.context.setImages(function (images) {
-	                jp.apply(images, jp.stringify(['$'].concat(_this2.path, additionalKeys)), transform);
+	                jp.apply(images, jp.stringify(['$'].concat(_this2.path)), transform);
 	                return images;
 	            }, callback);
 	        }

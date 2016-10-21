@@ -22,11 +22,11 @@ export default class Editor extends Component {
         };
     }
     set (transform, fetchSettings, additionalKeys = [], callback) {
-        fetch([API_URL, ...this.path].join('/'), Object.assign(fetchSettings, {
+        fetch([API_URL, ...this.path].concat(additionalKeys).join('/'), Object.assign(fetchSettings, {
             credentials: 'include'
         }));
         return this.context.setImages(images => {
-            jp.apply(images, jp.stringify(['$'].concat(this.path, additionalKeys)), transform);
+            jp.apply(images, jp.stringify(['$'].concat(this.path)), transform);
             return images;
         }, callback);
     }
