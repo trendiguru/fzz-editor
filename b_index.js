@@ -29763,7 +29763,8 @@
 	
 	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 	            user: undefined,
-	            images: {}
+	            images: {},
+	            selected: undefined
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
@@ -29775,7 +29776,7 @@
 	                setImages: this.setImages.bind(this),
 	                getImage: this.getImage.bind(this),
 	                getImageByURL: this.getImageByURL.bind(this),
-	                selectImage: this.selectImage
+	                selectImage: this.selectImage.bind(this)
 	            };
 	        }
 	    }, {
@@ -29872,12 +29873,19 @@
 	            });
 	        }
 	    }, {
+	        key: 'selectImage',
+	        value: function selectImage(selected) {
+	            this.setState({ selected: selected });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this6 = this;
 	
 	            var state = this.state;
-	            var user = this.state.user;
+	            var _state = this.state;
+	            var user = _state.user;
+	            var selected = _state.selected;
 	
 	            if (!user) {
 	                return _react2.default.createElement(_login2.default, { handshake: fzzFetch.bind(null, '?last=10'), onAuthenticate: function onAuthenticate(user) {
@@ -29896,6 +29904,7 @@
 	                    ref: 'collection',
 	                    source: state,
 	                    query: 'images',
+	                    selected: selected,
 	                    editor: _image2.default,
 	                    template: function template(node, key, collection) {
 	                        return _react2.default.createElement('img', { onClick: function onClick() {
@@ -29904,15 +29913,6 @@
 	                    }
 	                })
 	            );
-	        }
-	    }, {
-	        key: 'selectImage',
-	        get: function get() {
-	            var collection = this.refs.collection;
-	
-	            if (collection) {
-	                return collection.select.bind(collection);
-	            }
 	        }
 	    }]);
 	
@@ -30229,14 +30229,19 @@
 	    _inherits(Search, _Component);
 	
 	    function Search() {
+	        var _ref;
+	
+	        var _temp, _this, _ret;
+	
 	        _classCallCheck(this, Search);
 	
-	        var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).apply(this, arguments));
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
 	
-	        _this.state = {
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Search.__proto__ || Object.getPrototypeOf(Search)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 	            query: ''
-	        };
-	        return _this;
+	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
 	    _createClass(Search, [{
@@ -30247,6 +30252,7 @@
 	            var selectImage = _context.selectImage;
 	
 	            this.setState({ query: _query });
+	            selectImage('empty');
 	            getImageByURL(_query).then(function (image) {
 	                return selectImage(image.image_id);
 	            });
@@ -30256,23 +30262,24 @@
 	        value: function render() {
 	            var _this2 = this;
 	
-	            return _react2.default.createElement('input', { id: 'search', type: 'text', placeholder: 'Edit Image from URL', onChange: function onChange(e) {
+	            return _react2.default.createElement('input', {
+	                id: 'search',
+	                type: 'text',
+	                placeholder: 'Edit Image from URL',
+	                onChange: function onChange(e) {
 	                    return _this2.query(e.target.value);
-	                } });
-	        }
-	    }], [{
-	        key: 'contextTypes',
-	        get: function get() {
-	            return {
-	                getImageByURL: _react.PropTypes.func.isRequired,
-	                selectImage: _react.PropTypes.func
-	            };
+	                }
+	            });
 	        }
 	    }]);
 	
 	    return Search;
 	}(_react.Component);
 	
+	Search.contextTypes = {
+	    getImageByURL: _react.PropTypes.func.isRequired,
+	    selectImage: _react.PropTypes.func.isRequired
+	};
 	exports.default = Search;
 
 /***/ },
@@ -30380,11 +30387,16 @@
 	            );
 	        }
 	    }, {
+	        key: 'selected',
+	        get: function get() {
+	            return this.props.selected || this.state.selected;
+	        }
+	    }, {
 	        key: 'tiles',
 	        get: function get() {
 	            var _this3 = this;
 	
-	            var selected = this.state.selected;
+	            var selected = this.selected;
 	            var _props = this.props;
 	            var title = _props.title;
 	            var query = _props.query;
@@ -30485,7 +30497,8 @@
 	    title: _react.PropTypes.string,
 	    template: _react.PropTypes.func,
 	    editor: _react.PropTypes.func,
-	    editable: _react.PropTypes.bool
+	    editable: _react.PropTypes.bool,
+	    selected: _react.PropTypes.string
 	};
 	exports.default = Collection;
 
@@ -31502,23 +31515,32 @@
 	var Image = function (_Component) {
 	    _inherits(Image, _Component);
 	
-	    function Image(props) {
+	    function Image() {
 	        _classCallCheck(this, Image);
 	
-	        return _possibleConstructorReturn(this, (Image.__proto__ || Object.getPrototypeOf(Image)).call(this, props));
+	        return _possibleConstructorReturn(this, (Image.__proto__ || Object.getPrototypeOf(Image)).apply(this, arguments));
 	    }
 	
 	    _createClass(Image, [{
-	        key: 'componentWillMount',
-	        value: function componentWillMount() {
-	            return this.context.getImage(this.props);
-	        }
-	    }, {
 	        key: 'getChildContext',
 	        value: function getChildContext() {
 	            return {
 	                image: this.props
 	            };
+	        }
+	    }, {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            if (this.props.image_urls) {
+	                return this.context.getImage(this.props);
+	            }
+	        }
+	    }, {
+	        key: 'componentWillRecieveProps',
+	        value: function componentWillRecieveProps() {
+	            if (this.props.image_urls) {
+	                return this.context.getImage(this.props);
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -31546,7 +31568,7 @@
 	        key: 'propTypes',
 	        get: function get() {
 	            return {
-	                image_urls: _react.PropTypes.array.isRequired,
+	                image_urls: _react.PropTypes.array,
 	                element: _react.PropTypes.object
 	            };
 	        }

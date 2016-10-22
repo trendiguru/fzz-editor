@@ -15,7 +15,8 @@ export default class Collection extends Component {
         title: PropTypes.string,
         template: PropTypes.func,
         editor: PropTypes.func,
-        editable: PropTypes.bool
+        editable: PropTypes.bool,
+        selected: PropTypes.string
     }
     state = {
         selected: undefined,
@@ -40,9 +41,12 @@ export default class Collection extends Component {
             return images;
         });
     }
+    get selected () {
+        return this.props.selected || this.state.selected;
+    }
     get tiles () {
         let {
-            state: {selected},
+            selected,
             props: {
                 title,
                 query,

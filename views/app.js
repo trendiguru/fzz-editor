@@ -18,6 +18,7 @@ export default class App extends Component {
     state = {
         user: undefined,
         images: {},
+        selected: undefined
     }
     getChildContext () {
         return {
@@ -25,7 +26,7 @@ export default class App extends Component {
             setImages:      ::this.setImages,
             getImage:       ::this.getImage,
             getImageByURL:  ::this.getImageByURL,
-            selectImage:    this.selectImage
+            selectImage:    ::this.selectImage
         };
     }
     componentDidMount () {
@@ -71,14 +72,11 @@ export default class App extends Component {
             }
         });
     }
-    get selectImage () {
-        let {refs: {collection}} = this;
-        if (collection) {
-            return ::collection.select;
-        }
+    selectImage (selected) {
+        this.setState({selected});
     }
     render () {
-        let {state, state: {user}} = this;
+        let {state, state: {user, selected}} = this;
         if (!user) {
             return <Login handshake={fzzFetch.bind(null, '?last=10')} onAuthenticate={user => this.setState({user})} />;
         }
@@ -90,6 +88,7 @@ export default class App extends Component {
                 ref="collection"
                 source={state}
                 query="images"
+                selected={selected}
                 editor={Image}
                 template={function (node, key, collection) {
                     return <img onClick={() => collection.select(key)} src={node.image_urls[0]} />;

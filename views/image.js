@@ -4,15 +4,9 @@ import Person from './person';
 import Face from './face';
 
 export default class Image extends Component {
-    constructor (props) {
-        super(props);
-    }
-    componentWillMount () {
-        return this.context.getImage(this.props);
-    }
     static get propTypes () {
         return {
-            image_urls: PropTypes.array.isRequired,
+            image_urls: PropTypes.array,
             element: PropTypes.object
         };
     }
@@ -30,6 +24,16 @@ export default class Image extends Component {
         return {
             image: this.props
         };
+    }
+    componentWillMount () {
+        if (this.props.image_urls) {
+            return this.context.getImage(this.props);
+        }
+    }
+    componentWillRecieveProps () {
+        if (this.props.image_urls) {
+            return this.context.getImage(this.props);
+        }
     }
     render () {
         let {props: {image_urls, element}} = this;
