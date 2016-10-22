@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import ID from '../modules/id';
 
 export default class Search extends Component {
     state = {
@@ -7,13 +8,24 @@ export default class Search extends Component {
     static contextTypes = {
         getImageByURL:  PropTypes.func.isRequired,
         selectImage:    PropTypes.func.isRequired,
+        unselectImage:  PropTypes.func.isRequired,
+        setImages:      PropTypes.func.isRequired,
     }
     query (query) {
-        let {getImageByURL, selectImage} = this.context;
+        let {
+            context: {getImageByURL, selectImage, unselectImage, setImages}
+        } = this;
+        let id = ID();
+        if (!query.length) {
+            return unselectImage();
+        }
         this.setState({query});
-        selectImage('empty');
-        getImageByURL(query)
-        .then((image) => selectImage(image.image_id));
+        selectImage(id);
+        return getImageByURL(query)
+        .then((image) => selectImage(image.image_id))
+        .catch(() => setImages(images => Object.assign({}, images, {
+            [id]: null
+        })));
     }
     render () {
         return <input

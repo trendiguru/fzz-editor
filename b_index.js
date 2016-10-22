@@ -29776,7 +29776,8 @@
 	                setImages: this.setImages.bind(this),
 	                getImage: this.getImage.bind(this),
 	                getImageByURL: this.getImageByURL.bind(this),
-	                selectImage: this.selectImage.bind(this)
+	                selectImage: this.selectImage.bind(this),
+	                unselectImage: this.unselectImage.bind(this)
 	            };
 	        }
 	    }, {
@@ -29878,6 +29879,11 @@
 	            this.setState({ selected: selected });
 	        }
 	    }, {
+	        key: 'unselectImage',
+	        value: function unselectImage() {
+	            this.selectImage(undefined);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this6 = this;
@@ -29904,9 +29910,23 @@
 	                    ref: 'collection',
 	                    source: state,
 	                    query: 'images',
+	                    unselect: this.unselectImage.bind(this),
 	                    selected: selected,
 	                    editor: _image2.default,
 	                    template: function template(node, key, collection) {
+	                        if (node === undefined) {
+	                            return _react2.default.createElement(
+	                                'span',
+	                                null,
+	                                'LOADING'
+	                            );
+	                        } else if (node === null) {
+	                            return _react2.default.createElement(
+	                                'span',
+	                                null,
+	                                'NO DATA'
+	                            );
+	                        }
 	                        return _react2.default.createElement('img', { onClick: function onClick() {
 	                                return collection.select(key);
 	                            }, src: node.image_urls[0] });
@@ -29924,7 +29944,8 @@
 	    setImages: _react.PropTypes.func.isRequired,
 	    getImage: _react.PropTypes.func.isRequired,
 	    getImageByURL: _react.PropTypes.func.isRequired,
-	    selectImage: _react.PropTypes.func
+	    selectImage: _react.PropTypes.func.isRequired,
+	    unselectImage: _react.PropTypes.func.isRequired
 	};
 	exports.default = App;
 	
@@ -29935,6 +29956,11 @@
 	    return fetch(_package.api + url, Object.assign(settings, {
 	        credentials: 'include'
 	    })).then(function (res) {
+	        if (res.status > 400 && res.status < 500) {
+	            throw new Error(res.statusText);
+	        }
+	        return res;
+	    }).then(function (res) {
 	        return res.json();
 	    });
 	}
@@ -30217,7 +30243,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _id = __webpack_require__(686);
+	
+	var _id2 = _interopRequireDefault(_id);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -30250,11 +30282,21 @@
 	            var _context = this.context;
 	            var getImageByURL = _context.getImageByURL;
 	            var selectImage = _context.selectImage;
+	            var unselectImage = _context.unselectImage;
+	            var setImages = _context.setImages;
 	
+	            var id = (0, _id2.default)();
+	            if (!_query.length) {
+	                return unselectImage();
+	            }
 	            this.setState({ query: _query });
-	            selectImage('empty');
-	            getImageByURL(_query).then(function (image) {
+	            selectImage(id);
+	            return getImageByURL(_query).then(function (image) {
 	                return selectImage(image.image_id);
+	            }).catch(function () {
+	                return setImages(function (images) {
+	                    return Object.assign({}, images, _defineProperty({}, id, null));
+	                });
 	            });
 	        }
 	    }, {
@@ -30278,7 +30320,9 @@
 	
 	Search.contextTypes = {
 	    getImageByURL: _react.PropTypes.func.isRequired,
-	    selectImage: _react.PropTypes.func.isRequired
+	    selectImage: _react.PropTypes.func.isRequired,
+	    unselectImage: _react.PropTypes.func.isRequired,
+	    setImages: _react.PropTypes.func.isRequired
 	};
 	exports.default = Search;
 
@@ -30347,6 +30391,9 @@
 	        key: 'unselect',
 	        value: function unselect() {
 	            this.select(undefined);
+	            if (this.props.unselect) {
+	                this.props.unselect();
+	            }
 	        }
 	    }, {
 	        key: 'select',
@@ -30413,6 +30460,26 @@
 	
 	            if (selected) {
 	                var selectedNode = source[query][selected];
+	                if (!selectedNode) {
+	                    return _react2.default.createElement(
+	                        'div',
+	                        { className: 'list-item selected', key: selected },
+	                        template.call(this, selectedNode),
+	                        _react2.default.createElement(
+	                            'aside',
+	                            null,
+	                            _react2.default.createElement(
+	                                'button',
+	                                { onClick: this.unselect.bind(this) },
+	                                _react2.default.createElement(
+	                                    _mdIcon2.default,
+	                                    null,
+	                                    'keyboard_arrow_up'
+	                                )
+	                            )
+	                        )
+	                    );
+	                }
 	                return [_react2.default.createElement(
 	                    'div',
 	                    { className: 'list-item selected', key: selected },
@@ -30498,7 +30565,8 @@
 	    template: _react.PropTypes.func,
 	    editor: _react.PropTypes.func,
 	    editable: _react.PropTypes.bool,
-	    selected: _react.PropTypes.string
+	    selected: _react.PropTypes.string,
+	    unselect: _react.PropTypes.func
 	};
 	exports.default = Collection;
 
@@ -31536,8 +31604,8 @@
 	            }
 	        }
 	    }, {
-	        key: 'componentWillRecieveProps',
-	        value: function componentWillRecieveProps() {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps() {
 	            if (this.props.image_urls) {
 	                return this.context.getImage(this.props);
 	            }
@@ -44431,6 +44499,20 @@
 	    face: _react.PropTypes.array,
 	    image: _react.PropTypes.object
 	};
+
+/***/ },
+/* 686 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = ID;
+	function ID() {
+	    return Math.random().toString(36).slice(2);
+	}
 
 /***/ }
 /******/ ]);

@@ -13,7 +13,8 @@ export default class App extends Component {
         setImages:      PropTypes.func.isRequired,
         getImage:       PropTypes.func.isRequired,
         getImageByURL:  PropTypes.func.isRequired,
-        selectImage:    PropTypes.func
+        selectImage:    PropTypes.func.isRequired,
+        unselectImage:  PropTypes.func.isRequired
     }
     state = {
         user: undefined,
@@ -26,7 +27,8 @@ export default class App extends Component {
             setImages:      ::this.setImages,
             getImage:       ::this.getImage,
             getImageByURL:  ::this.getImageByURL,
-            selectImage:    ::this.selectImage
+            selectImage:    ::this.selectImage,
+            unselectImage:  ::this.unselectImage,
         };
     }
     componentDidMount () {
@@ -75,6 +77,9 @@ export default class App extends Component {
     selectImage (selected) {
         this.setState({selected});
     }
+    unselectImage () {
+        this.selectImage(undefined);
+    }
     render () {
         let {state, state: {user, selected}} = this;
         if (!user) {
@@ -88,9 +93,16 @@ export default class App extends Component {
                 ref="collection"
                 source={state}
                 query="images"
+                unselect={::this.unselectImage}
                 selected={selected}
                 editor={Image}
-                template={function (node, key, collection) {
+                template={(node, key, collection) => {
+                    if (node === undefined) {
+                        return <span>LOADING</span>;
+                    }
+                    else if (node === null) {
+                        return <span>NO DATA</span>;
+                    }
                     return <img onClick={() => collection.select(key)} src={node.image_urls[0]} />;
                 }}
             />
@@ -102,5 +114,11 @@ function fzzFetch (url, settings = {}) {
     return fetch(API_URL + url, Object.assign(settings, {
         credentials: 'include'
     }))
+    .then(res => {
+        if (res.status > 400 && res.status < 500) {
+            throw new Error(res.statusText);
+        }
+        return res;
+    })
     .then(res => res.json());
 }

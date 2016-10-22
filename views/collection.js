@@ -16,13 +16,17 @@ export default class Collection extends Component {
         template: PropTypes.func,
         editor: PropTypes.func,
         editable: PropTypes.bool,
-        selected: PropTypes.string
+        selected: PropTypes.string,
+        unselect: PropTypes.func
     }
     state = {
         selected: undefined,
     }
     unselect () {
         this.select(undefined);
+        if (this.props.unselect) {
+            this.props.unselect();
+        }
     }
     select (selected) {
         this.setState({selected});
@@ -57,6 +61,16 @@ export default class Collection extends Component {
         } = this;
         if (selected) {
             let selectedNode = source[query][selected];
+            if (!selectedNode) {
+                return <div className="list-item selected" key={selected}>
+                    {template.call(this, selectedNode)}
+                    <aside>
+                        <button onClick={this.unselect.bind(this)}>
+                            <MDIcon>keyboard_arrow_up</MDIcon>
+                        </button>
+                    </aside>
+                </div>;
+            }
             return [
                 <div className="list-item selected" key={selected}>
                     <div>

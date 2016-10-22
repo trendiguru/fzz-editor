@@ -30,7 +30,7 @@ export default class Image extends Component {
             return this.context.getImage(this.props);
         }
     }
-    componentWillRecieveProps () {
+    componentWillReceiveProps () {
         if (this.props.image_urls) {
             return this.context.getImage(this.props);
         }
