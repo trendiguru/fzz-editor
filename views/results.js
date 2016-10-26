@@ -11,11 +11,9 @@ const SortableList = SortableContainer(({items, remove}) => {
 
 export default class Results extends Editor {
     state = {
-        items: this.props.origin,
         selected: undefined
     }
     update (results) {
-        this.setState({items: results});
         this.set(
             () => results,
             {
@@ -25,11 +23,8 @@ export default class Results extends Editor {
         );
     }
     remove (id) {
-        let {state: {items}} = this;
-        this.setState({items: items.filter(result => result.id !== id)});
-        // id is not passed
         this.set(
-            () => this.state.items,
+            results => results.filter(result => result.id !== id),
             {
                 method: 'DELETE',
             },
@@ -40,6 +35,11 @@ export default class Results extends Editor {
         this.update(arrayMove(this.props.origin, oldIndex, newIndex));
     }
     render () {
-        return <SortableList useDragHandle={true} items={this.state.items} onSortEnd={::this.onSortEnd} remove={::this.remove} />;
+        return <SortableList
+            useDragHandle={true}
+            items={this.props.origin}
+            onSortEnd={::this.onSortEnd}
+            remove={::this.remove}
+        />;
     }
 }

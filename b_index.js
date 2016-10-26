@@ -38700,7 +38700,6 @@
 	        }
 	
 	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref2 = Results.__proto__ || Object.getPrototypeOf(Results)).call.apply(_ref2, [this].concat(args))), _this), _this.state = {
-	            items: _this.props.origin,
 	            selected: undefined
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
@@ -38708,7 +38707,6 @@
 	    _createClass(Results, [{
 	        key: 'update',
 	        value: function update(results) {
-	            this.setState({ items: results });
 	            this.set(function () {
 	                return results;
 	            }, {
@@ -38719,16 +38717,10 @@
 	    }, {
 	        key: 'remove',
 	        value: function remove(id) {
-	            var _this2 = this;
-	
-	            var items = this.state.items;
-	
-	            this.setState({ items: items.filter(function (result) {
+	            this.set(function (results) {
+	                return results.filter(function (result) {
 	                    return result.id !== id;
-	                }) });
-	            // id is not passed
-	            this.set(function () {
-	                return _this2.state.items;
+	                });
 	            }, {
 	                method: 'DELETE'
 	            }, id);
@@ -38744,7 +38736,12 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(SortableList, { useDragHandle: true, items: this.state.items, onSortEnd: this.onSortEnd.bind(this), remove: this.remove.bind(this) });
+	            return _react2.default.createElement(SortableList, {
+	                useDragHandle: true,
+	                items: this.props.origin,
+	                onSortEnd: this.onSortEnd.bind(this),
+	                remove: this.remove.bind(this)
+	            });
 	        }
 	    }]);
 	
