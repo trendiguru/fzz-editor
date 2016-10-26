@@ -31629,7 +31629,15 @@
 	            var _props = this.props;
 	            var image_urls = _props.image_urls;
 	            var element = _props.element;
+	            var people = _props.people;
 	
+	            if (!people) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    'LOADING'
+	                );
+	            }
 	            return _react2.default.createElement(
 	                'div',
 	                null,
