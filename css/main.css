@@ -57,12 +57,12 @@ header {
     header #search:hover, header #search:focus {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23); }
 
-.list .list-item {
+.list-item {
   margin: 1em; }
-  .list .list-item:only-child {
+  .list-item:only-child {
     width: 100%;
     margin: 1em 0; }
-  .list .list-item > *:first-child {
+  .list-item > *:first-child {
     padding: 0;
     overflow: hidden;
     background-color: #fff;
@@ -76,14 +76,14 @@ header {
     justify-content: center;
     position: relative;
     cursor: pointer; }
-    .list .list-item > *:first-child:hover, .list .list-item > *:first-child:focus {
+    .list-item > *:first-child:hover, .list-item > *:first-child:focus {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16); }
-    .list .list-item > *:first-child aside {
+    .list-item > *:first-child aside {
       position: absolute;
       top: 0;
       right: 0;
       z-index: 50; }
-      .list .list-item > *:first-child aside button {
+      .list-item > *:first-child aside button {
         padding: 0;
         overflow: hidden;
         background-color: #fff;
@@ -97,12 +97,12 @@ header {
         font-size: 1.25em;
         border-radius: 50%;
         margin: .5em .5em 0 0; }
-        .list .list-item > *:first-child aside button:hover, .list .list-item > *:first-child aside button:focus {
+        .list-item > *:first-child aside button:hover, .list-item > *:first-child aside button:focus {
           box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24); }
-  .list .list-item.editor {
+  .list-item.editor {
     display: block;
     background: none; }
-  .list .list-item .img {
+  .list-item .img {
     width: 100%;
     height: 100%;
     background-size: contain;

@@ -7,7 +7,8 @@ export default class Image extends Component {
     static get propTypes () {
         return {
             image_urls: PropTypes.array,
-            element: PropTypes.object
+            element: PropTypes.object,
+            people: PropTypes.object
         };
     }
     static get contextTypes () {
@@ -26,15 +27,15 @@ export default class Image extends Component {
         };
     }
     componentWillMount () {
-        if (this.props.image_urls) {
+        if (!this.props.people) {
             return this.context.getImage(this.props);
         }
     }
-    componentWillReceiveProps () {
-        if (this.props.image_urls) {
-            return this.context.getImage(this.props);
-        }
-    }
+    // componentWillReceiveProps () {
+    //     if (!this.props.people) {
+    //         return this.context.getImage(this.props);
+    //     }
+    // }
     render () {
         let {props: {image_urls, element}} = this;
         return <div>

@@ -31,8 +31,8 @@
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-draggable-list": "^3.0.4",
     "react-grid-layout": "^0.13.6",
+    "react-sortable-hoc": "^0.1.0",
     "web-core": "^0.0.4",
     "whatwg-fetch": "^1.0.0"
   }

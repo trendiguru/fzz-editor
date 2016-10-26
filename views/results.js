@@ -1,7 +1,11 @@
 import React from 'react';
-import DraggableList from 'react-draggable-list';
+import {SortableContainer, arrayMove} from 'react-sortable-hoc';
 import Editor from './editor';
 import Result from './result';
+
+const SortableList = SortableContainer(({items, remove}) => <div className="list">
+    {items.map((item, index) => <Result remove={remove} key={`item-${index}`} index={index} value={item} />)}
+</div>);
 
 export default class Results extends Editor {
     state = {
@@ -26,13 +30,11 @@ export default class Results extends Editor {
             id
         );
     }
+    onSortEnd ({oldIndex, newIndex}) {
+        this.update(arrayMove(this.props.origin, oldIndex, newIndex));
+    }
     render () {
         let {props: {origin: results}} = this;
-        return <DraggableList
-            list={results}
-            itemKey="id"
-            template={(props) => <Result {...props} remove={::this.remove} origin={props.item} />}
-            onMoveEnd={::this.update}
-        />;
+        return <SortableList items={results} onSortEnd={::this.onSortEnd} remove={::this.remove} />;
     }
 }
