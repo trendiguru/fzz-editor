@@ -31851,9 +31851,8 @@
 	            var additionalKeys = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 	            var callback = arguments[3];
 	
-	            fetch([_package.api].concat(_toConsumableArray(this.path)).concat(additionalKeys).join('/'), Object.assign(fetchSettings, {
-	                credentials: 'include'
-	            }));
+	            fetchSettings.credentials = 'include';
+	            fetch([_package.api].concat(_toConsumableArray(this.path)).concat(additionalKeys).join('/'), fetchSettings);
 	            return this.context.setImages(function (images) {
 	                jp.apply(images, jp.stringify(['$'].concat(_this2.path)), transform);
 	                return images;
@@ -38649,6 +38648,8 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _react = __webpack_require__(323);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -38674,11 +38675,12 @@
 	var SortableList = (0, _reactSortableHoc.SortableContainer)(function (_ref) {
 	    var items = _ref.items;
 	    var remove = _ref.remove;
+	
 	    return _react2.default.createElement(
 	        'div',
 	        { className: 'list' },
 	        items.map(function (item, index) {
-	            return _react2.default.createElement(_result2.default, { remove: remove, key: 'item-' + index, index: index, value: item });
+	            return _react2.default.createElement(_result2.default, _extends({ remove: remove, index: index }, { key: 'item-' + index, value: item }));
 	        })
 	    );
 	});
@@ -38698,6 +38700,7 @@
 	        }
 	
 	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref2 = Results.__proto__ || Object.getPrototypeOf(Results)).call.apply(_ref2, [this].concat(args))), _this), _this.state = {
+	            items: _this.props.origin,
 	            selected: undefined
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
@@ -38705,6 +38708,7 @@
 	    _createClass(Results, [{
 	        key: 'update',
 	        value: function update(results) {
+	            this.setState({ items: results });
 	            this.set(function () {
 	                return results;
 	            }, {
@@ -38715,11 +38719,16 @@
 	    }, {
 	        key: 'remove',
 	        value: function remove(id) {
-	            // id is not passed
-	            this.set(function (results) {
-	                return results.filter(function (result) {
+	            var _this2 = this;
+	
+	            var items = this.state.items;
+	
+	            this.setState({ items: items.filter(function (result) {
 	                    return result.id !== id;
-	                });
+	                }) });
+	            // id is not passed
+	            this.set(function () {
+	                return _this2.state.items;
 	            }, {
 	                method: 'DELETE'
 	            }, id);
@@ -38735,9 +38744,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var results = this.props.origin;
-	
-	            return _react2.default.createElement(SortableList, { items: results, onSortEnd: this.onSortEnd.bind(this), remove: this.remove.bind(this) });
+	            return _react2.default.createElement(SortableList, { items: this.state.items, onSortEnd: this.onSortEnd.bind(this), remove: this.remove.bind(this) });
 	        }
 	    }]);
 	
@@ -44422,7 +44429,6 @@
 	        'div',
 	        {
 	            className: 'list-item',
-	            key: result.id,
 	            style: {
 	                margin: '1em 0',
 	                width: '24em',

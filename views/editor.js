@@ -22,9 +22,8 @@ export default class Editor extends Component {
         };
     }
     set (transform, fetchSettings, additionalKeys = [], callback) {
-        fetch([API_URL, ...this.path].concat(additionalKeys).join('/'), Object.assign(fetchSettings, {
-            credentials: 'include'
-        }));
+        fetchSettings.credentials = 'include';
+        fetch([API_URL, ...this.path].concat(additionalKeys).join('/'), fetchSettings);
         return this.context.setImages(images => {
             jp.apply(images, jp.stringify(['$'].concat(this.path)), transform);
             return images;

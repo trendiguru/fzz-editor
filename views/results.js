@@ -3,15 +3,19 @@ import {SortableContainer, arrayMove} from 'react-sortable-hoc';
 import Editor from './editor';
 import Result from './result';
 
-const SortableList = SortableContainer(({items, remove}) => <div className="list">
-    {items.map((item, index) => <Result remove={remove} key={`item-${index}`} index={index} value={item} />)}
-</div>);
+const SortableList = SortableContainer(({items, remove}) => {
+    return <div className="list">{items.map((item, index) =>
+        <Result {...{remove, index}} key={`item-${index}`} value={item} />
+    )}</div>;
+});
 
 export default class Results extends Editor {
     state = {
+        items: this.props.origin,
         selected: undefined
     }
     update (results) {
+        this.setState({items: results});
         this.set(
             () => results,
             {
@@ -21,9 +25,11 @@ export default class Results extends Editor {
         );
     }
     remove (id) {
+        let {state: {items}} = this;
+        this.setState({items: items.filter(result => result.id !== id)});
         // id is not passed
         this.set(
-            results => results.filter(result => result.id !== id),
+            () => this.state.items,
             {
                 method: 'DELETE',
             },
@@ -34,7 +40,6 @@ export default class Results extends Editor {
         this.update(arrayMove(this.props.origin, oldIndex, newIndex));
     }
     render () {
-        let {props: {origin: results}} = this;
-        return <SortableList items={results} onSortEnd={::this.onSortEnd} remove={::this.remove} />;
+        return <SortableList items={this.state.items} onSortEnd={::this.onSortEnd} remove={::this.remove} />;
     }
 }

@@ -3,15 +3,14 @@ import MDIcon from './md-icon';
 import {SortableElement} from 'react-sortable-hoc';
 
 export default SortableElement(({value: result, remove}) => <div
-    className="list-item"
-    key={result.id}
-    style={{
-        margin: '1em 0',
-        width: '24em',
-        height: '12em',
-        display: 'block',
-        overflow: 'visible'
-    }}>
+className="list-item"
+style={{
+    margin: '1em 0',
+    width: '24em',
+    height: '12em',
+    display: 'block',
+    overflow: 'visible'
+}}>
     <div style={{width: '100%', height: '100%'}}>
        <aside>
            <button style={{position: 'relative', zIndex: 1000}} onClick={() => remove(result.id)}>
