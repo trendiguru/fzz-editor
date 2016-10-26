@@ -1,6 +1,8 @@
 import React from 'react';
 import MDIcon from './md-icon';
-import {SortableElement} from 'react-sortable-hoc';
+import {SortableElement, SortableHandle} from 'react-sortable-hoc';
+
+const DragHandle = SortableHandle(({children}) => children);
 
 export default SortableElement(({value: result, remove}) => <div
 className="list-item"
@@ -17,6 +19,8 @@ style={{
                <MDIcon>delete</MDIcon>
            </button>
        </aside>
-       <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
+       <DragHandle>
+           <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
+       </DragHandle>
    </div>
 </div>);

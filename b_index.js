@@ -38744,7 +38744,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(SortableList, { items: this.state.items, onSortEnd: this.onSortEnd.bind(this), remove: this.remove.bind(this) });
+	            return _react2.default.createElement(SortableList, { useDragHandle: true, items: this.state.items, onSortEnd: this.onSortEnd.bind(this), remove: this.remove.bind(this) });
 	        }
 	    }]);
 	
@@ -44422,9 +44422,14 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = (0, _reactSortableHoc.SortableElement)(function (_ref) {
-	    var result = _ref.value;
-	    var remove = _ref.remove;
+	var DragHandle = (0, _reactSortableHoc.SortableHandle)(function (_ref) {
+	    var children = _ref.children;
+	    return children;
+	});
+	
+	exports.default = (0, _reactSortableHoc.SortableElement)(function (_ref2) {
+	    var result = _ref2.value;
+	    var remove = _ref2.remove;
 	    return _react2.default.createElement(
 	        'div',
 	        {
@@ -44454,7 +44459,11 @@
 	                    )
 	                )
 	            ),
-	            _react2.default.createElement('div', { className: 'img', style: { backgroundImage: 'url(' + result.images.XLarge + ')' } })
+	            _react2.default.createElement(
+	                DragHandle,
+	                null,
+	                _react2.default.createElement('div', { className: 'img', style: { backgroundImage: 'url(' + result.images.XLarge + ')' } })
+	            )
 	        )
 	    );
 	});

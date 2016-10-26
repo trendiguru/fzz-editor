@@ -40,6 +40,6 @@ export default class Results extends Editor {
         this.update(arrayMove(this.props.origin, oldIndex, newIndex));
     }
     render () {
-        return <SortableList items={this.state.items} onSortEnd={::this.onSortEnd} remove={::this.remove} />;
+        return <SortableList useDragHandle={true} items={this.state.items} onSortEnd={::this.onSortEnd} remove={::this.remove} />;
     }
 }
