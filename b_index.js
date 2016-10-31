@@ -29737,6 +29737,10 @@
 	
 	var _image2 = _interopRequireDefault(_image);
 	
+	var _queryClass = __webpack_require__(664);
+	
+	var _queryClass2 = _interopRequireDefault(_queryClass);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -29843,6 +29847,7 @@
 	            var _this5 = this;
 	
 	            var number = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
+	            var known = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 	
 	            return fzzFetch('?last=' + number).then(function (_ref6) {
 	                var _ref6$data = _ref6.data;
@@ -29852,7 +29857,7 @@
 	                var _iteratorError = undefined;
 	
 	                try {
-	                    for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    for (var _iterator = data.slice(known)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                        var image = _step.value;
 	
 	                        _this5.setImage(image);
@@ -29906,6 +29911,14 @@
 	                    null,
 	                    _react2.default.createElement(_search2.default, null)
 	                ),
+	                _queryClass2.default.parse(location.search).mode === 'dev' ? _react2.default.createElement(
+	                    'button',
+	                    { onClick: function onClick() {
+	                            var image_number = Object.keys(_this6.state.images).length;
+	                            _this6.getLastImages(image_number + 10, image_number);
+	                        } },
+	                    'load more'
+	                ) : '',
 	                _react2.default.createElement(_collection2.default, {
 	                    ref: 'collection',
 	                    source: state,
@@ -30001,6 +30014,7 @@
 		"dependencies": {
 			"core-js": "^2.4.1",
 			"jsonpath": "^0.2.7",
+			"query-class": "^1.0.1",
 			"react": "^15.3.2",
 			"react-addons-css-transition-group": "^15.3.2",
 			"react-dom": "^15.3.2",
@@ -44504,6 +44518,44 @@
 	    face: _react.PropTypes.array,
 	    image: _react.PropTypes.object
 	};
+
+/***/ },
+/* 664 */
+/***/ function(module, exports) {
+
+	module.exports = class Query {
+	    /**
+	     * @param {object} query - key-value dictionary
+	     * @param {bool} prefix - add prefix or not
+	     * @returns {string} - query string
+	     */
+	    static stringify (query, prefix) {
+	        return (prefix ? '?' : '') +
+	        Object.keys(query)
+	        .reduce((result, name) =>
+	            result += `${name}=${encodeURIComponent(query[name])}&`,
+	            ''
+	        )
+	        .slice(0, -1);
+	    }
+	    /**
+	     * @param {string} string - url or just query string to parse into an object.
+	     * @returns {object} - query object
+	     */
+	    static parse (string) {
+	        let queryString = string.slice(string.indexOf('?') + 1);
+	        if (!queryString.length) {
+	            return {};
+	        }
+	        return queryString.split('&').reduce((query, entry) => {
+	            let [name, value] = entry.split('=');
+	            return Object.assign(query, {
+	                [name]: decodeURIComponent(value)
+	            });
+	        }, {});
+	    }
+	};
+
 
 /***/ }
 /******/ ]);

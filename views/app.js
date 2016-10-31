@@ -6,6 +6,7 @@ import Login from './login';
 import Search from './search';
 import Collection from './collection';
 import Image from './image';
+import Query from 'query-class';
 
 export default class App extends Component {
     static childContextTypes = {
@@ -66,10 +67,10 @@ export default class App extends Component {
             return image;
         });
     }
-    getLastImages (number = 10) {
+    getLastImages (number = 10, known = 0) {
         return fzzFetch(`?last=${number}`)
         .then(({data = []}) => {
-            for (let image of data) {
+            for (let image of data.slice(known)) {
                 this.setImage(image);
             }
         });
@@ -89,6 +90,10 @@ export default class App extends Component {
             <header>
                 <Search />
             </header>
+            {Query.parse(location.search).mode === 'dev' ? <button onClick={() => {
+                let image_number = Object.keys(this.state.images).length;
+                this.getLastImages(image_number + 10, image_number);
+            }}>load more</button> : ''}
             <Collection
                 ref="collection"
                 source={state}
