@@ -30376,6 +30376,8 @@
 	
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -30410,6 +30412,24 @@
 	            }
 	        }
 	    }, {
+	        key: 'add',
+	        value: function add(key, value) {
+	            var _this2 = this;
+	
+	            this.context.setImages(function (images) {
+	                var _JSON$stringify;
+	
+	                var path = images !== _this2.props.source[_this2.props.query] ? (0, _path2.default)(_this2.context.images, _this2.props.source[_this2.props.query]) : [];
+	                Object.assign(_this2.props.source[_this2.props.query], _defineProperty({}, key, value));
+	                fetch([_package.api].concat(_toConsumableArray(path)).join('/'), {
+	                    method: 'POST',
+	                    credentials: 'include',
+	                    body: JSON.stringify((_JSON$stringify = {}, _defineProperty(_JSON$stringify, _this2.props.query, key), _defineProperty(_JSON$stringify, 'body', value), _JSON$stringify))
+	                });
+	                return images;
+	            });
+	        }
+	    }, {
 	        key: 'select',
 	        value: function select(selected) {
 	            this.setState({ selected: selected });
@@ -30417,12 +30437,12 @@
 	    }, {
 	        key: 'remove',
 	        value: function remove(key) {
-	            var _this2 = this;
+	            var _this3 = this;
 	
 	            this.unselect();
 	            this.context.setImages(function (images) {
-	                var path = images !== _this2.props.source[_this2.props.query] ? (0, _path2.default)(_this2.context.images, _this2.props.source[_this2.props.query]) : [];
-	                delete _this2.props.source[_this2.props.query][key];
+	                var path = images !== _this3.props.source[_this3.props.query] ? (0, _path2.default)(_this3.context.images, _this3.props.source[_this3.props.query]) : [];
+	                delete _this3.props.source[_this3.props.query][key];
 	                fetch([_package.api].concat(_toConsumableArray(path), [key]).join('/'), {
 	                    method: 'DELETE',
 	                    credentials: 'include'
@@ -30433,18 +30453,46 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var selected = this.state.selected;
+	            var _this4 = this;
 	
+	            var addable = this.props.addable;
+	            var selected = this.state.selected;
+	            var tiles = this.tiles;
+	
+	            var addBox = void 0;
+	            if (!selected && addable) {
+	                addBox = _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'button',
+	                        { onClick: function onClick(e) {
+	                                return _this4.add(e.target.value);
+	                            } },
+	                        _react2.default.createElement('input', { placeholder: 'addition item' }),
+	                        _react2.default.createElement(
+	                            _mdIcon2.default,
+	                            null,
+	                            'add'
+	                        )
+	                    )
+	                );
+	            }
 	            return _react2.default.createElement(
-	                _reactAddonsCssTransitionGroup2.default,
-	                {
-	                    component: 'div',
-	                    className: selected ? 'selected list' : 'list',
-	                    transitionName: 'collection-item',
-	                    transitionEnterTimeout: 400,
-	                    transitionLeaveTimeout: 400
-	                },
-	                this.tiles
+	                'div',
+	                null,
+	                addBox,
+	                _react2.default.createElement(
+	                    _reactAddonsCssTransitionGroup2.default,
+	                    {
+	                        component: 'div',
+	                        className: selected ? 'selected list' : 'list',
+	                        transitionName: 'collection-item',
+	                        transitionEnterTimeout: 400,
+	                        transitionLeaveTimeout: 400
+	                    },
+	                    tiles
+	                )
 	            );
 	        }
 	    }, {
@@ -30455,7 +30503,7 @@
 	    }, {
 	        key: 'tiles',
 	        get: function get() {
-	            var _this3 = this;
+	            var _this5 = this;
 	
 	            var selected = this.selected;
 	            var _props = this.props;
@@ -30494,7 +30542,7 @@
 	                        )
 	                    );
 	                }
-	                return [_react2.default.createElement(
+	                return _react2.default.createElement(
 	                    'div',
 	                    { className: 'list-item selected', key: selected },
 	                    _react2.default.createElement(
@@ -30518,7 +30566,7 @@
 	                    _react2.default.createElement(this.props.editor, Object.assign({}, selectedNode, {
 	                        origin: selectedNode
 	                    }))
-	                )];
+	                );
 	            }
 	            return Object.entries(source[query]).reverse().map(function (_ref2) {
 	                var _ref3 = _slicedToArray(_ref2, 2);
@@ -30530,7 +30578,7 @@
 	                if (editable || editable === undefined) {
 	                    edit = _react2.default.createElement(
 	                        'button',
-	                        { onClick: _this3.select.bind(_this3, key) },
+	                        { onClick: _this5.select.bind(_this5, key) },
 	                        _react2.default.createElement(
 	                            _mdIcon2.default,
 	                            null,
@@ -30544,14 +30592,14 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
-	                        template.call(_this3, node, key, _this3),
+	                        template.call(_this5, node, key, _this5),
 	                        _react2.default.createElement(
 	                            'aside',
 	                            null,
 	                            edit,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: _this3.remove.bind(_this3, key) },
+	                                { onClick: _this5.remove.bind(_this5, key) },
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
@@ -30579,6 +30627,7 @@
 	    template: _react.PropTypes.func,
 	    editor: _react.PropTypes.func,
 	    editable: _react.PropTypes.bool,
+	    addable: _react.PropTypes.bool,
 	    selected: _react.PropTypes.string,
 	    unselect: _react.PropTypes.func
 	};

@@ -16,8 +16,9 @@ export default class Collection extends Component {
         template: PropTypes.func,
         editor: PropTypes.func,
         editable: PropTypes.bool,
+        addable: PropTypes.bool,
         selected: PropTypes.string,
-        unselect: PropTypes.func
+        unselect: PropTypes.func,
     }
     state = {
         selected: undefined,
@@ -27,6 +28,25 @@ export default class Collection extends Component {
         if (this.props.unselect) {
             this.props.unselect();
         }
+    }
+    add (key, value) {
+        this.context.setImages(images => {
+            let path = images !== this.props.source[this.props.query]
+                ? findPathToValue(this.context.images, this.props.source[this.props.query])
+                : [];
+            Object.assign(this.props.source[this.props.query], {
+                [key]: value
+            });
+            fetch([API_URL, ...path].join('/'), {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify({
+                    [this.props.query]: key,
+                    body: value,
+                })
+            });
+            return images;
+        });
     }
     select (selected) {
         this.setState({selected});
@@ -71,8 +91,7 @@ export default class Collection extends Component {
                     </aside>
                 </div>;
             }
-            return [
-                <div className="list-item selected" key={selected}>
+            return <div className="list-item selected" key={selected}>
                     <div>
                         {template.call(this, selectedNode)}
                         <aside>
@@ -84,8 +103,7 @@ export default class Collection extends Component {
                     {React.createElement(this.props.editor, Object.assign({}, selectedNode, {
                         origin: selectedNode,
                     }))}
-                </div>
-            ];
+                </div>;
         }
         return Object.entries(source[query])
         .reverse()
@@ -110,13 +128,25 @@ export default class Collection extends Component {
         });
     }
     render () {
-        let {state: {selected}} = this;
-        return <ReactCSSTransitionGroup
-            component="div"
-            className={selected ? 'selected list' : 'list'}
-            transitionName="collection-item"
-            transitionEnterTimeout={400}
-            transitionLeaveTimeout={400}
-        >{this.tiles}</ReactCSSTransitionGroup>;
+        let {props: {addable}, state: {selected}, tiles} = this;
+        let addBox;
+        if (!selected && addable) {
+            addBox = <div>
+                <button onClick={(e) => this.add(e.target.value)}>
+                    <input placeholder="addition item" />
+                    <MDIcon>add</MDIcon>
+                </button>
+            </div>;
+        }
+        return <div>
+            {addBox}
+            <ReactCSSTransitionGroup
+                component="div"
+                className={selected ? 'selected list' : 'list'}
+                transitionName="collection-item"
+                transitionEnterTimeout={400}
+                transitionLeaveTimeout={400}
+            >{tiles}</ReactCSSTransitionGroup>
+        </div>;
     }
 }
