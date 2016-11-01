@@ -37,3 +37,12 @@ div[data-reactroot] {
         }
     }
 }
+
+.raised{
+    @include card (1, $indigo500);
+    color: white;
+    text-transform: uppercase;
+    min-width: 6em;
+    padding: .5em 1em;
+    transform: translateY(-.75em);
+}

@@ -18,15 +18,6 @@ $indigo500: #3F51B5;
                 z-index: 1000;
             }
         }
-
-        button {
-            @include card (1, $indigo500);
-            color: white;
-            text-transform: uppercase;
-            min-width: 6em;
-            padding: .5em 1em;
-            transform: translateY(-.75em);
-        }
     }
 
     .list-item {

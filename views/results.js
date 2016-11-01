@@ -45,17 +45,20 @@ export default class Results extends Editor {
     }
     render () {
         return <div>
-            <form>
+            <form className="result-form">
                 <h3>Add a result</h3>
                 <label>Image</label>
                 <input type="text" name="image" />
                 <label>Click URL</label>
                 <input type="text" name="click_url" />
-                <button type="button" onClick={({target: {parentElement: form}}) => {
-                    this.add({
-                        image: form.querySelector('input[name="image"]').value,
-                        click_url: form.querySelector('input[name="click_url"]').value
-                    });
+                <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
+                    let newResult = {};
+                    for (let name of ['image', 'click_url']) {
+                        let input = form.querySelector(`input[name="${name}"]`);
+                        newResult[name] = input.value;
+                        input.value = '';
+                    }
+                    this.add(newResult);
                 }}>Submit</button>
             </form>
             <SortableList

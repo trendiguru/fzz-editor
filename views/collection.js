@@ -140,7 +140,7 @@ export default class Collection extends Component {
                     value={selectedAdd}
                     onChange={(selected) => this.setState({selectedAdd: selected})}
                 />
-                <button onClick={() => {
+                <button className="raised" onClick={() => {
                     this.setState({selectedAdd: undefined});
                     this.add(selectedAdd.value);
                 }}>Add</button>

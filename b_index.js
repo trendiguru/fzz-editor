@@ -30503,7 +30503,7 @@
 	                    }),
 	                    _react2.default.createElement(
 	                        'button',
-	                        { onClick: function onClick() {
+	                        { className: 'raised', onClick: function onClick() {
 	                                _this4.setState({ selectedAdd: undefined });
 	                                _this4.add(selectedAdd.value);
 	                            } },
@@ -41143,7 +41143,7 @@
 	                null,
 	                _react2.default.createElement(
 	                    'form',
-	                    null,
+	                    { className: 'result-form' },
 	                    _react2.default.createElement(
 	                        'h3',
 	                        null,
@@ -41163,13 +41163,18 @@
 	                    _react2.default.createElement('input', { type: 'text', name: 'click_url' }),
 	                    _react2.default.createElement(
 	                        'button',
-	                        { type: 'button', onClick: function onClick(_ref4) {
+	                        { className: 'raised', type: 'button', onClick: function onClick(_ref4) {
 	                                var form = _ref4.target.parentElement;
 	
-	                                _this2.add({
-	                                    image: form.querySelector('input[name="image"]').value,
-	                                    click_url: form.querySelector('input[name="click_url"]').value
-	                                });
+	                                var newResult = {};
+	                                var _arr = ['image', 'click_url'];
+	                                for (var _i = 0; _i < _arr.length; _i++) {
+	                                    var name = _arr[_i];
+	                                    var input = form.querySelector('input[name="' + name + '"]');
+	                                    newResult[name] = input.value;
+	                                    input.value = '';
+	                                }
+	                                _this2.add(newResult);
 	                            } },
 	                        'Submit'
 	                    )
