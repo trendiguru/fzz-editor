@@ -24,6 +24,7 @@ export default class Collection extends Component {
     }
     state = {
         selected: undefined,
+        selectedAdd: undefined
     }
     unselect () {
         this.select(undefined);
@@ -31,20 +32,20 @@ export default class Collection extends Component {
             this.props.unselect();
         }
     }
-    add (key, value) {
+    add (key, value = {}) {
+        let newItem = Object.assign({[this.props.title]: key}, value);
         this.context.setImages(images => {
             let path = images !== this.props.source[this.props.query]
                 ? findPathToValue(this.context.images, this.props.source[this.props.query])
                 : [];
             Object.assign(this.props.source[this.props.query], {
-                [key]: value
+                [key]: newItem
             });
             fetch([API_URL, ...path].join('/'), {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify({
-                    [this.props.query]: key,
-                    body: value,
+                    data: newItem
                 })
             });
             return images;
@@ -130,14 +131,19 @@ export default class Collection extends Component {
         });
     }
     render () {
-        let {props: {addable, options, query}, state: {selected}, tiles} = this;
+        let {props: {addable, options, query}, state: {selected, selectedAdd}, tiles} = this;
         if (!selected && addable && options) {
             tiles.unshift(<div className="selectbox">
                 <Select
                     name={query}
                     options={options}
+                    value={selectedAdd}
+                    onChange={(selected) => this.setState({selectedAdd: selected})}
                 />
-                <button onClick={(e) => this.add(e.target.value)}>Add</button>
+                <button onClick={() => {
+                    this.setState({selectedAdd: undefined});
+                    this.add(selectedAdd.value);
+                }}>Add</button>
             </div>);
         }
         return <ReactCSSTransitionGroup

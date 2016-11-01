@@ -1,3 +1,5 @@
+$indigo500: #3F51B5;
+
 .list {
     clear: both;
 
@@ -11,10 +13,14 @@
         .Select {
             width: 20em;
             margin-right: .5em;
+
+            .Select-menu-outer {
+                z-index: 1000;
+            }
         }
 
         button {
-            @include card (1, purple);
+            @include card (1, $indigo500);
             color: white;
             text-transform: uppercase;
             min-width: 6em;

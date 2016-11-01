@@ -431,10 +431,12 @@ header {
     .list .selectbox .Select {
       width: 20em;
       margin-right: .5em; }
+      .list .selectbox .Select .Select-menu-outer {
+        z-index: 1000; }
     .list .selectbox button {
       padding: 0;
       overflow: hidden;
-      background-color: purple;
+      background-color: #3F51B5;
       border-radius: .125em;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
       transition: box-shadow .25s;

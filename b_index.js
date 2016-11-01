@@ -30420,7 +30420,8 @@
 	        }
 	
 	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Collection.__proto__ || Object.getPrototypeOf(Collection)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-	            selected: undefined
+	            selected: undefined,
+	            selectedAdd: undefined
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
@@ -30434,18 +30435,21 @@
 	        }
 	    }, {
 	        key: 'add',
-	        value: function add(key, value) {
+	        value: function add(key) {
 	            var _this2 = this;
 	
-	            this.context.setImages(function (images) {
-	                var _JSON$stringify;
+	            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 	
+	            var newItem = Object.assign(_defineProperty({}, this.props.title, key), value);
+	            this.context.setImages(function (images) {
 	                var path = images !== _this2.props.source[_this2.props.query] ? (0, _path2.default)(_this2.context.images, _this2.props.source[_this2.props.query]) : [];
-	                Object.assign(_this2.props.source[_this2.props.query], _defineProperty({}, key, value));
+	                Object.assign(_this2.props.source[_this2.props.query], _defineProperty({}, key, newItem));
 	                fetch([_package.api].concat(_toConsumableArray(path)).join('/'), {
 	                    method: 'POST',
 	                    credentials: 'include',
-	                    body: JSON.stringify((_JSON$stringify = {}, _defineProperty(_JSON$stringify, _this2.props.query, key), _defineProperty(_JSON$stringify, 'body', value), _JSON$stringify))
+	                    body: JSON.stringify({
+	                        data: newItem
+	                    })
 	                });
 	                return images;
 	            });
@@ -30480,7 +30484,9 @@
 	            var addable = _props.addable;
 	            var options = _props.options;
 	            var query = _props.query;
-	            var selected = this.state.selected;
+	            var _state = this.state;
+	            var selected = _state.selected;
+	            var selectedAdd = _state.selectedAdd;
 	            var tiles = this.tiles;
 	
 	            if (!selected && addable && options) {
@@ -30489,12 +30495,17 @@
 	                    { className: 'selectbox' },
 	                    _react2.default.createElement(_reactSelect2.default, {
 	                        name: query,
-	                        options: options
+	                        options: options,
+	                        value: selectedAdd,
+	                        onChange: function onChange(selected) {
+	                            return _this4.setState({ selectedAdd: selected });
+	                        }
 	                    }),
 	                    _react2.default.createElement(
 	                        'button',
-	                        { onClick: function onClick(e) {
-	                                return _this4.add(e.target.value);
+	                        { onClick: function onClick() {
+	                                _this4.setState({ selectedAdd: undefined });
+	                                _this4.add(selectedAdd.value);
 	                            } },
 	                        'Add'
 	                    )
@@ -31778,6 +31789,10 @@
 	
 	var _item2 = _interopRequireDefault(_item);
 	
+	var _categories = __webpack_require__(679);
+	
+	var _categories2 = _interopRequireDefault(_categories);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31852,7 +31867,7 @@
 	                        'Female'
 	                    )
 	                ),
-	                this.state.changedGender ? 'Proccessing new gender' : _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, options: [{ value: 'dress', label: 'Dress' }], editor: _item2.default })
+	                this.state.changedGender ? 'Proccessing new gender' : _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, options: _categories2.default, editor: _item2.default })
 	            );
 	        }
 	    }]);
@@ -46917,6 +46932,74 @@
 	});
 	
 	module.exports = Value;
+
+/***/ },
+/* 679 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = [{
+		"value": "top",
+		"label": "Top"
+	}, {
+		"value": "pants",
+		"label": "Pants"
+	}, {
+		"value": "shorts",
+		"label": "Shorts"
+	}, {
+		"value": "jeans",
+		"label": "Jeans"
+	}, {
+		"value": "jacket",
+		"label": "Jacket"
+	}, {
+		"value": "blazer",
+		"label": "Blazer"
+	}, {
+		"value": "shirt",
+		"label": "Shirt"
+	}, {
+		"value": "blouse",
+		"label": "Blouse"
+	}, {
+		"value": "dress",
+		"label": "Dress"
+	}, {
+		"value": "bodysuit",
+		"label": "Bodysuit"
+	}, {
+		"value": "vest",
+		"label": "Vest"
+	}, {
+		"value": "cardigan",
+		"label": "Cardigan"
+	}, {
+		"value": "leggings",
+		"label": "Leggins"
+	}, {
+		"value": "sweater",
+		"label": "Sweater"
+	}, {
+		"value": "t-shirt",
+		"label": "T-Shirt"
+	}, {
+		"value": "coat",
+		"label": "Coat"
+	}, {
+		"value": "suit",
+		"label": "Suit"
+	}, {
+		"value": "tights",
+		"label": "Tights"
+	}, {
+		"value": "sweatshirt",
+		"label": "Sweatshirt"
+	}, {
+		"value": "stockings",
+		"label": "Stockings"
+	}];
 
 /***/ }
 /******/ ]);
