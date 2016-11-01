@@ -41065,12 +41065,11 @@
 	var SortableList = (0, _reactSortableHoc.SortableContainer)(function (_ref) {
 	    var items = _ref.items;
 	    var remove = _ref.remove;
-	
 	    return _react2.default.createElement(
 	        'div',
 	        { className: 'list' },
 	        items.map(function (item, index) {
-	            return _react2.default.createElement(_result2.default, _extends({ remove: remove, index: index }, { key: 'item-' + index, value: item }));
+	            return _react2.default.createElement(_result2.default, _extends({ key: index }, { remove: remove, index: index }, { value: item }));
 	        })
 	    );
 	});
@@ -41160,21 +41159,19 @@
 	                        null,
 	                        'Click URL'
 	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'click_url' }),
+	                    _react2.default.createElement('input', { type: 'text', name: 'clickUrl' }),
 	                    _react2.default.createElement(
 	                        'button',
 	                        { className: 'raised', type: 'button', onClick: function onClick(_ref4) {
 	                                var form = _ref4.target.parentElement;
 	
-	                                var newResult = {};
-	                                var _arr = ['image', 'click_url'];
-	                                for (var _i = 0; _i < _arr.length; _i++) {
-	                                    var name = _arr[_i];
-	                                    var input = form.querySelector('input[name="' + name + '"]');
-	                                    newResult[name] = input.value;
-	                                    input.value = '';
-	                                }
-	                                _this2.add(newResult);
+	                                _this2.add({
+	                                    clickUrl: form.elements.clickUrl.value,
+	                                    images: {
+	                                        XLarge: form.elements.image.value
+	                                    }
+	                                });
+	                                form.reset();
 	                            } },
 	                        'Submit'
 	                    )
