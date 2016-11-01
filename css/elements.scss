@@ -1,36 +1,36 @@
 div[data-reactroot] {
-    & > .list {
+    > .list {
         column-count: 3;
 
         &.selected {
             column-count: 1;
 
-            & > .list-item > *:first-child {
+            > .list-item > *:first-child {
                 display: inline-block;
                 cursor: auto;
 
-                & > img {
+                > img {
                     width: auto;
                     max-width: 30em;
                     max-height: 30em;
                 }
             }
 
-            & > .list-item:not(.selected) {
+            > .list-item:not(.selected) {
                 display: none;
             }
         }
 
-        & > .list-item {
+        > .list-item {
             width: 100%;
             min-height: 0;
             margin: 0 1em 1em 0;
             display: block;
 
-            & > div {
+            > div {
                 display: block;
 
-                & > img {
+                > img {
                     width: 100%;
                 }
             }

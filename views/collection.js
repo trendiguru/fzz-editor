@@ -3,6 +3,7 @@ import findPathToValue from '../modules/path';
 import {api as API_URL} from '../package.json';
 import MDIcon from './md-icon';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import Select from 'react-select';
 
 export default class Collection extends Component {
     static contextTypes = {
@@ -19,6 +20,7 @@ export default class Collection extends Component {
         addable: PropTypes.bool,
         selected: PropTypes.string,
         unselect: PropTypes.func,
+        options: PropTypes.object
     }
     state = {
         selected: undefined,
@@ -128,25 +130,22 @@ export default class Collection extends Component {
         });
     }
     render () {
-        let {props: {addable}, state: {selected}, tiles} = this;
-        let addBox;
-        if (!selected && addable) {
-            addBox = <div>
-                <button onClick={(e) => this.add(e.target.value)}>
-                    <input placeholder="addition item" />
-                    <MDIcon>add</MDIcon>
-                </button>
-            </div>;
+        let {props: {addable, options, query}, state: {selected}, tiles} = this;
+        if (!selected && addable && options) {
+            tiles.unshift(<div className="selectbox">
+                <Select
+                    name={query}
+                    options={options}
+                />
+                <button onClick={(e) => this.add(e.target.value)}>Add</button>
+            </div>);
         }
-        return <div>
-            {addBox}
-            <ReactCSSTransitionGroup
-                component="div"
-                className={selected ? 'selected list' : 'list'}
-                transitionName="collection-item"
-                transitionEnterTimeout={400}
-                transitionLeaveTimeout={400}
-            >{tiles}</ReactCSSTransitionGroup>
-        </div>;
+        return <ReactCSSTransitionGroup
+            component="div"
+            className={selected ? 'selected list' : 'list'}
+            transitionName="collection-item"
+            transitionEnterTimeout={400}
+            transitionLeaveTimeout={400}
+        >{tiles}</ReactCSSTransitionGroup>;
     }
 }
