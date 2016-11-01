@@ -13,6 +13,15 @@ export default class Results extends Editor {
     state = {
         selected: undefined
     }
+    add (result) {
+        this.set(
+            (results) => results.concat(result),
+            {
+                method: 'POST',
+                body: JSON.stringify({data: result})
+            }
+        );
+    }
     update (results) {
         this.set(
             () => results,
@@ -35,11 +44,26 @@ export default class Results extends Editor {
         this.update(arrayMove(this.props.origin, oldIndex, newIndex));
     }
     render () {
-        return <SortableList
-            useDragHandle={true}
-            items={this.props.origin}
-            onSortEnd={::this.onSortEnd}
-            remove={::this.remove}
-        />;
+        return <div>
+            <form>
+                <h3>Add a result</h3>
+                <label>Image</label>
+                <input type="text" name="image" />
+                <label>Click URL</label>
+                <input type="text" name="click_url" />
+                <button type="button" onClick={({target: {parentElement: form}}) => {
+                    this.add({
+                        image: form.querySelector('input[name="image"]').value,
+                        click_url: form.querySelector('input[name="click_url"]').value
+                    });
+                }}>Submit</button>
+            </form>
+            <SortableList
+                useDragHandle={true}
+                items={this.props.origin}
+                onSortEnd={::this.onSortEnd}
+                remove={::this.remove}
+            />
+        </div>;
     }
 }
