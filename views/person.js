@@ -2,6 +2,7 @@ import React from 'react';
 import Editor from './editor';
 import Collection from './collection';
 import Item from './item';
+import CATEGORIES from '../categories.json';
 
 export default class Person extends Editor {
     state = {
@@ -35,7 +36,7 @@ export default class Person extends Editor {
             {
                 this.state.changedGender
                 ? 'Proccessing new gender'
-                : <Collection source={this.props} query="items" title="category" addable={true} editor={Item} />
+                : <Collection source={this.props} query="items" title="category" addable={true} options={CATEGORIES} editor={Item} />
             }
         </div>;
     }

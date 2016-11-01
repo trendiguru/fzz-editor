@@ -14,7 +14,7 @@ module.exports = {
                 loader: 'json'
             },
             {
-                test: /\.scss/,
+                test: /\.s?css/,
                 include: /css/,
                 loader: ExtractTextPlugin.extract([
                     'css?sourceMap',
@@ -28,7 +28,7 @@ module.exports = {
     ],
     entry: {
         'b_index.js': ['core-js', 'web-core', './index.js'],
-        './css/main.css': './css/main.scss'
+        './css/main.css': ['react-select/dist/react-select.css', './css/main.scss']
     },
     output: {
         path: '.',

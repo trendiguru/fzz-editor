@@ -33,6 +33,7 @@
     "react-addons-css-transition-group": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-grid-layout": "^0.13.6",
+    "react-select": "^1.0.0-rc.2",
     "react-sortable-hoc": "^0.1.0",
     "web-core": "^0.0.4",
     "whatwg-fetch": "^1.0.0"

@@ -1,3 +1,25 @@
+$indigo500: #3F51B5;
+
+.list {
+
+    .selectbox {
+        margin: 1em 0;
+
+        > * {
+            display: inline-block;
+        }
+
+        .Select {
+            width: 20em;
+            margin-right: .5em;
+
+            .Select-menu-outer {
+                z-index: 1000;
+            }
+        }
+    }
+}
+
 .list-item {
     margin: 1em;
 
@@ -6,7 +28,7 @@
         margin: 1em 0;
     }
 
-    & > *:first-child {
+    > *:first-child {
         @include card (2);
         min-width: 10em;
         min-height: 7em;
@@ -54,7 +76,7 @@
     max-height: 9999px;
     max-width: 9999px;
     opacity: 1;
-    transform: translateY(0em);
+    transform: translateY(0);
 
     &-enter {
         max-width: 0;
@@ -66,7 +88,7 @@
             max-height: 9999px;
             max-width: 9999px;
             opacity: 1;
-            transform: translateY(0em);
+            transform: translateY(0);
             transition: all .4s;
         }
     }

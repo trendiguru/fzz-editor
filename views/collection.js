@@ -3,6 +3,7 @@ import findPathToValue from '../modules/path';
 import {api as API_URL} from '../package.json';
 import MDIcon from './md-icon';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import Select from 'react-select';
 
 export default class Collection extends Component {
     static contextTypes = {
@@ -16,17 +17,39 @@ export default class Collection extends Component {
         template: PropTypes.func,
         editor: PropTypes.func,
         editable: PropTypes.bool,
+        addable: PropTypes.bool,
         selected: PropTypes.string,
-        unselect: PropTypes.func
+        unselect: PropTypes.func,
+        options: PropTypes.object
     }
     state = {
         selected: undefined,
+        selectedAdd: undefined
     }
     unselect () {
         this.select(undefined);
         if (this.props.unselect) {
             this.props.unselect();
         }
+    }
+    add (key, value = {}) {
+        let newItem = Object.assign({[this.props.title]: key}, value);
+        this.context.setImages(images => {
+            let path = images !== this.props.source[this.props.query]
+                ? findPathToValue(this.context.images, this.props.source[this.props.query])
+                : [];
+            Object.assign(this.props.source[this.props.query], {
+                [key]: newItem
+            });
+            fetch([API_URL, ...path].join('/'), {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify({
+                    data: newItem
+                })
+            });
+            return images;
+        });
     }
     select (selected) {
         this.setState({selected});
@@ -71,8 +94,7 @@ export default class Collection extends Component {
                     </aside>
                 </div>;
             }
-            return [
-                <div className="list-item selected" key={selected}>
+            return <div className="list-item selected" key={selected}>
                     <div>
                         {template.call(this, selectedNode)}
                         <aside>
@@ -84,8 +106,7 @@ export default class Collection extends Component {
                     {React.createElement(this.props.editor, Object.assign({}, selectedNode, {
                         origin: selectedNode,
                     }))}
-                </div>
-            ];
+                </div>;
         }
         return Object.entries(source[query])
         .reverse()
@@ -110,13 +131,27 @@ export default class Collection extends Component {
         });
     }
     render () {
-        let {state: {selected}} = this;
+        let {props: {addable, options, query}, state: {selected, selectedAdd}, tiles} = this;
+        if (!selected && addable && options) {
+            tiles.unshift(<div className="selectbox">
+                <Select
+                    name={query}
+                    options={options}
+                    value={selectedAdd}
+                    onChange={(selected) => this.setState({selectedAdd: selected})}
+                />
+                <button className="raised" onClick={() => {
+                    this.setState({selectedAdd: undefined});
+                    this.add(selectedAdd.value);
+                }}>Add</button>
+            </div>);
+        }
         return <ReactCSSTransitionGroup
             component="div"
             className={selected ? 'selected list' : 'list'}
             transitionName="collection-item"
             transitionEnterTimeout={400}
             transitionLeaveTimeout={400}
-        >{this.tiles}</ReactCSSTransitionGroup>;
+        >{tiles}</ReactCSSTransitionGroup>;
     }
 }

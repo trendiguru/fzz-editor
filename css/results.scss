@@ -1,0 +1,24 @@
+.result-form {
+    @include card (1, white, false);
+    padding: .5em;
+    max-width: 20em;
+
+    label {
+        display: block;
+        margin: .5em 0;
+    }
+
+    input {
+        width: 100%;
+        padding: .5em;
+        font: inherit;
+        background: #eee;
+        border-bottom: 2px solid $indigo500;
+        display: block;
+    }
+
+    .raised {
+        margin: 1em 0;
+        transform: translateY(0);
+    }
+}

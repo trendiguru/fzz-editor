@@ -3,15 +3,24 @@ import {SortableContainer, arrayMove} from 'react-sortable-hoc';
 import Editor from './editor';
 import Result from './result';
 
-const SortableList = SortableContainer(({items, remove}) => {
-    return <div className="list">{items.map((item, index) =>
-        <Result {...{remove, index}} key={`item-${index}`} value={item} />
-    )}</div>;
-});
+const SortableList = SortableContainer(({items, remove}) => <div className="list">
+    {items.map((item, index) =>
+        <Result key={index} {...{remove, index}} value={item} />
+    )}
+</div>);
 
 export default class Results extends Editor {
     state = {
         selected: undefined
+    }
+    add (result) {
+        this.set(
+            (results) => results.concat(result),
+            {
+                method: 'POST',
+                body: JSON.stringify({data: result})
+            }
+        );
     }
     update (results) {
         this.set(
@@ -35,11 +44,29 @@ export default class Results extends Editor {
         this.update(arrayMove(this.props.origin, oldIndex, newIndex));
     }
     render () {
-        return <SortableList
-            useDragHandle={true}
-            items={this.props.origin}
-            onSortEnd={::this.onSortEnd}
-            remove={::this.remove}
-        />;
+        return <div>
+            <form className="result-form">
+                <h3>Add a result</h3>
+                <label>Image</label>
+                <input type="text" name="image" />
+                <label>Click URL</label>
+                <input type="text" name="clickUrl" />
+                <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
+                    this.add({
+                        clickUrl: form.elements.clickUrl.value,
+                        images: {
+                            XLarge: form.elements.image.value
+                        }
+                    });
+                    form.reset();
+                }}>Submit</button>
+            </form>
+            <SortableList
+                useDragHandle={true}
+                items={this.props.origin}
+                onSortEnd={::this.onSortEnd}
+                remove={::this.remove}
+            />
+        </div>;
     }
 }
