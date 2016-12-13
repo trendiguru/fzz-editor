@@ -62,6 +62,10 @@ export default class Results extends Editor {
                 }}>Submit</button>
             </form>
             <SortableList
+                helperClass={'stylizedHelper'}
+                className={classNames('storyboklist', 'stylizedList', 'grid')} 
+                // itemClass={classNames('stylizedItem', 'gridItem')}
+                axis={'xy'}
                 useDragHandle={true}
                 items={this.props.origin}
                 onSortEnd={::this.onSortEnd}

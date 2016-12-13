@@ -11,7 +11,8 @@ style={{
     width: '24em',
     height: '12em',
     display: 'block',
-    overflow: 'visible'
+    overflow: 'visible',
+    //float: 'left'
 }}>
     <div style={{width: '100%', height: '100%'}}>
        <aside>
