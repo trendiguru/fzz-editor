@@ -42424,6 +42424,10 @@
 	
 	var _result2 = _interopRequireDefault(_result);
 	
+	var _classnames = __webpack_require__(528);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42432,14 +42436,28 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	console.log("*******");
+	console.log(_classnames2.default);
+	
 	var SortableList = (0, _reactSortableHoc.SortableContainer)(function (_ref) {
-	    var items = _ref.items,
+	    var className = _ref.className,
+	        items = _ref.items,
+	        itemClass = _ref.itemClass,
+	        sortingIndex = _ref.sortingIndex,
+	        shouldUseDragHandle = _ref.shouldUseDragHandle,
+	        sortableHandlers = _ref.sortableHandlers,
 	        remove = _ref.remove;
 	    return _react2.default.createElement(
 	        'div',
-	        { className: 'list' },
+	        _extends({ className: className }, sortableHandlers),
 	        items.map(function (item, index) {
-	            return _react2.default.createElement(_result2.default, _extends({ key: index }, { remove: remove, index: index }, { value: item }));
+	            return _react2.default.createElement(_result2.default, _extends({ key: index
+	            }, { remove: remove, index: index }, {
+	                className: itemClass,
+	                sortingIndex: sortingIndex,
+	                shouldUseDragHandle: shouldUseDragHandle,
+	                value: item
+	            }));
 	        })
 	    );
 	});
@@ -42548,9 +42566,9 @@
 	                ),
 	                _react2.default.createElement(SortableList, {
 	                    helperClass: 'stylizedHelper',
-	                    className: classNames('storyboklist', 'stylizedList', 'grid')
-	                    // itemClass={classNames('stylizedItem', 'gridItem')}
-	                    , axis: 'xy',
+	                    className: (0, _classnames2.default)('storybooklist', 'stylizedList', 'grid'),
+	                    itemClass: (0, _classnames2.default)('stylizedItem', 'gridItem', 'list-item'),
+	                    axis: 'xy',
 	                    useDragHandle: true,
 	                    items: this.props.origin,
 	                    onSortEnd: this.onSortEnd.bind(this),
@@ -49794,11 +49812,12 @@
 	
 	exports.default = (0, _reactSortableHoc.SortableElement)(function (_ref2) {
 	    var result = _ref2.value,
-	        remove = _ref2.remove;
+	        remove = _ref2.remove,
+	        className = _ref2.className;
 	    return _react2.default.createElement(
 	        'div',
 	        {
-	            className: 'list-item',
+	            className: className,
 	            style: {
 	                margin: '1em 0',
 	                width: '24em',
@@ -49808,7 +49827,7 @@
 	            } },
 	        _react2.default.createElement(
 	            'div',
-	            { style: { width: '100%', height: '100%' } },
+	            { style: { width: '100%', height: '100%' }, className: 'wrapper' },
 	            _react2.default.createElement(
 	                'aside',
 	                null,
