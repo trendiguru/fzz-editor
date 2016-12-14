@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
-
+import Item from './views/result';
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc';
 import range from 'lodash/range';
 import random from 'lodash/random';
@@ -15,21 +15,6 @@ function getItems(count, height) {
 		};
 	});
 }
-
-const Handle = SortableHandle(() => <div className={'sb_handle'}></div>);
-
-const Item = SortableElement((props) => {
-    return (
-        <div className={props.className} style={{
-            height: props.height
-        }}>
-			{props.shouldUseDragHandle && <Handle/>}
-			<div className={'sb_wrapper'}>
-	            <span>Item</span> {props.value}
-			</div>
-        </div>
-    )
-});
 
 class ListWrapper extends Component {
 	constructor({items}) {

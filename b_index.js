@@ -8349,6 +8349,10 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
+	var _result = __webpack_require__(696);
+	
+	var _result2 = _interopRequireDefault(_result);
+	
 	var _reactSortableHoc = __webpack_require__(502);
 	
 	var _range = __webpack_require__(690);
@@ -8380,31 +8384,6 @@
 			};
 		});
 	}
-	
-	var Handle = (0, _reactSortableHoc.SortableHandle)(function () {
-		return _react2.default.createElement('div', { className: 'sb_handle' });
-	});
-	
-	var Item = (0, _reactSortableHoc.SortableElement)(function (props) {
-		return _react2.default.createElement(
-			'div',
-			{ className: props.className, style: {
-					height: props.height
-				} },
-			props.shouldUseDragHandle && _react2.default.createElement(Handle, null),
-			_react2.default.createElement(
-				'div',
-				{ className: 'sb_wrapper' },
-				_react2.default.createElement(
-					'span',
-					null,
-					'Item'
-				),
-				' ',
-				props.value
-			)
-		);
-	});
 	
 	var ListWrapper = function (_Component) {
 		_inherits(ListWrapper, _Component);
@@ -8508,7 +8487,7 @@
 			items.map(function (_ref3, index) {
 				var value = _ref3.value,
 				    height = _ref3.height;
-				return _react2.default.createElement(Item, {
+				return _react2.default.createElement(_result2.default, {
 					key: 'item-' + value,
 					className: itemClass,
 					sortingIndex: sortingIndex,
@@ -37427,6 +37406,110 @@
 		}
 	}());
 
+
+/***/ },
+/* 696 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(325);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _mdIcon = __webpack_require__(697);
+	
+	var _mdIcon2 = _interopRequireDefault(_mdIcon);
+	
+	var _reactSortableHoc = __webpack_require__(502);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var DragHandle = (0, _reactSortableHoc.SortableHandle)(function (_ref) {
+	    var children = _ref.children;
+	    return children;
+	});
+	
+	// export default SortableElement(({value: result, remove, className}) => <div
+	// className={className}
+	// style={{
+	//     margin: '1em 0',
+	//     width: '24em',
+	//     height: '12em',
+	//     display: 'block',
+	//     overflow: 'visible',
+	//     //float: 'left'
+	// }}>
+	//     <div style={{width: '100%', height: '100%'}} className={'wrapper'} >
+	//        <aside>
+	//            <button style={{position: 'relative', zIndex: 1000}} onClick={() => remove(result.id)}>
+	//                <MDIcon>delete</MDIcon>
+	//            </button>
+	//        </aside>
+	//        <DragHandle>
+	//            <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
+	//        </DragHandle>
+	//    </div>
+	// </div>);
+	
+	var Handle = (0, _reactSortableHoc.SortableHandle)(function () {
+	    return _react2.default.createElement('div', { className: 'sb_handle' });
+	});
+	
+	exports.default = (0, _reactSortableHoc.SortableElement)(function (props) {
+	    return _react2.default.createElement(
+	        'div',
+	        { className: props.className, style: {
+	                height: props.height
+	            } },
+	        props.shouldUseDragHandle && _react2.default.createElement(Handle, null),
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'sb_wrapper' },
+	            _react2.default.createElement(
+	                'span',
+	                null,
+	                'Item'
+	            ),
+	            ' ',
+	            props.value
+	        )
+	    );
+	});
+
+/***/ },
+/* 697 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(325);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var MDIcon = function MDIcon(props) {
+	    return _react2.default.createElement(
+	        "i",
+	        { className: "md-icon" },
+	        props.children
+	    );
+	};
+	
+	MDIcon.propTypes = {
+	    children: _react.PropTypes.string.isRequired
+	};
+	
+	exports.default = MDIcon;
 
 /***/ }
 /******/ ]);
