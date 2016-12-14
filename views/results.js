@@ -69,34 +69,46 @@ class ListWrapper extends Component {
             ref: "component",
             useDragHandle: this.props.shouldUseDragHandle
         }
-
+        console.log(this.props);
+        console.log(props);
         return <Component {...this.props} {...props} />
     }
 }
 
 
 const SortableList = SortableContainer(({className, items, itemClass, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
+    console.log("****");
+    console.log(items);
     return (
         <div className={className} {...sortableHandlers}>
-            {items.map(({value, height}, index) =>
+            {items.map((value, index) =>
                 <Item
-                    key={`item-${value}`}
+                    key={index}
                     className={itemClass}
                     sortingIndex={sortingIndex}
                     index={index}
                     value={value}
-                    height={height}
+                    // height={height} TODO: check if it is so important to set height per each item..
                     shouldUseDragHandle={shouldUseDragHandle}
+                    remove={(el)=>{console.log;}}
                     />
             )}
         </div>
     );
 });
 
-class Results extends Comment {
+export default class Results extends Component {
     render() {
         return <div>
-                <ListWrapper component={SortableList} axis={'xy'} items={getItems(10, 110)} helperClass={'sb_stylizedHelper'} className={classNames('sb_list', 'sb_stylizedList', 'sb_grid')} itemClass={classNames('sb_stylizedItem', 'sb_gridItem')} />
+                <ListWrapper 
+                component={SortableList} 
+                axis={'xy'} 
+                items={this.props.origin} 
+                helperClass={'sb_stylizedHelper'} 
+                className={classNames('sb_list', 'sb_stylizedList', 'sb_grid')} 
+                itemClass={classNames('sb_stylizedItem', 'sb_gridItem')}
+                shouldUseDragHandle={true}
+                />
             </div>
     }
 }
