@@ -8351,15 +8351,15 @@
 	
 	var _reactSortableHoc = __webpack_require__(502);
 	
-	var _range = __webpack_require__(691);
+	var _range = __webpack_require__(690);
 	
 	var _range2 = _interopRequireDefault(_range);
 	
-	var _random = __webpack_require__(694);
+	var _random = __webpack_require__(693);
 	
 	var _random2 = _interopRequireDefault(_random);
 	
-	var _classnames = __webpack_require__(690);
+	var _classnames = __webpack_require__(695);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -8370,13 +8370,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	//import {storiesOf} from '@kadira/storybook';
-	//import style from './Storybook.scss';
-	
-	//import {defaultFlexTableRowRenderer, FlexColumn, FlexTable, VirtualScroll} from 'react-virtualized';
-	// import 'react-virtualized/styles.css';
-	// import Infinite from 'react-infinite';
-	
 	
 	function getItems(count, height) {
 		var heights = [65, 110, 140, 65, 90, 65];
@@ -8389,7 +8382,7 @@
 	}
 	
 	var Handle = (0, _reactSortableHoc.SortableHandle)(function () {
-		return _react2.default.createElement('div', { className: 'handle' });
+		return _react2.default.createElement('div', { className: 'sb_handle' });
 	});
 	
 	var Item = (0, _reactSortableHoc.SortableElement)(function (props) {
@@ -8401,7 +8394,7 @@
 			props.shouldUseDragHandle && _react2.default.createElement(Handle, null),
 			_react2.default.createElement(
 				'div',
-				{ className: 'wrapper' },
+				{ className: 'sb_wrapper' },
 				_react2.default.createElement(
 					'span',
 					null,
@@ -8455,116 +8448,6 @@
 		return ListWrapper;
 	}(_react.Component);
 	
-	// // Function components cannot have refs, so we'll be using a class for React Virtualized
-	// class VirtualList extends Component {
-	// 	static propTypes = {
-	// 		items: PropTypes.array,
-	// 		className: PropTypes.string,
-	// 		itemClass: PropTypes.string,
-	// 		width: PropTypes.number,
-	// 		height: PropTypes.number,
-	// 		itemHeight: PropTypes.number,
-	// 		sortingIndex: PropTypes.number
-	// 	}
-	// 	render() {
-	// 		let {className, items, height, width, itemHeight, itemClass, sortingIndex} = this.props;
-	// 		return (
-	// 			<VirtualScroll
-	// 				ref="vs"
-	// 				className={className}
-	// 				rowHeight={({index}) => items[index].height}
-	// 				estimatedRowSize={itemHeight}
-	// 				rowRenderer={({index}) => {
-	// 					let {value, height} = items[index];
-	// 					return <Item index={index} className={itemClass} sortingIndex={sortingIndex} value={value} height={height}/>;
-	// 				}}
-	// 				rowCount={items.length}
-	// 				width={width}
-	// 				height={height}
-	// 			/>
-	// 		);
-	// 	}
-	// }
-	// const SortableVirtualList = SortableContainer(VirtualList, {withRef: true});
-	
-	// const SortableFlexTable = SortableContainer(FlexTable, {withRef: true});
-	// const SortableRowRenderer = SortableElement(defaultFlexTableRowRenderer);
-	
-	// class FlexTableWrapper extends Component {
-	// 	static propTypes = {
-	// 		items: PropTypes.array,
-	// 		className: PropTypes.string,
-	// 		helperClass: PropTypes.string,
-	// 		itemClass: PropTypes.string,
-	// 		width: PropTypes.number,
-	// 		height: PropTypes.number,
-	// 		itemHeight: PropTypes.number,
-	// 		onSortEnd: PropTypes.func
-	// 	}
-	// 	render () {
-	// 		const {
-	// 			className,
-	// 			height,
-	// 			helperClass,
-	// 			itemClass,
-	// 			itemHeight,
-	// 			items,
-	// 			onSortEnd,
-	// 			width
-	// 		} = this.props
-	
-	// 		return (
-	// 			<SortableFlexTable
-	// 				getContainer={(wrappedInstance) => ReactDOM.findDOMNode(wrappedInstance.Grid)}
-	// 				gridClassName={className}
-	// 				headerHeight={itemHeight}
-	// 				height={height}
-	// 				helperClass={helperClass}
-	// 				onSortEnd={onSortEnd}
-	// 				rowClassName={itemClass}
-	// 				rowCount={items.length}
-	// 				rowGetter={({ index }) => items[index]}
-	// 				rowHeight={itemHeight}
-	// 				rowRenderer={(props) => <SortableRowRenderer {...props} />}
-	// 				width={width}
-	// 			>
-	// 				<FlexColumn
-	// 					label='Index'
-	// 					dataKey='value'
-	// 					width={100}
-	// 				/>
-	// 				<FlexColumn
-	// 					label='Height'
-	// 					dataKey='height'
-	// 					width={width - 100}
-	// 				/>
-	// 			</SortableFlexTable>
-	// 		);
-	// 	}
-	// }
-	
-	// const SortableInfiniteList = SortableContainer(({className, items, itemClass, sortingIndex, sortableHandlers}) => {
-	// 	return (
-	// 		<Infinite
-	// 			className={className}
-	// 			containerHeight={600}
-	// 			elementHeight={items.map(({height}) => height)}
-	// 			{...sortableHandlers}
-	// 		>
-	// 			{items.map(({value, height}, index) =>
-	// 				<Item
-	// 					key={`item-${index}`}
-	// 					className={itemClass}
-	// 					sortingIndex={sortingIndex}
-	// 					index={index}
-	// 					value={value}
-	// 					height={height}
-	// 				/>
-	// 			)}
-	// 		</Infinite>
-	// 	)
-	// });
-	
 	ListWrapper.propTypes = {
 		items: _react.PropTypes.array,
 		className: _react.PropTypes.string,
@@ -8577,8 +8460,8 @@
 		shouldUseDragHandle: _react.PropTypes.bool
 	};
 	ListWrapper.defaultProps = {
-		className: (0, _classnames2.default)('list', 'stylizedList'),
-		itemClass: (0, _classnames2.default)('item', 'stylizedItem'),
+		className: (0, _classnames2.default)('sb_list', 'sb_stylizedList'),
+		itemClass: (0, _classnames2.default)('sb_item', 'sb_stylizedItem'),
 		width: 400,
 		height: 600
 	};
@@ -8638,30 +8521,11 @@
 		);
 	});
 	
-	// const ShrinkingSortableList = SortableContainer(({className, isSorting, items, itemClass, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
-	// 	return (
-	// 		<div className={className} {...sortableHandlers}>
-	// 			{items.map(({value, height}, index) =>
-	// 				<Item
-	// 					key={`item-${value}`}
-	// 					className={itemClass}
-	// 					sortingIndex={sortingIndex}
-	// 					index={index}
-	// 					value={value}
-	// 					height={isSorting ? 20 : height}
-	// 					shouldUseDragHandle={shouldUseDragHandle}
-	// 				/>
-	// 			)}
-	// 		</div>
-	// 	);
-	// });
-	
-	
 	function grid() {
 		return _react2.default.createElement(
 			'div',
-			{ className: 'root' },
-			_react2.default.createElement(ListWrapper, { component: SortableList, axis: 'xy', items: getItems(10, 110), helperClass: 'stylizedHelper', className: (0, _classnames2.default)('list', 'stylizedList', 'grid'), itemClass: (0, _classnames2.default)('stylizedItem', 'gridItem') })
+			null,
+			_react2.default.createElement(ListWrapper, { component: SortableList, axis: 'xy', items: getItems(10, 110), helperClass: 'sb_stylizedHelper', className: (0, _classnames2.default)('sb_list', 'sb_stylizedList', 'sb_grid'), itemClass: (0, _classnames2.default)('sb_stylizedItem', 'sb_gridItem') })
 		);
 	}
 	
@@ -37280,61 +37144,7 @@
 /* 690 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-	
-	(function () {
-		'use strict';
-	
-		var hasOwn = {}.hasOwnProperty;
-	
-		function classNames () {
-			var classes = [];
-	
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-	
-				var argType = typeof arg;
-	
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-	
-			return classes.join(' ');
-		}
-	
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ },
-/* 691 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var createRange = __webpack_require__(692);
+	var createRange = __webpack_require__(691);
 	
 	/**
 	 * Creates an array of numbers (positive and/or negative) progressing from
@@ -37383,10 +37193,10 @@
 
 
 /***/ },
-/* 692 */
+/* 691 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRange = __webpack_require__(693),
+	var baseRange = __webpack_require__(692),
 	    isIterateeCall = __webpack_require__(687),
 	    toFinite = __webpack_require__(673);
 	
@@ -37419,7 +37229,7 @@
 
 
 /***/ },
-/* 693 */
+/* 692 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -37453,10 +37263,10 @@
 
 
 /***/ },
-/* 694 */
+/* 693 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRandom = __webpack_require__(695),
+	var baseRandom = __webpack_require__(694),
 	    isIterateeCall = __webpack_require__(687),
 	    toFinite = __webpack_require__(673);
 	
@@ -37541,7 +37351,7 @@
 
 
 /***/ },
-/* 695 */
+/* 694 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -37562,6 +37372,60 @@
 	}
 	
 	module.exports = baseRandom;
+
+
+/***/ },
+/* 695 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+	
+	(function () {
+		'use strict';
+	
+		var hasOwn = {}.hasOwnProperty;
+	
+		function classNames () {
+			var classes = [];
+	
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+	
+				var argType = typeof arg;
+	
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+	
+			return classes.join(' ');
+		}
+	
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
 
 
 /***/ }

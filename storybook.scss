@@ -1,16 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400);
-
-.root {
-    display: flex;
-    height: 100%;
-    box-sizing: border-box;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 // Base styles
-.list {
+.sb_list {
     width: 400px;
     height: 600px;
     overflow: auto;
@@ -18,13 +8,13 @@
     border: 1px solid #999;
 }
 
-.item {
+.sb_item {
     position: relative;
     border-bottom: 1px solid #999;
 }
 
 // Stylized
-.stylizedList {
+.sb_stylizedList {
     position: relative;
     z-index: 0;
     background-color: #F3F3F3;
@@ -32,7 +22,7 @@
     border-radius: 3px;
     outline: none;
 }
-.stylizedItem {
+.sb_stylizedItem {
     display: flex;
     align-items: center;
     width: 100%;
@@ -47,7 +37,7 @@
 }
 
 // Drag handle
-.handle {
+.sb_handle {
     display: block;
     width: 18px;
     height: 18px;
@@ -78,7 +68,7 @@
 }
 
 // Grid
-.grid {
+.sb_grid {
     display: block;
     width: 130 * 4px;
     height: 350px;
@@ -87,14 +77,14 @@
     background-color: transparent;
 }
 
-.gridItem {
+.sb_gridItem {
     float: left;
     width: 130px;
     padding: 8px;
     background: transparent;
     border: 0;
 
-    .wrapper {
+    .sb_wrapper {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -127,7 +117,7 @@
 .helper {
     box-shadow: 0 5px 5px -5px rgba(0,0,0,0.2), 0 -5px 5px -5px rgba(0,0,0,0.2);
 }
-.stylizedHelper {
+.sb_stylizedHelper {
     box-shadow: 0 5px 5px -5px rgba(0,0,0,0.2), 0 -5px 5px -5px rgba(0,0,0,0.2);
     background-color: rgba(255,255,255,0.8);
     cursor: row-resize;
@@ -140,7 +130,7 @@
         white-space: nowrap;
         box-shadow: none;
 
-        .wrapper {
+        .sb_wrapper {
             background-color: rgba(255,255,255,0.8);
             box-shadow: 0 0 7px rgba(0,0,0,0.15)
         }

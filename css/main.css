@@ -363,26 +363,18 @@
 @-webkit-keyframes Select-animation-spin {
   to {
     -webkit-transform: rotate(1turn); } }
-.root {
-  display: flex;
-  height: 100%;
-  box-sizing: border-box;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; }
-
-.list {
+.sb_list {
   width: 400px;
   height: 600px;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   border: 1px solid #999; }
 
-.item {
+.sb_item {
   position: relative;
   border-bottom: 1px solid #999; }
 
-.stylizedList {
+.sb_stylizedList {
   position: relative;
   z-index: 0;
   background-color: #F3F3F3;
@@ -390,7 +382,7 @@
   border-radius: 3px;
   outline: none; }
 
-.stylizedItem {
+.sb_stylizedItem {
   display: flex;
   align-items: center;
   width: 100%;
@@ -402,7 +394,7 @@
   color: #333;
   font-weight: 400; }
 
-.handle {
+.sb_handle {
   display: block;
   width: 18px;
   height: 18px;
@@ -428,7 +420,7 @@
   border-right: 1px solid #EFEFEF;
   border-bottom: 0; }
 
-.grid {
+.sb_grid {
   display: block;
   width: 520px;
   height: 350px;
@@ -436,13 +428,13 @@
   border: 0;
   background-color: transparent; }
 
-.gridItem {
+.sb_gridItem {
   float: left;
   width: 130px;
   padding: 8px;
   background: transparent;
   border: 0; }
-  .gridItem .wrapper {
+  .sb_gridItem .sb_wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -451,7 +443,7 @@
     background: #FFF;
     border: 1px solid #EFEFEF;
     font-size: 28px; }
-    .gridItem .wrapper span {
+    .sb_gridItem .sb_wrapper span {
       display: none; }
 
 .divider {
@@ -465,17 +457,17 @@
 .helper {
   box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2), 0 -5px 5px -5px rgba(0, 0, 0, 0.2); }
 
-.stylizedHelper {
+.sb_stylizedHelper {
   box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.2), 0 -5px 5px -5px rgba(0, 0, 0, 0.2);
   background-color: rgba(255, 255, 255, 0.8);
   cursor: row-resize; }
-  .stylizedHelper.horizontalItem {
+  .sb_stylizedHelper.horizontalItem {
     cursor: col-resize; }
-  .stylizedHelper.gridItem {
+  .sb_stylizedHelper.gridItem {
     background-color: transparent;
     white-space: nowrap;
     box-shadow: none; }
-    .stylizedHelper.gridItem .wrapper {
+    .sb_stylizedHelper.gridItem .sb_wrapper {
       background-color: rgba(255, 255, 255, 0.8);
       box-shadow: 0 0 7px rgba(0, 0, 0, 0.15); }
 
