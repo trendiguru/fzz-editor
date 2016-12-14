@@ -77,10 +77,8 @@ class ListWrapper extends Component {
 
 
 const SortableList = SortableContainer(({className, items, itemClass, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
-    console.log("****");
-    console.log(items);
     return (
-        <div className={className} {...sortableHandlers}>
+        <div className={className} style={{width:'1000px', height:'auto'}} {...sortableHandlers}>
             {items.map((value, index) =>
                 <Item
                     key={index}

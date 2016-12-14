@@ -42551,11 +42551,9 @@
 	        shouldUseDragHandle = _ref2.shouldUseDragHandle,
 	        sortableHandlers = _ref2.sortableHandlers;
 	
-	    console.log("****");
-	    console.log(items);
 	    return _react2.default.createElement(
 	        'div',
-	        _extends({ className: className }, sortableHandlers),
+	        _extends({ className: className, style: { width: '1000px', height: 'auto' } }, sortableHandlers),
 	        items.map(function (value, index) {
 	            return _react2.default.createElement(_result2.default, {
 	                key: index,
