@@ -42553,7 +42553,7 @@
 	
 	    return _react2.default.createElement(
 	        'div',
-	        _extends({ className: className, style: { width: '1000px', height: 'auto' } }, sortableHandlers),
+	        _extends({ className: className, style: { width: '1300px', height: 'auto' } }, sortableHandlers),
 	        items.map(function (value, index) {
 	            return _react2.default.createElement(_result2.default, {
 	                key: index,
@@ -42718,6 +42718,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	var DragHandle = (0, _reactSortableHoc.SortableHandle)(function (_ref) {
 	    var children = _ref.children;
 	    return children;
@@ -42731,8 +42733,8 @@
 	            className: props.className,
 	            style: {
 	                margin: '1em 0',
-	                width: '12em',
-	                height: '12em',
+	                width: '24em',
+	                height: '24em',
 	                display: 'block',
 	                overflow: 'visible'
 	            } },
@@ -42757,7 +42759,13 @@
 	            _react2.default.createElement(
 	                DragHandle,
 	                null,
-	                _react2.default.createElement('div', { style: { backgroundImage: 'url(' + props.value.images.XLarge + ')', height: '100%', width: '100%' } })
+	                _react2.default.createElement('div', { style: _defineProperty({
+	                        backgroundImage: 'url(' + props.value.images.XLarge + ')',
+	                        height: '100%', width: '100%',
+	                        'background-size': '80px 60px',
+	                        'background-repeat': 'no-repeat',
+	                        'background-position': 'center'
+	                    }, 'background-size', 'contain') })
 	            )
 	        )
 	    );
