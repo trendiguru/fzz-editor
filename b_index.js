@@ -42436,6 +42436,10 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
+	var _editor = __webpack_require__(540);
+	
+	var _editor2 = _interopRequireDefault(_editor);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42454,23 +42458,62 @@
 	    });
 	}
 	
-	var ListWrapper = function (_Component) {
-	    _inherits(ListWrapper, _Component);
+	var ListWrapper = function (_Editor) {
+	    _inherits(ListWrapper, _Editor);
 	
-	    function ListWrapper(_ref) {
-	        var items = _ref.items;
-	
+	    function ListWrapper(props) {
 	        _classCallCheck(this, ListWrapper);
 	
 	        var _this = _possibleConstructorReturn(this, (ListWrapper.__proto__ || Object.getPrototypeOf(ListWrapper)).call(this));
 	
-	        _initialiseProps.call(_this);
+	        _this.onSortStart = function () {
+	            var onSortStart = _this.props.onSortStart;
+	
+	            _this.setState({ isSorting: true });
+	
+	            if (onSortStart) {
+	                onSortStart(_this.refs.component);
+	            }
+	        };
+	
+	        _this.onSortEnd = function (_ref) {
+	            var oldIndex = _ref.oldIndex,
+	                newIndex = _ref.newIndex;
+	            var onSortEnd = _this.props.onSortEnd;
+	            var items = _this.state.items;
+	
+	
+	            _this.setState({ items: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex), isSorting: false });
+	
+	            if (onSortEnd) {
+	                onSortEnd(_this.refs.component);
+	            }
+	        };
 	
 	        _this.state = {
-	            items: items, isSorting: false
+	            items: props.origin,
+	            isSorting: false
 	        };
 	        return _this;
 	    }
+	    // static propTypes = {
+	    //     items: PropTypes.array,
+	    //     className: PropTypes.string,
+	    //     itemClass: PropTypes.string,
+	    //     width: PropTypes.number,
+	    //     height: PropTypes.number,
+	    //     onSortStart: PropTypes.func,
+	    //     onSortEnd: PropTypes.func,
+	    //     component: PropTypes.func,
+	    //     shouldUseDragHandle: PropTypes.bool
+	    // }
+	    // static defaultProps = {
+	    //     className: classNames('sb_list', 'sb_stylizedList'),
+	    //     itemClass: classNames('sb_item', 'sb_stylizedItem'),
+	    //     width: 400,
+	    //     height: 600
+	    // };
+	
 	
 	    _createClass(ListWrapper, [{
 	        key: 'render',
@@ -42495,53 +42538,7 @@
 	    }]);
 	
 	    return ListWrapper;
-	}(_react.Component);
-	
-	ListWrapper.propTypes = {
-	    items: _react.PropTypes.array,
-	    className: _react.PropTypes.string,
-	    itemClass: _react.PropTypes.string,
-	    width: _react.PropTypes.number,
-	    height: _react.PropTypes.number,
-	    onSortStart: _react.PropTypes.func,
-	    onSortEnd: _react.PropTypes.func,
-	    component: _react.PropTypes.func,
-	    shouldUseDragHandle: _react.PropTypes.bool
-	};
-	ListWrapper.defaultProps = {
-	    className: (0, _classnames2.default)('sb_list', 'sb_stylizedList'),
-	    itemClass: (0, _classnames2.default)('sb_item', 'sb_stylizedItem'),
-	    width: 400,
-	    height: 600
-	};
-	
-	var _initialiseProps = function _initialiseProps() {
-	    var _this3 = this;
-	
-	    this.onSortStart = function () {
-	        var onSortStart = _this3.props.onSortStart;
-	
-	        _this3.setState({ isSorting: true });
-	
-	        if (onSortStart) {
-	            onSortStart(_this3.refs.component);
-	        }
-	    };
-	
-	    this.onSortEnd = function (_ref3) {
-	        var oldIndex = _ref3.oldIndex,
-	            newIndex = _ref3.newIndex;
-	        var onSortEnd = _this3.props.onSortEnd;
-	        var items = _this3.state.items;
-	
-	
-	        _this3.setState({ items: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex), isSorting: false });
-	
-	        if (onSortEnd) {
-	            onSortEnd(_this3.refs.component);
-	        }
-	    };
-	};
+	}(_editor2.default);
 	
 	var SortableList = (0, _reactSortableHoc.SortableContainer)(function (_ref2) {
 	    var className = _ref2.className,
@@ -42571,8 +42568,8 @@
 	    );
 	});
 	
-	var Results = function (_Component2) {
-	    _inherits(Results, _Component2);
+	var Results = function (_Component) {
+	    _inherits(Results, _Component);
 	
 	    function Results() {
 	        _classCallCheck(this, Results);
@@ -42589,7 +42586,7 @@
 	                _react2.default.createElement(ListWrapper, {
 	                    component: SortableList,
 	                    axis: 'xy',
-	                    items: this.props.origin,
+	                    origin: this.props.origin,
 	                    helperClass: 'sb_stylizedHelper',
 	                    className: (0, _classnames2.default)('sb_list', 'sb_stylizedList', 'sb_grid'),
 	                    itemClass: (0, _classnames2.default)('sb_stylizedItem', 'sb_gridItem'),

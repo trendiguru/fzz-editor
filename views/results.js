@@ -5,6 +5,7 @@ import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'r
 import range from 'lodash/range';
 import random from 'lodash/random';
 import classNames from 'classnames';
+import Editor from './editor';
 
 function getItems(count, height) {
     var heights = [65, 110, 140, 65, 90, 65];
@@ -16,30 +17,31 @@ function getItems(count, height) {
     });
 }
 
-class ListWrapper extends Component {
-    constructor({items}) {
+class ListWrapper extends Editor {
+    constructor(props) {
         super();
         this.state = {
-            items, isSorting: false
+            items:props.origin, 
+            isSorting: false
         };
     }
-    static propTypes = {
-        items: PropTypes.array,
-        className: PropTypes.string,
-        itemClass: PropTypes.string,
-        width: PropTypes.number,
-        height: PropTypes.number,
-        onSortStart: PropTypes.func,
-        onSortEnd: PropTypes.func,
-        component: PropTypes.func,
-        shouldUseDragHandle: PropTypes.bool
-    }
-    static defaultProps = {
-        className: classNames('sb_list', 'sb_stylizedList'),
-        itemClass: classNames('sb_item', 'sb_stylizedItem'),
-        width: 400,
-        height: 600
-    };
+    // static propTypes = {
+    //     items: PropTypes.array,
+    //     className: PropTypes.string,
+    //     itemClass: PropTypes.string,
+    //     width: PropTypes.number,
+    //     height: PropTypes.number,
+    //     onSortStart: PropTypes.func,
+    //     onSortEnd: PropTypes.func,
+    //     component: PropTypes.func,
+    //     shouldUseDragHandle: PropTypes.bool
+    // }
+    // static defaultProps = {
+    //     className: classNames('sb_list', 'sb_stylizedList'),
+    //     itemClass: classNames('sb_item', 'sb_stylizedItem'),
+    //     width: 400,
+    //     height: 600
+    // };
     onSortStart = () => {
         let {onSortStart} = this.props;
         this.setState({ isSorting: true });
@@ -101,7 +103,7 @@ export default class Results extends Component {
                 <ListWrapper 
                 component={SortableList} 
                 axis={'xy'} 
-                items={this.props.origin} 
+                origin={this.props.origin} 
                 helperClass={'sb_stylizedHelper'} 
                 className={classNames('sb_list', 'sb_stylizedList', 'sb_grid')} 
                 itemClass={classNames('sb_stylizedItem', 'sb_gridItem')}
