@@ -29,25 +29,10 @@ export default SortableElement((props) => {
                         'background-size': '80px 60px',
                         'background-repeat': 'no-repeat',
                         'background-position': 'center',
-                         'background-size': 'contain'
+                        'background-size': 'contain'
                     }} />
             </DragHandle>
         </div>
     </div>;
 }
 );
-
-// const Handle = SortableHandle(() => <div className={'sb_handle'}></div>);
-
-// export default SortableElement((props) => {
-//     return (
-//         <div className={props.className} style={{
-//             height: props.height
-//         }}>
-// 			{props.shouldUseDragHandle && <Handle/>}
-// 			<div className={'sb_wrapper'}>
-// 	            <span>Item</span> {props.value}
-// 			</div>
-//         </div>
-//     )
-// })

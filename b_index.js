@@ -42494,28 +42494,23 @@
 	            items: props.origin,
 	            isSorting: false
 	        };
+	        //function binding:
+	        _this.remove = _this.remove.bind(_this);
 	        return _this;
 	    }
-	    // static propTypes = {
-	    //     items: PropTypes.array,
-	    //     className: PropTypes.string,
-	    //     itemClass: PropTypes.string,
-	    //     width: PropTypes.number,
-	    //     height: PropTypes.number,
-	    //     onSortStart: PropTypes.func,
-	    //     onSortEnd: PropTypes.func,
-	    //     component: PropTypes.func,
-	    //     shouldUseDragHandle: PropTypes.bool
-	    // }
-	    // static defaultProps = {
-	    //     className: classNames('sb_list', 'sb_stylizedList'),
-	    //     itemClass: classNames('sb_item', 'sb_stylizedItem'),
-	    //     width: 400,
-	    //     height: 600
-	    // };
-	
 	
 	    _createClass(ListWrapper, [{
+	        key: 'remove',
+	        value: function remove(id) {
+	            this.set(function (results) {
+	                return results.filter(function (result) {
+	                    return result.id !== id;
+	                });
+	            }, {
+	                method: 'DELETE'
+	            }, id);
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var Component = this.props.component;
@@ -42529,7 +42524,8 @@
 	                onSortEnd: this.onSortEnd,
 	                onSortStart: this.onSortStart,
 	                ref: "component",
-	                useDragHandle: this.props.shouldUseDragHandle
+	                useDragHandle: this.props.shouldUseDragHandle,
+	                remove: this.remove
 	            };
 	            console.log(this.props);
 	            console.log(props);
@@ -42540,10 +42536,19 @@
 	    return ListWrapper;
 	}(_editor2.default);
 	
+	ListWrapper.defaultProps = {
+	    className: (0, _classnames2.default)('sb_list', 'sb_stylizedList'),
+	    itemClass: (0, _classnames2.default)('sb_item', 'sb_stylizedItem'),
+	    width: 400,
+	    height: 600
+	};
+	
+	
 	var SortableList = (0, _reactSortableHoc.SortableContainer)(function (_ref2) {
 	    var className = _ref2.className,
 	        items = _ref2.items,
 	        itemClass = _ref2.itemClass,
+	        remove = _ref2.remove,
 	        sortingIndex = _ref2.sortingIndex,
 	        shouldUseDragHandle = _ref2.shouldUseDragHandle,
 	        sortableHandlers = _ref2.sortableHandlers;
@@ -42560,9 +42565,7 @@
 	                value: value
 	                // height={height} TODO: check if it is so important to set height per each item..
 	                , shouldUseDragHandle: shouldUseDragHandle,
-	                remove: function remove(el) {
-	                    console.log;
-	                }
+	                remove: remove
 	            });
 	        })
 	    );
@@ -42767,21 +42770,6 @@
 	        )
 	    );
 	});
-	
-	// const Handle = SortableHandle(() => <div className={'sb_handle'}></div>);
-	
-	// export default SortableElement((props) => {
-	//     return (
-	//         <div className={props.className} style={{
-	//             height: props.height
-	//         }}>
-	// 			{props.shouldUseDragHandle && <Handle/>}
-	// 			<div className={'sb_wrapper'}>
-	// 	            <span>Item</span> {props.value}
-	// 			</div>
-	//         </div>
-	//     )
-	// })
 
 /***/ },
 /* 545 */

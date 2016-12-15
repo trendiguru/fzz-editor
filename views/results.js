@@ -21,27 +21,28 @@ class ListWrapper extends Editor {
     constructor(props) {
         super();
         this.state = {
-            items:props.origin, 
+            items: props.origin,
             isSorting: false
         };
+        //function binding:
+        this.remove = this.remove.bind(this);
     }
-    // static propTypes = {
-    //     items: PropTypes.array,
-    //     className: PropTypes.string,
-    //     itemClass: PropTypes.string,
-    //     width: PropTypes.number,
-    //     height: PropTypes.number,
-    //     onSortStart: PropTypes.func,
-    //     onSortEnd: PropTypes.func,
-    //     component: PropTypes.func,
-    //     shouldUseDragHandle: PropTypes.bool
-    // }
-    // static defaultProps = {
-    //     className: classNames('sb_list', 'sb_stylizedList'),
-    //     itemClass: classNames('sb_item', 'sb_stylizedItem'),
-    //     width: 400,
-    //     height: 600
-    // };
+    remove(id) {
+        this.set(
+            results => results.filter(result => result.id !== id),
+            {
+                method: 'DELETE',
+            },
+            id
+        );
+    }
+
+    static defaultProps = {
+        className: classNames('sb_list', 'sb_stylizedList'),
+        itemClass: classNames('sb_item', 'sb_stylizedItem'),
+        width: 400,
+        height: 600
+    };
     onSortStart = () => {
         let {onSortStart} = this.props;
         this.setState({ isSorting: true });
@@ -69,7 +70,8 @@ class ListWrapper extends Editor {
             onSortEnd: this.onSortEnd,
             onSortStart: this.onSortStart,
             ref: "component",
-            useDragHandle: this.props.shouldUseDragHandle
+            useDragHandle: this.props.shouldUseDragHandle,
+            remove: this.remove
         }
         console.log(this.props);
         console.log(props);
@@ -78,9 +80,9 @@ class ListWrapper extends Editor {
 }
 
 
-const SortableList = SortableContainer(({className, items, itemClass, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
+const SortableList = SortableContainer(({className, items, itemClass,remove, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
     return (
-        <div className={className} style={{width:'1300px', height:'auto'}} {...sortableHandlers}>
+        <div className={className} style={{ width: '1300px', height: 'auto' }} {...sortableHandlers}>
             {items.map((value, index) =>
                 <Item
                     key={index}
@@ -90,7 +92,7 @@ const SortableList = SortableContainer(({className, items, itemClass, sortingInd
                     value={value}
                     // height={height} TODO: check if it is so important to set height per each item..
                     shouldUseDragHandle={shouldUseDragHandle}
-                    remove={(el)=>{console.log;}}
+                    remove={remove}
                     />
             )}
         </div>
@@ -100,16 +102,16 @@ const SortableList = SortableContainer(({className, items, itemClass, sortingInd
 export default class Results extends Component {
     render() {
         return <div>
-                <ListWrapper 
-                component={SortableList} 
-                axis={'xy'} 
-                origin={this.props.origin} 
-                helperClass={'sb_stylizedHelper'} 
-                className={classNames('sb_list', 'sb_stylizedList', 'sb_grid')} 
+            <ListWrapper
+                component={SortableList}
+                axis={'xy'}
+                origin={this.props.origin}
+                helperClass={'sb_stylizedHelper'}
+                className={classNames('sb_list', 'sb_stylizedList', 'sb_grid')}
                 itemClass={classNames('sb_stylizedItem', 'sb_gridItem')}
                 shouldUseDragHandle={true}
                 />
-            </div>
+        </div>
     }
 }
 
