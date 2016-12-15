@@ -28,7 +28,7 @@ module.exports = {
     ],
     entry: {
         'b_index.js': ['core-js', 'web-core', './index.js'],
-        './css/main.css': ['react-select/dist/react-select.css', './storybook.scss']
+        './css/main.css': ['react-select/dist/react-select.css', './css/main.scss']
     },
     output: {
         path: '.',

@@ -42731,14 +42731,14 @@
 	            className: props.className,
 	            style: {
 	                margin: '1em 0',
-	                width: '24em',
+	                width: '12em',
 	                height: '12em',
 	                display: 'block',
 	                overflow: 'visible'
 	            } },
 	        _react2.default.createElement(
 	            'div',
-	            { style: { width: '100%', height: '100%' }, className: 'wrapper' },
+	            { style: { width: '100%', height: '100%' }, className: 'sb_wrapper' },
 	            _react2.default.createElement(
 	                'aside',
 	                null,
@@ -42757,7 +42757,7 @@
 	            _react2.default.createElement(
 	                DragHandle,
 	                null,
-	                _react2.default.createElement('div', { className: 'img', style: { backgroundImage: 'url(' + props.value.images.XLarge + ')' } })
+	                _react2.default.createElement('div', { style: { backgroundImage: 'url(' + props.value.images.XLarge + ')', height: '100%', width: '100%' } })
 	            )
 	        )
 	    );

@@ -10,19 +10,19 @@ export default SortableElement((props) => {
 className={props.className}
 style={{
     margin: '1em 0',
-    width: '24em',
+    width: '12em',
     height: '12em',
     display: 'block',
     overflow: 'visible',
 }}>
-    <div style={{width: '100%', height: '100%'}} className={'wrapper'} >
+    <div style={{width: '100%', height: '100%'}} className={'sb_wrapper'} >
        <aside>
            <button style={{position: 'relative', zIndex: 1000}} onClick={() => props.remove(value.id)}>
                <MDIcon>delete</MDIcon>
            </button>
        </aside>
        <DragHandle>
-           <div className="img" style={{backgroundImage: 'url('+props.value.images.XLarge+')'}} />
+           <div style={{backgroundImage: 'url('+props.value.images.XLarge+')', height:'100%', width:'100%'}} />
        </DragHandle>
    </div>
 </div>;
