@@ -42482,9 +42482,9 @@
 	            var onSortEnd = _this.props.onSortEnd;
 	            var items = _this.state.items;
 	
-	            //this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
 	
-	            _this.update((0, _reactSortableHoc.arrayMove)(_this.props.origin, oldIndex, newIndex)); //TODO: test it!
+	            _this.setState({ items: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex), isSorting: false });
+	            _this.update(_this.state.items); //TODO: test it!
 	
 	            if (onSortEnd) {
 	                onSortEnd(_this.refs.component);

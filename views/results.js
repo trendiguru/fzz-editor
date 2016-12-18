@@ -65,8 +65,8 @@ class ListWrapper extends Editor {
         let {onSortEnd} = this.props;
         let {items} = this.state;
 
-        //this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
-        this.update(arrayMove(this.props.origin, oldIndex, newIndex));//TODO: test it!
+        this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
+        this.update(this.state.items);//TODO: test it!
 
         if (onSortEnd) {
             onSortEnd(this.refs.component);
