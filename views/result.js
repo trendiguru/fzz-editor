@@ -17,7 +17,7 @@ export default SortableElement((props) => {
         }}>
         <div style={{ width: '100%', height: '100%' }} className={'sb_wrapper'} >
             <aside>
-                <button style={{ position: 'relative', zIndex: 1000 }} onClick={() => props.remove(value.id)}>
+                <button style={{ position: 'relative', zIndex: 1000 }} onClick={() => props.remove(props.value.id)}>
                     <MDIcon>delete</MDIcon>
                 </button>
             </aside>
