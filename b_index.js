@@ -42482,8 +42482,9 @@
 	            var onSortEnd = _this.props.onSortEnd;
 	            var items = _this.state.items;
 	
+	            //this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
 	
-	            _this.setState({ items: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex), isSorting: false });
+	            _this.update((0, _reactSortableHoc.arrayMove)(_this.props.origin, oldIndex, newIndex)); //TODO: test it!
 	
 	            if (onSortEnd) {
 	                onSortEnd(_this.refs.component);
@@ -42509,6 +42510,16 @@
 	            }, {
 	                method: 'DELETE'
 	            }, id);
+	        }
+	    }, {
+	        key: 'update',
+	        value: function update(results) {
+	            this.set(function () {
+	                return results;
+	            }, {
+	                method: 'PUT',
+	                body: JSON.stringify({ data: results })
+	            });
 	        }
 	    }, {
 	        key: 'render',

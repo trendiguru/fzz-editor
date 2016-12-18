@@ -43,6 +43,16 @@ class ListWrapper extends Editor {
         width: 400,
         height: 600
     };
+    update(results) {
+        this.set(
+            () => results,
+            {
+                method: 'PUT',
+                body: JSON.stringify({ data: results })
+            }
+        );
+    }
+
     onSortStart = () => {
         let {onSortStart} = this.props;
         this.setState({ isSorting: true });
@@ -55,7 +65,8 @@ class ListWrapper extends Editor {
         let {onSortEnd} = this.props;
         let {items} = this.state;
 
-        this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
+        //this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
+        this.update(arrayMove(this.props.origin, oldIndex, newIndex));//TODO: test it!
 
         if (onSortEnd) {
             onSortEnd(this.refs.component);
