@@ -400,26 +400,41 @@ button {
 header {
   width: 100%;
   position: absolute;
-  top: 0; }
-  header #search {
+  top: 0;
+  margin: auto;
+  padding: 10px;
+  z-index: 10000; }
+  header #search > input {
     padding: 0;
     overflow: hidden;
     background-color: #fff;
     border-radius: .125em;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     transition: box-shadow .25s;
-    width: calc(100% - 2em);
-    max-width: 20em;
+    width: 65%;
     padding: .5em 1em;
     font-size: 1.2em;
     display: block;
-    top: 2em;
-    left: 0;
-    right: 0;
-    margin: auto;
-    position: fixed;
-    z-index: 10000; }
-    header #search:hover, header #search:focus {
+    position: relative;
+    z-index: 10000;
+    display: inline; }
+    header #search > input:hover, header #search > input:focus {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23); }
+  header #search > button {
+    padding: 0;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: .125em;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    transition: box-shadow .25s;
+    width: 30%;
+    padding: .5em 1em;
+    font-size: 1.2em;
+    font-family: 'Times New Roman', Times, serif;
+    display: block;
+    display: inline;
+    background-color: PINK; }
+    header #search > button:hover, header #search > button:focus {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 .list .selectbox {

@@ -30385,14 +30385,21 @@
 	        value: function render() {
 	            var _this2 = this;
 	
-	            return _react2.default.createElement('input', {
-	                id: 'search',
-	                type: 'text',
-	                placeholder: 'Edit Image from URL',
-	                onChange: function onChange(e) {
-	                    return _this2.query(e.target.value);
-	                }
-	            });
+	            return _react2.default.createElement(
+	                'div',
+	                { id: 'search' },
+	                _react2.default.createElement('input', {
+	                    type: 'text',
+	                    placeholder: 'Edit Image from URL'
+	                }),
+	                _react2.default.createElement(
+	                    'button',
+	                    { type: 'button', onClick: function onClick(e) {
+	                            _this2.query(document.querySelector('input').value);
+	                        } },
+	                    'EDIT'
+	                )
+	            );
 	        }
 	    }]);
 	
