@@ -42458,13 +42458,13 @@
 	    });
 	}
 	
-	var ListWrapper = function (_Editor) {
-	    _inherits(ListWrapper, _Editor);
+	var Results = function (_Editor) {
+	    _inherits(Results, _Editor);
 	
-	    function ListWrapper(props) {
-	        _classCallCheck(this, ListWrapper);
+	    function Results(props) {
+	        _classCallCheck(this, Results);
 	
-	        var _this = _possibleConstructorReturn(this, (ListWrapper.__proto__ || Object.getPrototypeOf(ListWrapper)).call(this));
+	        var _this = _possibleConstructorReturn(this, (Results.__proto__ || Object.getPrototypeOf(Results)).call(this));
 	
 	        _this.onSortStart = function () {
 	            var onSortStart = _this.props.onSortStart;
@@ -42479,12 +42479,14 @@
 	        _this.onSortEnd = function (_ref) {
 	            var oldIndex = _ref.oldIndex,
 	                newIndex = _ref.newIndex;
+	
+	            _this.update((0, _reactSortableHoc.arrayMove)(_this.props.origin, oldIndex, newIndex));
+	            _this.setState({ isSorting: false });
 	            var onSortEnd = _this.props.onSortEnd;
-	            var items = _this.state.items;
+	            // let {items} = this.state;
 	
-	
-	            _this.setState({ items: (0, _reactSortableHoc.arrayMove)(items, oldIndex, newIndex), isSorting: false });
-	            _this.update(_this.state.items); //TODO: test it!
+	            // this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
+	            // this.update(this.state.items);//TODO: test it!
 	
 	            if (onSortEnd) {
 	                onSortEnd(_this.refs.component);
@@ -42497,10 +42499,12 @@
 	        };
 	        //function binding:
 	        _this.remove = _this.remove.bind(_this);
+	        _this.update = _this.update.bind(_this);
+	        _this.add = _this.add.bind(_this);
 	        return _this;
 	    }
 	
-	    _createClass(ListWrapper, [{
+	    _createClass(Results, [{
 	        key: 'remove',
 	        value: function remove(id) {
 	            this.set(function (results) {
@@ -42522,16 +42526,25 @@
 	            });
 	        }
 	    }, {
+	        key: 'add',
+	        value: function add(result) {
+	            this.set(function (results) {
+	                return results.concat(result);
+	            }, {
+	                method: 'POST',
+	                body: JSON.stringify({ data: result })
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var Component = this.props.component;
-	            var _state = this.state,
-	                items = _state.items,
-	                isSorting = _state.isSorting;
+	            var _this2 = this;
+	
+	            var isSorting = this.state.isSorting;
 	
 	            var props = {
 	                isSorting: isSorting,
-	                items: items,
+	                items: this.props.origin,
 	                onSortEnd: this.onSortEnd,
 	                onSortStart: this.onSortStart,
 	                ref: "component",
@@ -42540,61 +42553,6 @@
 	            };
 	            console.log(this.props);
 	            console.log(props);
-	            return _react2.default.createElement(Component, _extends({}, this.props, props));
-	        }
-	    }]);
-	
-	    return ListWrapper;
-	}(_editor2.default);
-	
-	ListWrapper.defaultProps = {
-	    className: (0, _classnames2.default)('sb_list', 'sb_stylizedList'),
-	    itemClass: (0, _classnames2.default)('sb_item', 'sb_stylizedItem'),
-	    width: 400,
-	    height: 600
-	};
-	
-	
-	var SortableList = (0, _reactSortableHoc.SortableContainer)(function (_ref2) {
-	    var className = _ref2.className,
-	        items = _ref2.items,
-	        itemClass = _ref2.itemClass,
-	        remove = _ref2.remove,
-	        sortingIndex = _ref2.sortingIndex,
-	        shouldUseDragHandle = _ref2.shouldUseDragHandle,
-	        sortableHandlers = _ref2.sortableHandlers;
-	
-	    return _react2.default.createElement(
-	        'div',
-	        _extends({ className: className, style: { width: '1300px', height: 'auto' } }, sortableHandlers),
-	        items.map(function (value, index) {
-	            return _react2.default.createElement(_result2.default, {
-	                key: index,
-	                className: itemClass,
-	                sortingIndex: sortingIndex,
-	                index: index,
-	                value: value,
-	                shouldUseDragHandle: shouldUseDragHandle,
-	                remove: remove
-	            });
-	        })
-	    );
-	});
-	
-	var Results = function (_Component) {
-	    _inherits(Results, _Component);
-	
-	    function Results() {
-	        _classCallCheck(this, Results);
-	
-	        return _possibleConstructorReturn(this, (Results.__proto__ || Object.getPrototypeOf(Results)).apply(this, arguments));
-	    }
-	
-	    _createClass(Results, [{
-	        key: 'render',
-	        value: function render() {
-	            var _this3 = this;
-	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -42620,10 +42578,10 @@
 	                    _react2.default.createElement('input', { type: 'text', name: 'clickUrl' }),
 	                    _react2.default.createElement(
 	                        'button',
-	                        { className: 'raised', type: 'button', onClick: function onClick(_ref3) {
-	                                var form = _ref3.target.parentElement;
+	                        { className: 'raised', type: 'button', onClick: function onClick(_ref2) {
+	                                var form = _ref2.target.parentElement;
 	
-	                                _this3.add({
+	                                _this2.add({
 	                                    clickUrl: form.elements.clickUrl.value,
 	                                    images: {
 	                                        XLarge: form.elements.image.value
@@ -42634,28 +42592,54 @@
 	                        'Submit'
 	                    )
 	                ),
-	                _react2.default.createElement(ListWrapper, {
-	                    component: SortableList,
+	                _react2.default.createElement(SortableList, _extends({
 	                    axis: 'xy',
-	                    origin: this.props.origin,
 	                    helperClass: 'sb_stylizedHelper',
 	                    className: (0, _classnames2.default)('sb_list', 'sb_stylizedList', 'sb_grid'),
 	                    itemClass: (0, _classnames2.default)('sb_stylizedItem', 'sb_gridItem'),
 	                    shouldUseDragHandle: true
-	                })
+	                }, props))
 	            );
 	        }
 	    }]);
 	
 	    return Results;
-	}(_react.Component);
+	}(_editor2.default);
 	
+	Results.defaultProps = {
+	    className: (0, _classnames2.default)('sb_list', 'sb_stylizedList'),
+	    itemClass: (0, _classnames2.default)('sb_item', 'sb_stylizedItem'),
+	    width: 400,
+	    height: 600
+	};
 	exports.default = Results;
 	
 	
-	var d = document.createElement("DIV");
-	document.body.appendChild(d);
-	// ReactDOM.render(grid(),d);
+	var SortableList = (0, _reactSortableHoc.SortableContainer)(function (_ref3) {
+	    var className = _ref3.className,
+	        items = _ref3.items,
+	        itemClass = _ref3.itemClass,
+	        remove = _ref3.remove,
+	        sortingIndex = _ref3.sortingIndex,
+	        shouldUseDragHandle = _ref3.shouldUseDragHandle,
+	        sortableHandlers = _ref3.sortableHandlers;
+	
+	    return _react2.default.createElement(
+	        'div',
+	        _extends({ className: className, style: { width: '100%', height: 'auto' } }, sortableHandlers),
+	        items.map(function (value, index) {
+	            return _react2.default.createElement(_result2.default, {
+	                key: index,
+	                className: itemClass,
+	                sortingIndex: sortingIndex,
+	                index: index,
+	                value: value,
+	                shouldUseDragHandle: shouldUseDragHandle,
+	                remove: remove
+	            });
+	        })
+	    );
+	});
 	
 	// import React from 'react';
 	// import { SortableContainer, arrayMove } from 'react-sortable-hoc';
@@ -42783,8 +42767,8 @@
 	            className: props.className
 	        }, 'style', {
 	            margin: '1em',
-	            width: '24em',
-	            height: '24em',
+	            width: '15em',
+	            height: '15em',
 	            display: 'block',
 	            overflow: 'visible',
 	            backgroundColor: 'WHITE',
@@ -42805,7 +42789,11 @@
 	                            width: REMOVE_BUTTON_SIZE,
 	                            height: REMOVE_BUTTON_SIZE,
 	                            borderRadius: '10px',
-	                            right: '0px'
+	                            right: '0px',
+	                            backgroundColor: 'PINK',
+	                            borderColor: 'GREY',
+	                            borderStyle: 'solid',
+	                            borderWidth: '3px'
 	                        }, onClick: function onClick() {
 	                            return props.remove(props.value.id);
 	                        } },

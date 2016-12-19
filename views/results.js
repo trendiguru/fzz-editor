@@ -17,7 +17,7 @@ function getItems(count, height) {
     });
 }
 
-class ListWrapper extends Editor {
+export default class Results extends Editor {
     constructor(props) {
         super();
         this.state = {
@@ -26,6 +26,8 @@ class ListWrapper extends Editor {
         };
         //function binding:
         this.remove = this.remove.bind(this);
+        this.update = this.update.bind(this);
+        this.add = this.add.bind(this);
     }
     remove(id) {
         this.set(
@@ -53,6 +55,16 @@ class ListWrapper extends Editor {
         );
     }
 
+    add(result) {
+        this.set(
+            (results) => results.concat(result),
+            {
+                method: 'POST',
+                body: JSON.stringify({ data: result })
+            }
+        );
+    }
+
     onSortStart = () => {
         let {onSortStart} = this.props;
         this.setState({ isSorting: true });
@@ -62,22 +74,23 @@ class ListWrapper extends Editor {
         }
     };
     onSortEnd = ({oldIndex, newIndex}) => {
+        this.update(arrayMove(this.props.origin, oldIndex, newIndex));
+        this.setState({isSorting: false});
         let {onSortEnd} = this.props;
-        let {items} = this.state;
+        // let {items} = this.state;
 
-        this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
-        this.update(this.state.items);//TODO: test it!
+        // this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
+        // this.update(this.state.items);//TODO: test it!
 
         if (onSortEnd) {
             onSortEnd(this.refs.component);
         }
     };
     render() {
-        const Component = this.props.component;
-        const {items, isSorting} = this.state;
+        const {isSorting} = this.state;
         const props = {
             isSorting,
-            items,
+            items: this.props.origin,
             onSortEnd: this.onSortEnd,
             onSortStart: this.onSortStart,
             ref: "component",
@@ -86,31 +99,6 @@ class ListWrapper extends Editor {
         }
         console.log(this.props);
         console.log(props);
-        return <Component {...this.props} {...props} />
-    }
-}
-
-
-const SortableList = SortableContainer(({className, items, itemClass, remove, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
-    return (
-        <div className={className} style={{ width: '1300px', height: 'auto' }} {...sortableHandlers}>
-            {items.map((value, index) =>
-                <Item
-                    key={index}
-                    className={itemClass}
-                    sortingIndex={sortingIndex}
-                    index={index}
-                    value={value}
-                    shouldUseDragHandle={shouldUseDragHandle}
-                    remove={remove}
-                    />
-            )}
-        </div>
-    );
-});
-
-export default class Results extends Component {
-    render() {
         return <div>
             <form className="result-form">
                 <h3>Add a result</h3>
@@ -128,22 +116,37 @@ export default class Results extends Component {
                     form.reset();
                 } }>Submit</button>
             </form>
-            <ListWrapper
-                component={SortableList}
+            <SortableList
                 axis={'xy'}
-                origin={this.props.origin}
                 helperClass={'sb_stylizedHelper'}
                 className={classNames('sb_list', 'sb_stylizedList', 'sb_grid')}
                 itemClass={classNames('sb_stylizedItem', 'sb_gridItem')}
                 shouldUseDragHandle={true}
+                {...props}
                 />
         </div>
+
     }
 }
 
-let d = document.createElement("DIV");
-document.body.appendChild(d);
-// ReactDOM.render(grid(),d);
+
+const SortableList = SortableContainer(({className, items, itemClass, remove, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
+    return (
+        <div className={className} style={{ width: '100%', height: 'auto' }} {...sortableHandlers}>
+            {items.map((value, index) =>
+                <Item
+                    key={index}
+                    className={itemClass}
+                    sortingIndex={sortingIndex}
+                    index={index}
+                    value={value}
+                    shouldUseDragHandle={shouldUseDragHandle}
+                    remove={remove}
+                    />
+            )}
+        </div>
+    );
+});
 
 // import React from 'react';
 // import { SortableContainer, arrayMove } from 'react-sortable-hoc';

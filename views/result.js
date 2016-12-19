@@ -12,8 +12,8 @@ export default SortableElement((props) => {
         className={props.className}
         style={{
             margin: '1em',
-            width: '24em',
-            height: '24em',
+            width: '15em',
+            height: '15em',
             display: 'block',
             overflow: 'visible',
             backgroundColor: 'WHITE',
@@ -28,7 +28,11 @@ export default SortableElement((props) => {
                     width: REMOVE_BUTTON_SIZE,
                     height: REMOVE_BUTTON_SIZE, 
                     borderRadius: '10px',
-                    right: '0px'
+                    right: '0px',
+                    backgroundColor: 'PINK',
+                    borderColor: 'GREY',
+                    borderStyle: 'solid',
+                    borderWidth: '3px',
                 }} onClick={() => props.remove(props.value.id)}>
                     <MDIcon>delete</MDIcon>
                 </button>
