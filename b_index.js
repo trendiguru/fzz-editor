@@ -42470,10 +42470,6 @@
 	            var onSortStart = _this.props.onSortStart;
 	
 	            _this.setState({ isSorting: true });
-	
-	            if (onSortStart) {
-	                onSortStart(_this.refs.component);
-	            }
 	        };
 	
 	        _this.onSortEnd = function (_ref) {
@@ -42483,14 +42479,6 @@
 	            _this.update((0, _reactSortableHoc.arrayMove)(_this.props.origin, oldIndex, newIndex));
 	            _this.setState({ isSorting: false });
 	            var onSortEnd = _this.props.onSortEnd;
-	            // let {items} = this.state;
-	
-	            // this.setState({ items: arrayMove(items, oldIndex, newIndex), isSorting: false });
-	            // this.update(this.state.items);//TODO: test it!
-	
-	            if (onSortEnd) {
-	                onSortEnd(_this.refs.component);
-	            }
 	        };
 	
 	        _this.state = {
@@ -42551,8 +42539,6 @@
 	                useDragHandle: this.props.shouldUseDragHandle,
 	                remove: this.remove
 	            };
-	            console.log(this.props);
-	            console.log(props);
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -42626,7 +42612,7 @@
 	
 	    return _react2.default.createElement(
 	        'div',
-	        _extends({ className: className, style: { width: '100%', height: 'auto' } }, sortableHandlers),
+	        _extends({ className: className, style: { width: '100%', height: '100%' } }, sortableHandlers),
 	        items.map(function (value, index) {
 	            return _react2.default.createElement(_result2.default, {
 	                key: index,
@@ -42640,93 +42626,6 @@
 	        })
 	    );
 	});
-	
-	// import React from 'react';
-	// import { SortableContainer, arrayMove } from 'react-sortable-hoc';
-	// import Editor from './editor';
-	// import Result from './result';
-	// import classNames from 'classnames';
-	
-	// console.log("*******");
-	// console.log(classNames);
-	
-	// const SortableList = SortableContainer(({className, items, itemClass, sortingIndex, shouldUseDragHandle, sortableHandlers, remove}) => <div className={className} {...sortableHandlers}>
-	//     {items.map((item, index) =>
-	//         <Result key={index} 
-	//         {...{ remove, index }}
-	//         className={itemClass}
-	//         sortingIndex={sortingIndex}
-	//         shouldUseDragHandle={shouldUseDragHandle} 
-	//         value={item} 
-	//         />
-	//     )}
-	// </div>);
-	
-	// export default class Results extends Editor {
-	//     state = {
-	//         selected: undefined
-	//     }
-	//     add(result) {
-	//         this.set(
-	//             (results) => results.concat(result),
-	//             {
-	//                 method: 'POST',
-	//                 body: JSON.stringify({ data: result })
-	//             }
-	//         );
-	//     }
-	//     update(results) {
-	//         this.set(
-	//             () => results,
-	//             {
-	//                 method: 'PUT',
-	//                 body: JSON.stringify({ data: results })
-	//             }
-	//         );
-	//     }
-	//     remove(id) {
-	//         this.set(
-	//             results => results.filter(result => result.id !== id),
-	//             {
-	//                 method: 'DELETE',
-	//             },
-	//             id
-	//         );
-	//     }
-	//     onSortEnd({oldIndex, newIndex}) {
-	//         this.update(arrayMove(this.props.origin, oldIndex, newIndex));
-	//     }
-	//     render() {
-	//         return <div>
-	//             <form className="result-form">
-	//                 <h3>Add a result</h3>
-	//                 <label>Image</label>
-	//                 <input type="text" name="image" />
-	//                 <label>Click URL</label>
-	//                 <input type="text" name="clickUrl" />
-	//                 <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
-	//                     this.add({
-	//                         clickUrl: form.elements.clickUrl.value,
-	//                         images: {
-	//                             XLarge: form.elements.image.value
-	//                         }
-	//                     });
-	//                     form.reset();
-	//                 } }>Submit</button>
-	//             </form>
-	//             <SortableList
-	//                 helperClass={'stylizedHelper'}
-	//                 className={classNames('storybooklist', 'stylizedList', 'grid')}
-	//                 itemClass={classNames('stylizedItem', 'gridItem', 'list-item')}
-	//                 axis={'xy'}
-	//                 useDragHandle={true}
-	//                 items={this.props.origin}
-	//                 onSortEnd={::this.onSortEnd}
-	//                 remove={::this.remove}
-	//             />
-	//         </div>;
-	//     }
-	// }
 
 /***/ },
 /* 544 */
@@ -42760,7 +42659,6 @@
 	});
 	
 	exports.default = (0, _reactSortableHoc.SortableElement)(function (props) {
-	    console.log(props);
 	    return _react2.default.createElement(
 	        'div',
 	        _defineProperty({ style: { isolation: 'isolate' },
