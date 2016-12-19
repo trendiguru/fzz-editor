@@ -42573,9 +42573,8 @@
 	                className: itemClass,
 	                sortingIndex: sortingIndex,
 	                index: index,
-	                value: value
-	                // height={height} TODO: check if it is so important to set height per each item..
-	                , shouldUseDragHandle: shouldUseDragHandle,
+	                value: value,
+	                shouldUseDragHandle: shouldUseDragHandle,
 	                remove: remove
 	            });
 	        })
@@ -42594,9 +42593,47 @@
 	    _createClass(Results, [{
 	        key: 'render',
 	        value: function render() {
+	            var _this3 = this;
+	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
+	                _react2.default.createElement(
+	                    'form',
+	                    { className: 'result-form' },
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'Add a result'
+	                    ),
+	                    _react2.default.createElement(
+	                        'label',
+	                        null,
+	                        'Image'
+	                    ),
+	                    _react2.default.createElement('input', { type: 'text', name: 'image' }),
+	                    _react2.default.createElement(
+	                        'label',
+	                        null,
+	                        'Click URL'
+	                    ),
+	                    _react2.default.createElement('input', { type: 'text', name: 'clickUrl' }),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'raised', type: 'button', onClick: function onClick(_ref3) {
+	                                var form = _ref3.target.parentElement;
+	
+	                                _this3.add({
+	                                    clickUrl: form.elements.clickUrl.value,
+	                                    images: {
+	                                        XLarge: form.elements.image.value
+	                                    }
+	                                });
+	                                form.reset();
+	                            } },
+	                        'Submit'
+	                    )
+	                ),
 	                _react2.default.createElement(ListWrapper, {
 	                    component: SortableList,
 	                    axis: 'xy',
@@ -42731,6 +42768,8 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
+	var REMOVE_BUTTON_SIZE = '40px';
+	
 	var DragHandle = (0, _reactSortableHoc.SortableHandle)(function (_ref) {
 	    var children = _ref.children;
 	    return children;
@@ -42740,24 +42779,34 @@
 	    console.log(props);
 	    return _react2.default.createElement(
 	        'div',
-	        {
-	            className: props.className,
-	            style: {
-	                margin: '1em 0',
-	                width: '24em',
-	                height: '24em',
-	                display: 'block',
-	                overflow: 'visible'
-	            } },
+	        _defineProperty({ style: { isolation: 'isolate' },
+	            className: props.className
+	        }, 'style', {
+	            margin: '1em',
+	            width: '24em',
+	            height: '24em',
+	            display: 'block',
+	            overflow: 'visible',
+	            backgroundColor: 'WHITE',
+	            borderRadius: '10px',
+	            borderColor: 'PINK',
+	            borderStyle: 'solid',
+	            borderWidth: '3px'
+	        }),
 	        _react2.default.createElement(
 	            'div',
-	            { style: { width: '100%', height: '100%' }, className: 'sb_wrapper' },
+	            { style: { width: '100%', height: '100%' } },
 	            _react2.default.createElement(
 	                'aside',
-	                null,
+	                { style: { position: 'absolute', marging: '10px' } },
 	                _react2.default.createElement(
 	                    'button',
-	                    { style: { position: 'relative', zIndex: 1000 }, onClick: function onClick() {
+	                    { style: {
+	                            width: REMOVE_BUTTON_SIZE,
+	                            height: REMOVE_BUTTON_SIZE,
+	                            borderRadius: '10px',
+	                            right: '0px'
+	                        }, onClick: function onClick() {
 	                            return props.remove(props.value.id);
 	                        } },
 	                    _react2.default.createElement(
@@ -42770,13 +42819,13 @@
 	            _react2.default.createElement(
 	                DragHandle,
 	                null,
-	                _react2.default.createElement('div', { style: _defineProperty({
+	                _react2.default.createElement('div', { style: {
 	                        backgroundImage: 'url(' + props.value.images.XLarge + ')',
 	                        height: '100%', width: '100%',
-	                        'background-size': '80px 60px',
-	                        'background-repeat': 'no-repeat',
-	                        'background-position': 'center'
-	                    }, 'background-size', 'contain') })
+	                        'backgroundRepeat': 'no-repeat',
+	                        'backgroundPosition': 'center',
+	                        'backgroundSize': 'contain'
+	                    } })
 	            )
 	        )
 	    );

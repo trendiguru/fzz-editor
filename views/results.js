@@ -91,7 +91,7 @@ class ListWrapper extends Editor {
 }
 
 
-const SortableList = SortableContainer(({className, items, itemClass,remove, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
+const SortableList = SortableContainer(({className, items, itemClass, remove, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
     return (
         <div className={className} style={{ width: '1300px', height: 'auto' }} {...sortableHandlers}>
             {items.map((value, index) =>
@@ -101,7 +101,6 @@ const SortableList = SortableContainer(({className, items, itemClass,remove, sor
                     sortingIndex={sortingIndex}
                     index={index}
                     value={value}
-                    // height={height} TODO: check if it is so important to set height per each item..
                     shouldUseDragHandle={shouldUseDragHandle}
                     remove={remove}
                     />
@@ -113,6 +112,22 @@ const SortableList = SortableContainer(({className, items, itemClass,remove, sor
 export default class Results extends Component {
     render() {
         return <div>
+            <form className="result-form">
+                <h3>Add a result</h3>
+                <label>Image</label>
+                <input type="text" name="image" />
+                <label>Click URL</label>
+                <input type="text" name="clickUrl" />
+                <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
+                    this.add({
+                        clickUrl: form.elements.clickUrl.value,
+                        images: {
+                            XLarge: form.elements.image.value
+                        }
+                    });
+                    form.reset();
+                } }>Submit</button>
+            </form>
             <ListWrapper
                 component={SortableList}
                 axis={'xy'}
