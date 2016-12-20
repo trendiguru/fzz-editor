@@ -42531,6 +42531,14 @@
 	            });
 	        }
 	    }, {
+	        key: 'shouldCancelStart',
+	        value: function shouldCancelStart(e) {
+	            // Cancel sorting if the event target is a 'button':
+	            if (['button'].indexOf(e.target.tagName.toLowerCase()) !== -1) {
+	                return true; // Return true to cancel sorting
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this2 = this;
@@ -42542,6 +42550,7 @@
 	                items: this.props.origin,
 	                onSortEnd: this.onSortEnd,
 	                onSortStart: this.onSortStart,
+	                shouldCancelStart: this.shouldCancelStart,
 	                ref: "component",
 	                useDragHandle: this.props.shouldUseDragHandle,
 	                remove: this.remove
@@ -42656,8 +42665,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
 	var REMOVE_BUTTON_SIZE = '40px';
 	
 	var DragHandle = (0, _reactSortableHoc.SortableHandle)(function (_ref) {
@@ -42668,20 +42675,21 @@
 	exports.default = (0, _reactSortableHoc.SortableElement)(function (props) {
 	    return _react2.default.createElement(
 	        'div',
-	        _defineProperty({ style: { isolation: 'isolate' },
-	            className: props.className
-	        }, 'style', {
-	            margin: '1em',
-	            width: '15em',
-	            height: '15em',
-	            display: 'block',
-	            overflow: 'visible',
-	            backgroundColor: 'WHITE',
-	            borderRadius: '10px',
-	            borderColor: 'PINK',
-	            borderStyle: 'solid',
-	            borderWidth: '3px'
-	        }),
+	        {
+	            className: props.className,
+	            style: {
+	                isolation: 'isolate',
+	                margin: '1em',
+	                width: '15em',
+	                height: '15em',
+	                display: 'block',
+	                overflow: 'visible',
+	                backgroundColor: 'WHITE',
+	                borderRadius: '10px',
+	                borderColor: 'PINK',
+	                borderStyle: 'solid',
+	                borderWidth: '3px'
+	            } },
 	        _react2.default.createElement(
 	            'div',
 	            { style: { width: '100%', height: '100%' } },

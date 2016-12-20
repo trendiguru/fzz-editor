@@ -7,9 +7,10 @@ const REMOVE_BUTTON_SIZE = '40px';
 const DragHandle = SortableHandle(({children}) => children);
 
 export default SortableElement((props) => {
-    return <div style={{ isolation: 'isolate' }}
+    return <div 
         className={props.className}
         style={{
+            isolation: 'isolate',
             margin: '1em',
             width: '15em',
             height: '15em',

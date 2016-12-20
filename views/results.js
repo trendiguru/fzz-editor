@@ -63,6 +63,12 @@ export default class Results extends Editor {
             }
         );
     }
+    shouldCancelStart(e) {
+        // Cancel sorting if the event target is a 'button':
+        if (['button'].indexOf(e.target.tagName.toLowerCase()) !== -1) {
+            return true; // Return true to cancel sorting
+        }
+    }
 
     onSortStart = () => {
         let {onSortStart} = this.props;
@@ -80,6 +86,7 @@ export default class Results extends Editor {
             items: this.props.origin,
             onSortEnd: this.onSortEnd,
             onSortStart: this.onSortStart,
+            shouldCancelStart:this.shouldCancelStart,
             ref: "component",
             useDragHandle: this.props.shouldUseDragHandle,
             remove: this.remove
