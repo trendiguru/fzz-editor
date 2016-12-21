@@ -4,7 +4,7 @@ div[data-reactroot] {
 
         &.selected {
             column-count: 1;
-
+            background-color:pink;
             > .list-item > *:first-child {
                 display: inline-block;
                 cursor: auto;
@@ -15,7 +15,11 @@ div[data-reactroot] {
                     max-height: 30em;
                 }
             }
-
+            > .list-item > div:nth-child(2) {                    
+                    float: left;
+                    width: 60%;
+                    background-color: green;
+                }
             > .list-item:not(.selected) {
                 display: none;
             }

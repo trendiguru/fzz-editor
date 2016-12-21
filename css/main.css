@@ -526,7 +526,8 @@ header {
 div[data-reactroot] > .list {
   column-count: 3; }
   div[data-reactroot] > .list.selected {
-    column-count: 1; }
+    column-count: 1;
+    background-color: pink; }
     div[data-reactroot] > .list.selected > .list-item > *:first-child {
       display: inline-block;
       cursor: auto; }
@@ -534,6 +535,10 @@ div[data-reactroot] > .list {
         width: auto;
         max-width: 30em;
         max-height: 30em; }
+    div[data-reactroot] > .list.selected > .list-item > div:nth-child(2) {
+      float: left;
+      width: 60%;
+      background-color: green; }
     div[data-reactroot] > .list.selected > .list-item:not(.selected) {
       display: none; }
   div[data-reactroot] > .list > .list-item {
@@ -563,9 +568,9 @@ div[data-reactroot] > .list {
 
 #reference {
   max-width: 20em;
-  position: fixed;
-  top: 8em;
-  right: 1em;
+  position: absolute;
+  width: 40%;
+  right: 0px;
   z-index: 1000; }
 
 .react-grid-item.list-item {
