@@ -65,7 +65,7 @@ export default class Results extends Editor {
     }
     shouldCancelStart(e) {
         // Cancel sorting if the event target is a 'button':
-        if (['button'].indexOf(e.target.tagName.toLowerCase()) !== -1) {
+        if (['button', 'i'].indexOf(e.target.tagName.toLowerCase()) !== -1) {
             return true; // Return true to cancel sorting
         }
     }
