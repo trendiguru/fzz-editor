@@ -1,24 +1,31 @@
 div[data-reactroot] {
     > .list {
         column-count: 3;
-
         &.selected {
             column-count: 1;
             background-color:pink;
+            
             > .list-item > *:first-child {
                 display: inline-block;
                 cursor: auto;
-
+                width:100%;
+                min-height:40px;
+                height:40px;
                 > img {
                     width: auto;
                     max-width: 30em;
                     max-height: 30em;
+                    visibility: collapse;
+                    height:50px;
                 }
             }
             > .list-item > div:nth-child(2) {                    
                     float: left;
-                    width: 60%;
+                    width: 50%;
                     background-color: green;
+                    height:1000px;
+                    overflow-y:scroll;
+                    height:100%;
                 }
             > .list-item:not(.selected) {
                 display: none;

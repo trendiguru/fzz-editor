@@ -530,15 +530,23 @@ div[data-reactroot] > .list {
     background-color: pink; }
     div[data-reactroot] > .list.selected > .list-item > *:first-child {
       display: inline-block;
-      cursor: auto; }
+      cursor: auto;
+      width: 100%;
+      min-height: 40px;
+      height: 40px; }
       div[data-reactroot] > .list.selected > .list-item > *:first-child > img {
         width: auto;
         max-width: 30em;
-        max-height: 30em; }
+        max-height: 30em;
+        visibility: collapse;
+        height: 50px; }
     div[data-reactroot] > .list.selected > .list-item > div:nth-child(2) {
       float: left;
-      width: 60%;
-      background-color: green; }
+      width: 50%;
+      background-color: green;
+      height: 1000px;
+      overflow-y: scroll;
+      height: 100%; }
     div[data-reactroot] > .list.selected > .list-item:not(.selected) {
       display: none; }
   div[data-reactroot] > .list > .list-item {
