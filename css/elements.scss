@@ -1,31 +1,31 @@
+//height: 85vh - 83% browser support
+$INNER_WINDOW_HEIGHT: 85vh;
+$MIN_INNER_WINDOW_HEIGHT:500px;
+
 div[data-reactroot] {
     > .list {
         column-count: 3;
         &.selected {
             column-count: 1;
-            background-color:black;//pink;
-            //display:flex;
-           // flex:1;
+            //background-color:white;
             > .list-item > *:first-child {
                 display: inline-block;
                 cursor: auto;
                 width:40%;
-                min-height:800px;
-                height:100%;
+                min-height:$MIN_INNER_WINDOW_HEIGHT;
+                height:$INNER_WINDOW_HEIGHT;
                 > img {
                     width: 100%;
+                    max-width: 500px;
                 }
             }
             > .list-item > div:nth-child(2) {  
-                    //test
-                    height: auto;
+                    height: $INNER_WINDOW_HEIGHT;
+                    min-height:$MIN_INNER_WINDOW_HEIGHT;
                     overflow-y: auto;
-                    //end test             
-                    float: left;
+                    float:right;
                     width: 60%;
-                    background-color: green;
-                    //overflow-y:scroll;
-                    height:inherit;
+                   // background-color:white;
                 }
             > .list-item:not(.selected) {
                 display: none;
