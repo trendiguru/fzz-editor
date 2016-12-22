@@ -541,7 +541,10 @@ div[data-reactroot] > .list {
       min-height: 500px;
       overflow-y: auto;
       float: right;
-      width: 60%; }
+      width: 57%;
+      background-color: pink;
+      border-radius: 5px;
+      margin-left: 3%; }
     div[data-reactroot] > .list.selected > .list-item:not(.selected) {
       display: none; }
   div[data-reactroot] > .list > .list-item {

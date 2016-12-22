@@ -7,7 +7,7 @@ div[data-reactroot] {
         column-count: 3;
         &.selected {
             column-count: 1;
-            //background-color:white;
+            
             > .list-item > *:first-child {
                 display: inline-block;
                 cursor: auto;
@@ -24,8 +24,10 @@ div[data-reactroot] {
                     min-height:$MIN_INNER_WINDOW_HEIGHT;
                     overflow-y: auto;
                     float:right;
-                    width: 60%;
-                   // background-color:white;
+                    width: 57%;
+                    background-color:pink;
+                    border-radius:5px;
+                    margin-left:3%;
                 }
             > .list-item:not(.selected) {
                 display: none;

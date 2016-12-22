@@ -18,7 +18,7 @@ export default SortableElement((props) => {
             overflow: 'visible',
             backgroundColor: 'WHITE',
             borderRadius: '10px',
-            borderColor: 'PINK',
+            borderColor: 'GREY',
             borderStyle: 'solid',
             borderWidth: '3px',
         }}>
