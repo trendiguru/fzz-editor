@@ -527,7 +527,7 @@ div[data-reactroot] > .list {
   column-count: 3; }
   div[data-reactroot] > .list.selected {
     column-count: 1;
-    background-color: pink; }
+    background-color: black; }
     div[data-reactroot] > .list.selected > .list-item > *:first-child {
       display: inline-block;
       cursor: auto;
@@ -542,7 +542,7 @@ div[data-reactroot] > .list {
         height: 50px; }
     div[data-reactroot] > .list.selected > .list-item > div:nth-child(2) {
       float: left;
-      width: 50%;
+      width: 60%;
       background-color: green;
       height: 1000px;
       overflow-y: scroll;

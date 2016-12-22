@@ -3,7 +3,7 @@ div[data-reactroot] {
         column-count: 3;
         &.selected {
             column-count: 1;
-            background-color:pink;
+            background-color:black;//pink;
             
             > .list-item > *:first-child {
                 display: inline-block;
@@ -21,7 +21,7 @@ div[data-reactroot] {
             }
             > .list-item > div:nth-child(2) {                    
                     float: left;
-                    width: 50%;
+                    width: 60%;
                     background-color: green;
                     height:1000px;
                     overflow-y:scroll;
