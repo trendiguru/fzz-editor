@@ -531,15 +531,11 @@ div[data-reactroot] > .list {
     div[data-reactroot] > .list.selected > .list-item > *:first-child {
       display: inline-block;
       cursor: auto;
-      width: 100%;
-      min-height: 40px;
-      height: 40px; }
+      width: 40%;
+      min-height: 50pxpx;
+      height: 100%; }
       div[data-reactroot] > .list.selected > .list-item > *:first-child > img {
-        width: auto;
-        max-width: 30em;
-        max-height: 30em;
-        visibility: collapse;
-        height: 50px; }
+        width: 100%; }
     div[data-reactroot] > .list.selected > .list-item > div:nth-child(2) {
       float: left;
       width: 60%;
