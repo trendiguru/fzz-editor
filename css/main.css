@@ -532,17 +532,17 @@ div[data-reactroot] > .list {
       display: inline-block;
       cursor: auto;
       width: 40%;
-      min-height: 50pxpx;
+      min-height: 800px;
       height: 100%; }
       div[data-reactroot] > .list.selected > .list-item > *:first-child > img {
         width: 100%; }
     div[data-reactroot] > .list.selected > .list-item > div:nth-child(2) {
+      height: auto;
+      overflow-y: auto;
       float: left;
       width: 60%;
       background-color: green;
-      height: 1000px;
-      overflow-y: scroll;
-      height: 100%; }
+      height: inherit; }
     div[data-reactroot] > .list.selected > .list-item:not(.selected) {
       display: none; }
   div[data-reactroot] > .list > .list-item {

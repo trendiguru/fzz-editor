@@ -4,28 +4,28 @@ div[data-reactroot] {
         &.selected {
             column-count: 1;
             background-color:black;//pink;
-            
+            //display:flex;
+           // flex:1;
             > .list-item > *:first-child {
                 display: inline-block;
                 cursor: auto;
                 width:40%;
-                min-height:50pxpx;
+                min-height:800px;
                 height:100%;
                 > img {
                     width: 100%;
-                    // max-width: 30em;
-                    // max-height: 30em;
-                    // visibility: collapse;
-                    // height:50px;
                 }
             }
-            > .list-item > div:nth-child(2) {                    
+            > .list-item > div:nth-child(2) {  
+                    //test
+                    height: auto;
+                    overflow-y: auto;
+                    //end test             
                     float: left;
                     width: 60%;
                     background-color: green;
-                    height:1000px;
-                    overflow-y:scroll;
-                    height:100%;
+                    //overflow-y:scroll;
+                    height:inherit;
                 }
             > .list-item:not(.selected) {
                 display: none;
