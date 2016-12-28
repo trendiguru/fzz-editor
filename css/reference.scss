@@ -1,7 +1,9 @@
 #reference {
-    max-width: 20em;
-    position: fixed;
-    top: 8em;
-    right: 1em;
+    max-width: 20em;// TODO: check it)
+    position: absolute;
+    width: 40%;
+    // top: 8em;
+    // right: 1em;
+    right:0px;
     z-index: 1000;
 }

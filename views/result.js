@@ -1,26 +1,53 @@
 import React from 'react';
 import MDIcon from './md-icon';
-import {SortableElement, SortableHandle} from 'react-sortable-hoc';
+import { SortableElement, SortableHandle } from 'react-sortable-hoc';
+
+const REMOVE_BUTTON_SIZE = '40px';
 
 const DragHandle = SortableHandle(({children}) => children);
 
-export default SortableElement(({value: result, remove}) => <div
-className="list-item"
-style={{
-    margin: '1em 0',
-    width: '24em',
-    height: '12em',
-    display: 'block',
-    overflow: 'visible'
-}}>
-    <div style={{width: '100%', height: '100%'}}>
-       <aside>
-           <button style={{position: 'relative', zIndex: 1000}} onClick={() => remove(result.id)}>
-               <MDIcon>delete</MDIcon>
-           </button>
-       </aside>
-       <DragHandle>
-           <div className="img" style={{backgroundImage: `url(${result.images.XLarge})`}} />
-       </DragHandle>
-   </div>
-</div>);
+export default SortableElement((props) => {
+    return <div 
+        className={props.className}
+        style={{
+            isolation: 'isolate',
+            margin: '1em',
+            width: '15em',
+            height: '15em',
+            display: 'block',
+            overflow: 'visible',
+            backgroundColor: 'WHITE',
+            borderRadius: '10px',
+            borderColor: 'GREY',
+            borderStyle: 'solid',
+            borderWidth: '3px',
+        }}>
+        <div style={{ width: '100%', height: '100%'}}  >
+            <aside style={{ position: 'absolute', marging:'10px'}}>
+                <button style={{
+                    width: REMOVE_BUTTON_SIZE,
+                    height: REMOVE_BUTTON_SIZE, 
+                    borderRadius: '10px',
+                    right: '0px',
+                    backgroundColor: 'PINK',
+                    borderColor: 'GREY',
+                    borderStyle: 'solid',
+                    borderWidth: '3px',
+                }} onClick={() => props.remove(props.value.id)}>
+                    <MDIcon>delete</MDIcon>
+                </button>
+            </aside>
+            <DragHandle>
+                <div style={
+                    {
+                        backgroundImage: 'url(' + props.value.images.XLarge + ')',
+                        height: '100%', width: '100%',
+                        'backgroundRepeat': 'no-repeat',
+                        'backgroundPosition': 'center',
+                        'backgroundSize': 'contain'
+                    }} />
+            </DragHandle>
+        </div>
+    </div>;
+}
+);

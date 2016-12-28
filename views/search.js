@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import ID from '../modules/id';
 
 export default class Search extends Component {
@@ -6,12 +6,12 @@ export default class Search extends Component {
         query: ''
     }
     static contextTypes = {
-        getImageByURL:  PropTypes.func.isRequired,
-        selectImage:    PropTypes.func.isRequired,
-        unselectImage:  PropTypes.func.isRequired,
-        setImages:      PropTypes.func.isRequired,
+        getImageByURL: PropTypes.func.isRequired,
+        selectImage: PropTypes.func.isRequired,
+        unselectImage: PropTypes.func.isRequired,
+        setImages: PropTypes.func.isRequired,
     }
-    query (query) {
+    query(query) {
         let {
             context: {getImageByURL, selectImage, unselectImage, setImages}
         } = this;
@@ -19,20 +19,22 @@ export default class Search extends Component {
         if (!query.length) {
             return unselectImage();
         }
-        this.setState({query});
+        this.setState({ query });
         selectImage(id);
         return getImageByURL(query)
-        .then((image) => selectImage(image.image_id))
-        .catch(() => setImages(images => Object.assign({}, images, {
-            [id]: null
-        })));
+            .then((image) => selectImage(image.image_id))
+            .catch(() => setImages(images => Object.assign({}, images, {
+                [id]: null
+            })));
     }
-    render () {
-        return <input
-            id="search"
+    render() {
+        return <div id="search"><input
             type="text"
             placeholder="Edit Image from URL"
-            onChange={e => this.query(e.target.value)}
-        />;
+            />
+            <button type="button" onClick={(e) => { 
+                this.query(document.querySelector('input').value) } }>EDIT
+        </button>
+        </div>;
     }
 }

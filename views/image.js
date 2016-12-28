@@ -42,7 +42,7 @@ export default class Image extends Component {
             return <div>LOADING</div>;
         }
         return <div>
-            <img id="reference" src={image_urls[0]} />
+
             <Collection source={this.props} query="people" editor={Person} template={(node) => {
                 if (!element) {
                     return {};
