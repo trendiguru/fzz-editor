@@ -29969,7 +29969,7 @@
 	                        }
 	                        return _react2.default.createElement('img', { onClick: function onClick() {
 	                                return collection.select(key);
-	                            }, src: node.image_urls[0], style: { backgroundColor: 'blue' } });
+	                            }, src: node.image_urls[0] });
 	                    }
 	                })
 	            );
