@@ -25,13 +25,16 @@ export default class Person extends Editor {
     render () {
         let {gender} = this.props;
         return <div>
-            <div>
-                <input checked={gender === 'Male'} id="male" type="radio" onChange={e => this.changeGender(e.target.value)} value="Male" name="gender" />
-                <label htmlFor="male">Male</label>
-            </div>
-            <div>
-                <input checked={gender === 'Female'} id="female" type="radio" onChange={e => this.changeGender(e.target.value)} value="Female" name="gender" />
-                <label htmlFor="female">Female</label>
+            <div className='gender'>
+                <p>gender:</p>
+                <div>
+                    <input checked={gender === 'Male'} id="male" type="radio" onChange={e => this.changeGender(e.target.value)} value="Male" name="gender" />
+                    <label htmlFor="male">Male</label>
+                </div>
+                <div>
+                    <input checked={gender === 'Female'} id="female" type="radio" onChange={e => this.changeGender(e.target.value)} value="Female" name="gender" />
+                    <label htmlFor="female">Female</label>
+                </div>
             </div>
             {
                 this.state.changedGender

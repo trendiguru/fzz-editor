@@ -85,7 +85,7 @@ export default class Collection extends Component {
         if (selected) {
             let selectedNode = source[query][selected];
             if (!selectedNode) {
-                return <div className="list-item selected" key={selected}>
+            return <div className={'list-item selected '+query} key={selected}>
                     {template.call(this, selectedNode)}
                     <aside>
                         <button onClick={this.unselect.bind(this)}>
@@ -94,7 +94,7 @@ export default class Collection extends Component {
                     </aside>
                 </div>;
             }
-            return <div className="list-item selected" key={selected}>
+        return <div className={'list-item selected '+query} key={selected}>
                     <div>
                         {template.call(this, selectedNode)}
                         <aside>
@@ -117,7 +117,7 @@ export default class Collection extends Component {
                     <MDIcon>edit</MDIcon>
                 </button>;
             }
-            return <div className="list-item" key={key}>
+            return <div className={'list-item '+query} key={key}>
                 <div>
                     {template.call(this, node, key, this)}
                     <aside>

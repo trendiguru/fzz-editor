@@ -20,6 +20,7 @@ div[data-reactroot] {
                 }
             }
             > .list-item > div:nth-child(2) {  
+                    @include card (5, $indigo500);
                     height: $INNER_WINDOW_HEIGHT;
                     min-height:$MIN_INNER_WINDOW_HEIGHT;
                     overflow-y: auto;
@@ -28,6 +29,14 @@ div[data-reactroot] {
                     background-color:pink;
                     border-radius:5px;
                     margin-left:3%;
+                    > div{
+                        width:100%;
+                        background-color: 'WHITE';
+                        border-radius: '10px';
+                        border-color: 'GREY';
+                        border-style: 'solid';
+                        border-width: '3px';
+                    }
                 }
             > .list-item:not(.selected) {
                 display: none;
@@ -52,10 +61,25 @@ div[data-reactroot] {
 }
 
 .raised{
-    @include card (1, $indigo500);
+    @include card (2, $indigo500);
     color: white;
     text-transform: uppercase;
     min-width: 6em;
     padding: .5em 1em;
     transform: translateY(-.75em);
+}
+
+.list-item.people {
+    width:94%;
+    margin:3%;
+    // background-color: blue;
+    .gender {
+        @include card (5, white);
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        > div{
+           margin-left:1em; 
+        }
+    }
 }

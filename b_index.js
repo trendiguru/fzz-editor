@@ -30585,7 +30585,7 @@
 	                if (!selectedNode) {
 	                    return _react2.default.createElement(
 	                        'div',
-	                        { className: 'list-item selected', key: selected },
+	                        { className: 'list-item selected ' + query, key: selected },
 	                        template.call(this, selectedNode),
 	                        _react2.default.createElement(
 	                            'aside',
@@ -30604,7 +30604,7 @@
 	                }
 	                return _react2.default.createElement(
 	                    'div',
-	                    { className: 'list-item selected', key: selected },
+	                    { className: 'list-item selected ' + query, key: selected },
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
@@ -30648,7 +30648,7 @@
 	                }
 	                return _react2.default.createElement(
 	                    'div',
-	                    { className: 'list-item', key: key },
+	                    { className: 'list-item ' + query, key: key },
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
@@ -34184,26 +34184,35 @@
 	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    null,
-	                    _react2.default.createElement('input', { checked: gender === 'Male', id: 'male', type: 'radio', onChange: function onChange(e) {
-	                            return _this2.changeGender(e.target.value);
-	                        }, value: 'Male', name: 'gender' }),
+	                    { className: 'gender' },
 	                    _react2.default.createElement(
-	                        'label',
-	                        { htmlFor: 'male' },
-	                        'Male'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement('input', { checked: gender === 'Female', id: 'female', type: 'radio', onChange: function onChange(e) {
-	                            return _this2.changeGender(e.target.value);
-	                        }, value: 'Female', name: 'gender' }),
+	                        'p',
+	                        null,
+	                        'gender:'
+	                    ),
 	                    _react2.default.createElement(
-	                        'label',
-	                        { htmlFor: 'female' },
-	                        'Female'
+	                        'div',
+	                        null,
+	                        _react2.default.createElement('input', { checked: gender === 'Male', id: 'male', type: 'radio', onChange: function onChange(e) {
+	                                return _this2.changeGender(e.target.value);
+	                            }, value: 'Male', name: 'gender' }),
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'male' },
+	                            'Male'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement('input', { checked: gender === 'Female', id: 'female', type: 'radio', onChange: function onChange(e) {
+	                                return _this2.changeGender(e.target.value);
+	                            }, value: 'Female', name: 'gender' }),
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'female' },
+	                            'Female'
+	                        )
 	                    )
 	                ),
 	                this.state.changedGender ? 'Proccessing new gender' : _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, options: _categories2.default, editor: _item2.default })

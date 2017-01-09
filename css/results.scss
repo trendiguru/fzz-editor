@@ -1,20 +1,9 @@
 .result-form {
-    //@include card (1, white, false);
-    //test
-    // background-color: 'WHITE';
-    // border-radius: '10px';
-    // border-color: 'GREY';
-    // border-style: 'solid';
-    // border-width: '3px';
-    // display: inline;
-    //padding:2%;
+    @include card (4, white, false);
+    margin-top:1em;
     text-align: center;
-    //end test
-    //padding: .5em;
-    // max-width: 20em;
     width:100%;
     
-
     label {
         display: block;
         margin: .5em 0;
@@ -22,23 +11,13 @@
 
     input {
         width: 80%;
-        // max-width: 300px;
         padding-top: .5em;
         padding-bottom: .5em;
         padding-left:8%;
         padding-right:8%;
         font: inherit;
         background: #eee;
-        //border-bottom: 2px solid $indigo500;
-        // display: block;
-        //test
-        display: inline;
-        border-radius: '10px';
-        border-color: 'GREY';
-        border-style: 'solid';
-        border-width: '3px';
-        // align:center;
-        //end test
+        border-bottom: 2px solid grey//$indigo500;
     }
 
     .raised {
@@ -49,9 +28,5 @@
         border-width: '3px';
         margin: 1em 0;
         transform: translateY(0);
-        // display: block;
-        // width: 30%;
-        // left:35%;
-        // right:35%;
     }
 }
