@@ -600,11 +600,18 @@ div[data-reactroot] > .list {
     transition: box-shadow .25s;
     justify-content: center;
     align-items: center;
-    display: flex; }
+    display: flex;
+    margin-bottom: 1em; }
     .list-item.people .gender:hover, .list-item.people .gender:focus {
       box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23); }
     .list-item.people .gender > div {
       margin-left: 1em; }
+
+.list-item.items {
+  margin: 0px;
+  width: 100%; }
+  .list-item.items > div {
+    width: 100%; }
 
 #reference {
   max-width: 20em;

@@ -78,8 +78,17 @@ div[data-reactroot] {
         justify-content: center;
         align-items: center;
         display: flex;
+        margin-bottom: 1em;
         > div{
            margin-left:1em; 
         }
+    }
+}
+
+.list-item.items{
+    margin: 0px;
+    width: 100%;
+    >div{
+        width:100%
     }
 }
