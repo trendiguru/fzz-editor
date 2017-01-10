@@ -412,9 +412,9 @@ header {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     transition: box-shadow .25s;
     width: 65%;
+    min-width: 300px;
     padding: .5em 1em;
     font-size: 1.2em;
-    display: block;
     position: relative;
     z-index: 10000;
     display: inline; }
@@ -428,23 +428,23 @@ header {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     transition: box-shadow .25s;
     width: 30%;
+    max-width: 150px;
     padding: .5em 1em;
     font-size: 1.2em;
     font-family: 'Times New Roman', Times, serif;
-    display: block;
     display: inline;
-    background-color: PINK; }
+    background-color: #DDDDDD; }
     header #search > button:hover, header #search > button:focus {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 .list .selectbox {
   margin: 1em 0; }
-  .list .selectbox > * {
+  .list .selectbox #hide-me-please > * {
     display: inline-block; }
-  .list .selectbox .Select {
+  .list .selectbox #hide-me-please .Select {
     width: 20em;
     margin-right: .5em; }
-    .list .selectbox .Select .Select-menu-outer {
+    .list .selectbox #hide-me-please .Select .Select-menu-outer {
       z-index: 1000; }
 
 .list-item {
@@ -549,7 +549,7 @@ div[data-reactroot] > .list {
       overflow-y: auto;
       float: right;
       width: 57%;
-      background-color: pink;
+      background-color: #DDDDDD;
       border-radius: 5px;
       margin-left: 3%; }
       div[data-reactroot] > .list.selected > .list-item > div:nth-child(2):hover, div[data-reactroot] > .list.selected > .list-item > div:nth-child(2):focus {
@@ -627,22 +627,37 @@ div[data-reactroot] > .list {
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23); }
 
 .add-result {
-  padding: 0;
-  overflow: hidden;
-  background-color: white;
-  border-radius: .125em;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19);
-  transition: box-shadow .25s;
   min-width: 10em;
   min-height: 7em;
-  width: 100%; }
-  .add-result:hover, .add-result:focus {
-    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23); }
+  width: 100%;
+  margin-top: 1em;
+  border-radius: '10px';
+  border-color: 'GREY';
+  border-style: 'solid';
+  border-width: '3px';
+  background-image: url("/img/cross.png");
+  align-items: center; }
+  .add-result i {
+    max-width: 15px; }
 
 .hidden {
   visibility: hidden;
   pointer-events: none;
   position: absolute; }
+
+.gray-frame {
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  border-radius: .125em;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+  transition: box-shadow .25s;
+  border-radius: '10px';
+  border-color: 'GREY';
+  border-style: 'solid';
+  border-width: '3px'; }
+  .gray-frame:hover, .gray-frame:focus {
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.22); }
 
 #reference {
   max-width: 20em;

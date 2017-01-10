@@ -16,6 +16,8 @@ export default SortableElement((props) => {
             height: '15em',
             display: 'block',
             overflow: 'visible',
+            backgroundColor: 'WHITE',
+            borderRadius: '10px',
         }}>
         <div style={{ width: '100%', height: '100%'}}  >
             <aside style={{ position: 'absolute', marging:'10px'}}>
@@ -25,9 +27,6 @@ export default SortableElement((props) => {
                     borderRadius: '10px',
                     right: '0px',
                     backgroundColor: 'PINK',
-                    borderColor: 'GREY',
-                    borderStyle: 'solid',
-                    borderWidth: '3px',
                 }} onClick={() => props.remove(props.value.id)}>
                     <MDIcon>delete</MDIcon>
                 </button>

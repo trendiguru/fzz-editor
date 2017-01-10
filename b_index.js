@@ -30512,6 +30512,7 @@
 	        value: function render() {
 	            var _this4 = this;
 	
+	            console.log('render');
 	            var _props = this.props;
 	            var addable = _props.addable;
 	            var options = _props.options;
@@ -30529,27 +30530,40 @@
 	                        'button',
 	                        { className: 'add-item', src: '/img/cross.png', onClick: function onClick() {
 	                                document.querySelector('.add-item').classList.add('hidden');
-	                                document.querySelector('.Select.hidden+BUTTON').classList.remove('hidden');
-	                                document.querySelector('.Select.hidden').classList.remove('hidden');
+	                                document.querySelector('#hide-me-please').classList.remove('hidden');
+	                                console.log('add-item-button');
 	                            } },
-	                        'add new category'
+	                        _react2.default.createElement(
+	                            'i',
+	                            { className: 'md-icon' },
+	                            'add'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            'add a category'
+	                        )
 	                    ),
-	                    _react2.default.createElement(_reactSelect2.default, {
-	                        className: 'hidden',
-	                        name: query,
-	                        options: options,
-	                        value: selectedAdd,
-	                        onChange: function onChange(selected) {
-	                            return _this4.setState({ selectedAdd: selected });
-	                        }
-	                    }),
 	                    _react2.default.createElement(
-	                        'button',
-	                        { className: 'raised hidden', onClick: function onClick() {
-	                                _this4.setState({ selectedAdd: undefined });
-	                                _this4.add(selectedAdd.value);
-	                            } },
-	                        'Add'
+	                        'div',
+	                        { className: 'hidden', id: 'hide-me-please', style: { width: '100%' } },
+	                        _react2.default.createElement(_reactSelect2.default, {
+	                            name: query,
+	                            options: options,
+	                            value: selectedAdd,
+	                            onChange: function onChange(selected) {
+	                                return _this4.setState({ selectedAdd: selected });
+	                            }
+	                        }),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { className: 'raised', onClick: function onClick() {
+	                                    console.log('add-button');
+	                                    _this4.setState({ selectedAdd: undefined });
+	                                    _this4.add(selectedAdd.value);
+	                                } },
+	                            'Add'
+	                        )
 	                    )
 	                ));
 	            }
@@ -41233,11 +41247,20 @@
 	                null,
 	                _react2.default.createElement(
 	                    'button',
-	                    { className: 'add-result', src: '/img/cross.png', onClick: function onClick() {
+	                    { className: 'add-result gray-frame', src: '/img/cross.png', style: { borderRadius: '10px' }, onClick: function onClick() {
 	                            document.querySelector('.add-result').classList.add('hidden');
 	                            document.querySelector('.result-form').classList.remove('hidden');
 	                        } },
-	                    'add a result'
+	                    _react2.default.createElement(
+	                        'i',
+	                        { className: 'md-icon' },
+	                        'add'
+	                    ),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        'add a result'
+	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'form',
@@ -41279,7 +41302,7 @@
 	                    axis: 'xy',
 	                    helperClass: 'sb_stylizedHelper',
 	                    className: (0, _classnames2.default)('sb_list', 'sb_stylizedList', 'sb_grid'),
-	                    itemClass: (0, _classnames2.default)('sb_stylizedItem', 'sb_gridItem'),
+	                    itemClass: (0, _classnames2.default)('sb_stylizedItem', 'sb_gridItem', 'gray-frame'),
 	                    shouldUseDragHandle: true
 	                }, props))
 	            );
@@ -41364,7 +41387,9 @@
 	                width: '15em',
 	                height: '15em',
 	                display: 'block',
-	                overflow: 'visible'
+	                overflow: 'visible',
+	                backgroundColor: 'WHITE',
+	                borderRadius: '10px'
 	            } },
 	        _react2.default.createElement(
 	            'div',
@@ -41379,10 +41404,7 @@
 	                            height: REMOVE_BUTTON_SIZE,
 	                            borderRadius: '10px',
 	                            right: '0px',
-	                            backgroundColor: 'PINK',
-	                            borderColor: 'GREY',
-	                            borderStyle: 'solid',
-	                            borderWidth: '3px'
+	                            backgroundColor: 'PINK'
 	                        }, onClick: function onClick() {
 	                            return props.remove(props.value.id);
 	                        } },

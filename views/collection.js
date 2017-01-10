@@ -131,27 +131,31 @@ export default class Collection extends Component {
         });
     }
     render () {
+        console.log('render');
         let {props: {addable, options, query}, state: {selected, selectedAdd}, tiles} = this;
         if (!selected && addable && options) {
             tiles.unshift(<div className="selectbox">
             <button className='add-item' src={'/img/cross.png'} onClick={()=>{
                 (document.querySelector('.add-item')).classList.add('hidden');
-                (document.querySelector('.Select.hidden+BUTTON')).classList.remove('hidden');
-                (document.querySelector('.Select.hidden')).classList.remove('hidden');
+                (document.querySelector('#hide-me-please')).classList.remove('hidden');
+                console.log('add-item-button');
             }}>
-            add new category
+            <i className='md-icon'>add</i>
+                    <p>add a category</p>
             </button>
-                <Select
-                    className={'hidden'}
-                    name={query}
-                    options={options}
-                    value={selectedAdd}
-                    onChange={(selected) => this.setState({selectedAdd: selected})}
-                />
-                <button className="raised hidden" onClick={() => {
-                    this.setState({selectedAdd: undefined});
-                    this.add(selectedAdd.value);
-                }}>Add</button>
+                <div className={'hidden'} id={'hide-me-please'} style={{width:'100%'}}>            
+                    <Select
+                        name={query}
+                        options={options}
+                        value={selectedAdd}
+                        onChange={(selected) => this.setState({selectedAdd: selected})}
+                    />
+                    <button className="raised" onClick={() => {
+                        console.log('add-button');
+                        this.setState({selectedAdd: undefined});
+                        this.add(selectedAdd.value);
+                    }}>Add</button>
+                </div>
             </div>);
         }
         return <ReactCSSTransitionGroup

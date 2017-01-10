@@ -4,16 +4,17 @@ $indigo500: #3F51B5;
 
     .selectbox {
         margin: 1em 0;
+        #hide-me-please{
+            > * {
+                display: inline-block;
+            }
+            .Select {
+                width: 20em;
+                margin-right: .5em;
 
-        > * {
-            display: inline-block;
-        }
-        .Select {
-            width: 20em;
-            margin-right: .5em;
-
-            .Select-menu-outer {
-                z-index: 1000;
+                .Select-menu-outer {
+                    z-index: 1000;
+                }
             }
         }
     }

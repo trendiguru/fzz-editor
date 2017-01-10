@@ -92,11 +92,12 @@ export default class Results extends Editor {
             remove: this.remove
         }
         return <div>
-        <button className='add-result' src={'/img/cross.png'} onClick={()=>{
+        <button className='add-result gray-frame' src={'/img/cross.png'} style={{borderRadius:'10px'}} onClick={()=>{
                 (document.querySelector('.add-result')).classList.add('hidden');
                 (document.querySelector('.result-form')).classList.remove('hidden');
             }}>
-            add a result
+            <i className='md-icon'>add</i>
+            <p>add a result</p>
             </button>
             <form className="result-form hidden">
                 <h3>Add a result</h3>
@@ -118,7 +119,7 @@ export default class Results extends Editor {
                 axis={'xy'}
                 helperClass={'sb_stylizedHelper'}
                 className={classNames('sb_list', 'sb_stylizedList', 'sb_grid')}
-                itemClass={classNames('sb_stylizedItem', 'sb_gridItem')}
+                itemClass={classNames('sb_stylizedItem', 'sb_gridItem', 'gray-frame')}
                 shouldUseDragHandle={true}
                 {...props}
                 />
