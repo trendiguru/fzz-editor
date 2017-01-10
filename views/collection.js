@@ -134,13 +134,21 @@ export default class Collection extends Component {
         let {props: {addable, options, query}, state: {selected, selectedAdd}, tiles} = this;
         if (!selected && addable && options) {
             tiles.unshift(<div className="selectbox">
+            <button className='add-item' src={'/img/cross.png'} onClick={()=>{
+                (document.querySelector('.add-item')).classList.add('hidden');
+                (document.querySelector('.Select.hidden+BUTTON')).classList.remove('hidden');
+                (document.querySelector('.Select.hidden')).classList.remove('hidden');
+            }}>
+            add new category
+            </button>
                 <Select
+                    className={'hidden'}
                     name={query}
                     options={options}
                     value={selectedAdd}
                     onChange={(selected) => this.setState({selectedAdd: selected})}
                 />
-                <button className="raised" onClick={() => {
+                <button className="raised hidden" onClick={() => {
                     this.setState({selectedAdd: undefined});
                     this.add(selectedAdd.value);
                 }}>Add</button>

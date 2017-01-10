@@ -92,7 +92,13 @@ export default class Results extends Editor {
             remove: this.remove
         }
         return <div>
-            <form className="result-form">
+        <button className='add-result' src={'/img/cross.png'} onClick={()=>{
+                (document.querySelector('.add-result')).classList.add('hidden');
+                (document.querySelector('.result-form')).classList.remove('hidden');
+            }}>
+            add a result
+            </button>
+            <form className="result-form hidden">
                 <h3>Add a result</h3>
                 <label>Image</label>
                 <input type="text" name="image" />

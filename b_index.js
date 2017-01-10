@@ -30525,7 +30525,17 @@
 	                tiles.unshift(_react2.default.createElement(
 	                    'div',
 	                    { className: 'selectbox' },
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'add-item', src: '/img/cross.png', onClick: function onClick() {
+	                                document.querySelector('.add-item').classList.add('hidden');
+	                                document.querySelector('.Select.hidden+BUTTON').classList.remove('hidden');
+	                                document.querySelector('.Select.hidden').classList.remove('hidden');
+	                            } },
+	                        'add new category'
+	                    ),
 	                    _react2.default.createElement(_reactSelect2.default, {
+	                        className: 'hidden',
 	                        name: query,
 	                        options: options,
 	                        value: selectedAdd,
@@ -30535,7 +30545,7 @@
 	                    }),
 	                    _react2.default.createElement(
 	                        'button',
-	                        { className: 'raised', onClick: function onClick() {
+	                        { className: 'raised hidden', onClick: function onClick() {
 	                                _this4.setState({ selectedAdd: undefined });
 	                                _this4.add(selectedAdd.value);
 	                            } },
@@ -41222,8 +41232,16 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(
+	                    'button',
+	                    { className: 'add-result', src: '/img/cross.png', onClick: function onClick() {
+	                            document.querySelector('.add-result').classList.add('hidden');
+	                            document.querySelector('.result-form').classList.remove('hidden');
+	                        } },
+	                    'add a result'
+	                ),
+	                _react2.default.createElement(
 	                    'form',
-	                    { className: 'result-form' },
+	                    { className: 'result-form hidden' },
 	                    _react2.default.createElement(
 	                        'h3',
 	                        null,
@@ -41346,12 +41364,7 @@
 	                width: '15em',
 	                height: '15em',
 	                display: 'block',
-	                overflow: 'visible',
-	                backgroundColor: 'WHITE',
-	                borderRadius: '10px',
-	                borderColor: 'GREY',
-	                borderStyle: 'solid',
-	                borderWidth: '3px'
+	                overflow: 'visible'
 	            } },
 	        _react2.default.createElement(
 	            'div',

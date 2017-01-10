@@ -613,6 +613,37 @@ div[data-reactroot] > .list {
   .list-item.items > div {
     width: 100%; }
 
+.add-item {
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  border-radius: .125em;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19);
+  transition: box-shadow .25s;
+  min-width: 10em;
+  min-height: 7em;
+  width: 100%; }
+  .add-item:hover, .add-item:focus {
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23); }
+
+.add-result {
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  border-radius: .125em;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19);
+  transition: box-shadow .25s;
+  min-width: 10em;
+  min-height: 7em;
+  width: 100%; }
+  .add-result:hover, .add-result:focus {
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23); }
+
+.hidden {
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute; }
+
 #reference {
   max-width: 20em;
   position: absolute;

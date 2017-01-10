@@ -1,0 +1,11 @@
+@mixin presence ($presence: true) {
+    @if $presence {
+        // visibility: visible;
+        // pointer-events: auto;
+    }
+    @else{
+        visibility: hidden;
+        pointer-events: none;
+        position: absolute;
+    }
+}

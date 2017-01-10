@@ -16,11 +16,6 @@ export default SortableElement((props) => {
             height: '15em',
             display: 'block',
             overflow: 'visible',
-            backgroundColor: 'WHITE',
-            borderRadius: '10px',
-            borderColor: 'GREY',
-            borderStyle: 'solid',
-            borderWidth: '3px',
         }}>
         <div style={{ width: '100%', height: '100%'}}  >
             <aside style={{ position: 'absolute', marging:'10px'}}>
