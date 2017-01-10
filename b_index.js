@@ -41247,7 +41247,7 @@
 	                null,
 	                _react2.default.createElement(
 	                    'button',
-	                    { className: 'add-result gray-frame', src: '/img/cross.png', style: { borderRadius: '10px' }, onClick: function onClick() {
+	                    { className: 'add-result gray-frame', style: { borderRadius: '10px' }, onClick: function onClick() {
 	                            document.querySelector('.add-result').classList.add('hidden');
 	                            document.querySelector('.result-form').classList.remove('hidden');
 	                        } },

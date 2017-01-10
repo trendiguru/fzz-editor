@@ -70,7 +70,7 @@ div[data-reactroot] {
     margin:3%;
     // background-color: blue;
     .gender {
-        @include card (5, white);
+        @include card (2, white);
         justify-content: center;
         align-items: center;
         display: flex;
@@ -90,7 +90,7 @@ div[data-reactroot] {
 }
 
 .add-item{
-    @include card (5, white);
+    @include card (2, white);
     min-width: 10em;
     min-height: 7em;
     width:100%;
@@ -101,12 +101,10 @@ div[data-reactroot] {
     min-height: 7em;
     width:100%;
     margin-top: 1em;
-    //@include card (7, white);
     border-radius: '10px';
     border-color: 'GREY';
     border-style: 'solid';
     border-width: '3px';
-    background-image: url('/img/cross.png');
     align-items:center;
     i{
         max-width: 15px;
@@ -118,9 +116,15 @@ div[data-reactroot] {
 }
 
 .gray-frame{
-    @include card (7, white);
-    border-radius: '10px';
-    border-color: 'GREY';
-    border-style: 'solid';
-    border-width: '3px';
+    $shadows: (
+        0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24),
+        0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23),
+        0 10px 20px rgba(0, 0, 0, .19), 0 6px 6px rgba(0, 0, 0, .23),
+        0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22),
+        0 19px 38px rgba(0, 0, 0, .3), 0 15px 12px rgba(0, 0, 0, .22)
+    );
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: nth($shadows, 7);
 }

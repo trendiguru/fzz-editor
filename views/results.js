@@ -92,7 +92,7 @@ export default class Results extends Editor {
             remove: this.remove
         }
         return <div>
-        <button className='add-result gray-frame' src={'/img/cross.png'} style={{borderRadius:'10px'}} onClick={()=>{
+        <button className='add-result gray-frame' style={{borderRadius:'10px'}} onClick={()=>{
                 (document.querySelector('.add-result')).classList.add('hidden');
                 (document.querySelector('.result-form')).classList.remove('hidden');
             }}>

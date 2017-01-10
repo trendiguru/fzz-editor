@@ -596,14 +596,14 @@ div[data-reactroot] > .list {
     overflow: hidden;
     background-color: white;
     border-radius: .125em;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
     transition: box-shadow .25s;
     justify-content: center;
     align-items: center;
     display: flex;
     margin-bottom: 1em; }
     .list-item.people .gender:hover, .list-item.people .gender:focus {
-      box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23); }
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16); }
     .list-item.people .gender > div {
       margin-left: 1em; }
 
@@ -618,13 +618,13 @@ div[data-reactroot] > .list {
   overflow: hidden;
   background-color: white;
   border-radius: .125em;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: box-shadow .25s;
   min-width: 10em;
   min-height: 7em;
   width: 100%; }
   .add-item:hover, .add-item:focus {
-    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23); }
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16); }
 
 .add-result {
   min-width: 10em;
@@ -635,7 +635,6 @@ div[data-reactroot] > .list {
   border-color: 'GREY';
   border-style: 'solid';
   border-width: '3px';
-  background-image: url("/img/cross.png");
   align-items: center; }
   .add-result i {
     max-width: 15px; }
@@ -649,15 +648,7 @@ div[data-reactroot] > .list {
   padding: 0;
   overflow: hidden;
   background-color: white;
-  border-radius: .125em;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
-  transition: box-shadow .25s;
-  border-radius: '10px';
-  border-color: 'GREY';
-  border-style: 'solid';
-  border-width: '3px'; }
-  .gray-frame:hover, .gray-frame:focus {
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.22); }
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25); }
 
 #reference {
   max-width: 20em;
