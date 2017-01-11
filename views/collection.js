@@ -55,18 +55,20 @@ export default class Collection extends Component {
         this.setState({selected});
     }
     remove (key) {
-        this.unselect();
-        this.context.setImages(images => {
-            let path = images !== this.props.source[this.props.query]
-                ? findPathToValue(this.context.images, this.props.source[this.props.query])
-                : [];
-            delete this.props.source[this.props.query][key];
-            fetch([API_URL, ...path, key].join('/'), {
-                method: 'DELETE',
-                credentials: 'include'
+        if (confirm('Are you sure you want to delete this item?')) {
+            this.unselect();
+            this.context.setImages(images => {
+                let path = images !== this.props.source[this.props.query]
+                    ? findPathToValue(this.context.images, this.props.source[this.props.query])
+                    : [];
+                delete this.props.source[this.props.query][key];
+                fetch([API_URL, ...path, key].join('/'), {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                return images;
             });
-            return images;
-        });
+        }
     }
     get selected () {
         return this.props.selected || this.state.selected;

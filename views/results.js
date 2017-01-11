@@ -36,13 +36,15 @@ export default class Results extends Editor {
         height: 600
     };
     remove(id) {
-        this.set(
-            results => results.filter(result => result.id !== id),
-            {
-                method: 'DELETE',
-            },
-            id
-        );
+        if (confirm('Are you sure you want to delete this item?')) {
+            this.set(
+                results => results.filter(result => result.id !== id),
+                {
+                    method: 'DELETE',
+                },
+                id
+            );
+        }
     }
     update(results) {
         this.set(
