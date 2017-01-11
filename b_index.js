@@ -30496,16 +30496,18 @@
 	        value: function remove(key) {
 	            var _this3 = this;
 	
-	            this.unselect();
-	            this.context.setImages(function (images) {
-	                var path = images !== _this3.props.source[_this3.props.query] ? (0, _path2.default)(_this3.context.images, _this3.props.source[_this3.props.query]) : [];
-	                delete _this3.props.source[_this3.props.query][key];
-	                fetch([_package.api].concat(_toConsumableArray(path), [key]).join('/'), {
-	                    method: 'DELETE',
-	                    credentials: 'include'
+	            if (confirm('Are you sure you want to delete this item?')) {
+	                this.unselect();
+	                this.context.setImages(function (images) {
+	                    var path = images !== _this3.props.source[_this3.props.query] ? (0, _path2.default)(_this3.context.images, _this3.props.source[_this3.props.query]) : [];
+	                    delete _this3.props.source[_this3.props.query][key];
+	                    fetch([_package.api].concat(_toConsumableArray(path), [key]).join('/'), {
+	                        method: 'DELETE',
+	                        credentials: 'include'
+	                    });
+	                    return images;
 	                });
-	                return images;
-	            });
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -41189,13 +41191,15 @@
 	    _createClass(Results, [{
 	        key: 'remove',
 	        value: function remove(id) {
-	            this.set(function (results) {
-	                return results.filter(function (result) {
-	                    return result.id !== id;
-	                });
-	            }, {
-	                method: 'DELETE'
-	            }, id);
+	            if (confirm('Are you sure you want to delete this item?')) {
+	                this.set(function (results) {
+	                    return results.filter(function (result) {
+	                        return result.id !== id;
+	                    });
+	                }, {
+	                    method: 'DELETE'
+	                }, id);
+	            }
 	        }
 	    }, {
 	        key: 'update',
