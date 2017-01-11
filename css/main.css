@@ -412,9 +412,9 @@ header {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     transition: box-shadow .25s;
     width: 65%;
+    min-width: 300px;
     padding: .5em 1em;
     font-size: 1.2em;
-    display: block;
     position: relative;
     z-index: 10000;
     display: inline; }
@@ -428,23 +428,23 @@ header {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     transition: box-shadow .25s;
     width: 30%;
+    max-width: 150px;
     padding: .5em 1em;
     font-size: 1.2em;
     font-family: 'Times New Roman', Times, serif;
-    display: block;
     display: inline;
-    background-color: PINK; }
+    background-color: #DDDDDD; }
     header #search > button:hover, header #search > button:focus {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23); }
 
 .list .selectbox {
   margin: 1em 0; }
-  .list .selectbox > * {
+  .list .selectbox #hide-me-please > * {
     display: inline-block; }
-  .list .selectbox .Select {
+  .list .selectbox #hide-me-please .Select {
     width: 20em;
     margin-right: .5em; }
-    .list .selectbox .Select .Select-menu-outer {
+    .list .selectbox #hide-me-please .Select .Select-menu-outer {
       z-index: 1000; }
 
 .list-item {
@@ -465,7 +465,8 @@ header {
     align-items: center;
     justify-content: center;
     position: relative;
-    cursor: pointer; }
+    cursor: pointer;
+    width: 100%; }
     .list-item > *:first-child:hover, .list-item > *:first-child:focus {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16); }
     .list-item > *:first-child aside {
@@ -537,14 +538,29 @@ div[data-reactroot] > .list {
         width: 100%;
         max-width: 500px; }
     div[data-reactroot] > .list.selected > .list-item > div:nth-child(2) {
+      padding: 0;
+      overflow: hidden;
+      background-color: #3F51B5;
+      border-radius: .125em;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19);
+      transition: box-shadow .25s;
       height: 85vh;
       min-height: 500px;
       overflow-y: auto;
       float: right;
       width: 57%;
-      background-color: pink;
+      background-color: #DDDDDD;
       border-radius: 5px;
       margin-left: 3%; }
+      div[data-reactroot] > .list.selected > .list-item > div:nth-child(2):hover, div[data-reactroot] > .list.selected > .list-item > div:nth-child(2):focus {
+        box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23); }
+      div[data-reactroot] > .list.selected > .list-item > div:nth-child(2) > div {
+        width: 100%;
+        background-color: 'WHITE';
+        border-radius: '10px';
+        border-color: 'GREY';
+        border-style: 'solid';
+        border-width: '3px'; }
     div[data-reactroot] > .list.selected > .list-item:not(.selected) {
       display: none; }
   div[data-reactroot] > .list > .list-item {
@@ -562,7 +578,7 @@ div[data-reactroot] > .list {
   overflow: hidden;
   background-color: #3F51B5;
   border-radius: .125em;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: box-shadow .25s;
   color: white;
   text-transform: uppercase;
@@ -570,7 +586,69 @@ div[data-reactroot] > .list {
   padding: .5em 1em;
   transform: translateY(-0.75em); }
   .raised:hover, .raised:focus {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24); }
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16); }
+
+.list-item.people {
+  width: 94%;
+  margin: 3%; }
+  .list-item.people .gender {
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
+    border-radius: .125em;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: box-shadow .25s;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-bottom: 1em; }
+    .list-item.people .gender:hover, .list-item.people .gender:focus {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16); }
+    .list-item.people .gender > div {
+      margin-left: 1em; }
+
+.list-item.items {
+  margin: 0px;
+  width: 100%; }
+  .list-item.items > div {
+    width: 100%; }
+
+.add-item {
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  border-radius: .125em;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: box-shadow .25s;
+  min-width: 10em;
+  min-height: 7em;
+  width: 100%; }
+  .add-item:hover, .add-item:focus {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16); }
+
+.add-result {
+  min-width: 10em;
+  min-height: 7em;
+  width: 100%;
+  margin-top: 1em;
+  border-radius: '10px';
+  border-color: 'GREY';
+  border-style: 'solid';
+  border-width: '3px';
+  align-items: center; }
+  .add-result i {
+    max-width: 15px; }
+
+.hidden {
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute; }
+
+.gray-frame {
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25); }
 
 #reference {
   max-width: 20em;
@@ -578,24 +656,6 @@ div[data-reactroot] > .list {
   width: 40%;
   right: 0px;
   z-index: 1000; }
-
-.react-grid-item.list-item {
-  padding: 0;
-  overflow: hidden;
-  background-color: #fff;
-  border-radius: .125em;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-  transition: box-shadow .25s; }
-  .react-grid-item.list-item:hover, .react-grid-item.list-item:focus {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24); }
-  .react-grid-item.list-item > *:first-child {
-    width: 100%;
-    height: 100%;
-    box-shadow: none; }
-  .react-grid-item.list-item .img {
-    position: absolute;
-    top: 0;
-    left: 0; }
 
 #login {
   padding: 0;
@@ -639,21 +699,29 @@ div[data-reactroot] > .list {
   overflow: hidden;
   background-color: white;
   border-radius: .125em;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: box-shadow .25s;
-  padding: .5em;
-  max-width: 20em; }
+  margin-top: 1em;
+  text-align: center;
+  width: 100%; }
   .result-form label {
     display: block;
     margin: .5em 0; }
   .result-form input {
-    width: 100%;
-    padding: .5em;
+    width: 80%;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    padding-left: 8%;
+    padding-right: 8%;
     font: inherit;
     background: #eee;
-    border-bottom: 2px solid #3F51B5;
-    display: block; }
+    border-bottom: 2px solid grey; }
   .result-form .raised {
+    background-color: black;
+    border-radius: '10px';
+    border-color: 'GREY';
+    border-style: 'solid';
+    border-width: '3px';
     margin: 1em 0;
     transform: translateY(0); }
 

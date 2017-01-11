@@ -29969,7 +29969,7 @@
 	                        }
 	                        return _react2.default.createElement('img', { onClick: function onClick() {
 	                                return collection.select(key);
-	                            }, src: node.image_urls[0], style: { backgroundColor: 'blue' } });
+	                            }, src: node.image_urls[0] });
 	                    }
 	                })
 	            );
@@ -30512,6 +30512,7 @@
 	        value: function render() {
 	            var _this4 = this;
 	
+	            console.log('render');
 	            var _props = this.props;
 	            var addable = _props.addable;
 	            var options = _props.options;
@@ -30525,21 +30526,44 @@
 	                tiles.unshift(_react2.default.createElement(
 	                    'div',
 	                    { className: 'selectbox' },
-	                    _react2.default.createElement(_reactSelect2.default, {
-	                        name: query,
-	                        options: options,
-	                        value: selectedAdd,
-	                        onChange: function onChange(selected) {
-	                            return _this4.setState({ selectedAdd: selected });
-	                        }
-	                    }),
 	                    _react2.default.createElement(
 	                        'button',
-	                        { className: 'raised', onClick: function onClick() {
-	                                _this4.setState({ selectedAdd: undefined });
-	                                _this4.add(selectedAdd.value);
+	                        { className: 'add-item', src: '/img/cross.png', onClick: function onClick() {
+	                                document.querySelector('.add-item').classList.add('hidden');
+	                                document.querySelector('#hide-me-please').classList.remove('hidden');
+	                                console.log('add-item-button');
 	                            } },
-	                        'Add'
+	                        _react2.default.createElement(
+	                            'i',
+	                            { className: 'md-icon' },
+	                            'add'
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            'add a category'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'hidden', id: 'hide-me-please', style: { width: '100%' } },
+	                        _react2.default.createElement(_reactSelect2.default, {
+	                            name: query,
+	                            options: options,
+	                            value: selectedAdd,
+	                            onChange: function onChange(selected) {
+	                                return _this4.setState({ selectedAdd: selected });
+	                            }
+	                        }),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { className: 'raised', onClick: function onClick() {
+	                                    console.log('add-button');
+	                                    _this4.setState({ selectedAdd: undefined });
+	                                    _this4.add(selectedAdd.value);
+	                                } },
+	                            'Add'
+	                        )
 	                    )
 	                ));
 	            }
@@ -30585,7 +30609,7 @@
 	                if (!selectedNode) {
 	                    return _react2.default.createElement(
 	                        'div',
-	                        { className: 'list-item selected', key: selected },
+	                        { className: 'list-item selected ' + query, key: selected },
 	                        template.call(this, selectedNode),
 	                        _react2.default.createElement(
 	                            'aside',
@@ -30604,7 +30628,7 @@
 	                }
 	                return _react2.default.createElement(
 	                    'div',
-	                    { className: 'list-item selected', key: selected },
+	                    { className: 'list-item selected ' + query, key: selected },
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
@@ -30648,7 +30672,7 @@
 	                }
 	                return _react2.default.createElement(
 	                    'div',
-	                    { className: 'list-item', key: key },
+	                    { className: 'list-item ' + query, key: key },
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
@@ -34184,26 +34208,35 @@
 	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    null,
-	                    _react2.default.createElement('input', { checked: gender === 'Male', id: 'male', type: 'radio', onChange: function onChange(e) {
-	                            return _this2.changeGender(e.target.value);
-	                        }, value: 'Male', name: 'gender' }),
+	                    { className: 'gender' },
 	                    _react2.default.createElement(
-	                        'label',
-	                        { htmlFor: 'male' },
-	                        'Male'
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement('input', { checked: gender === 'Female', id: 'female', type: 'radio', onChange: function onChange(e) {
-	                            return _this2.changeGender(e.target.value);
-	                        }, value: 'Female', name: 'gender' }),
+	                        'p',
+	                        null,
+	                        'gender:'
+	                    ),
 	                    _react2.default.createElement(
-	                        'label',
-	                        { htmlFor: 'female' },
-	                        'Female'
+	                        'div',
+	                        null,
+	                        _react2.default.createElement('input', { checked: gender === 'Male', id: 'male', type: 'radio', onChange: function onChange(e) {
+	                                return _this2.changeGender(e.target.value);
+	                            }, value: 'Male', name: 'gender' }),
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'male' },
+	                            'Male'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement('input', { checked: gender === 'Female', id: 'female', type: 'radio', onChange: function onChange(e) {
+	                                return _this2.changeGender(e.target.value);
+	                            }, value: 'Female', name: 'gender' }),
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'female' },
+	                            'Female'
+	                        )
 	                    )
 	                ),
 	                this.state.changedGender ? 'Proccessing new gender' : _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, options: _categories2.default, editor: _item2.default })
@@ -41213,8 +41246,25 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(
+	                    'button',
+	                    { className: 'add-result gray-frame', style: { borderRadius: '10px' }, onClick: function onClick() {
+	                            document.querySelector('.add-result').classList.add('hidden');
+	                            document.querySelector('.result-form').classList.remove('hidden');
+	                        } },
+	                    _react2.default.createElement(
+	                        'i',
+	                        { className: 'md-icon' },
+	                        'add'
+	                    ),
+	                    _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        'add a result'
+	                    )
+	                ),
+	                _react2.default.createElement(
 	                    'form',
-	                    { className: 'result-form' },
+	                    { className: 'result-form hidden' },
 	                    _react2.default.createElement(
 	                        'h3',
 	                        null,
@@ -41252,7 +41302,7 @@
 	                    axis: 'xy',
 	                    helperClass: 'sb_stylizedHelper',
 	                    className: (0, _classnames2.default)('sb_list', 'sb_stylizedList', 'sb_grid'),
-	                    itemClass: (0, _classnames2.default)('sb_stylizedItem', 'sb_gridItem'),
+	                    itemClass: (0, _classnames2.default)('sb_stylizedItem', 'sb_gridItem', 'gray-frame'),
 	                    shouldUseDragHandle: true
 	                }, props))
 	            );
@@ -41339,10 +41389,7 @@
 	                display: 'block',
 	                overflow: 'visible',
 	                backgroundColor: 'WHITE',
-	                borderRadius: '10px',
-	                borderColor: 'GREY',
-	                borderStyle: 'solid',
-	                borderWidth: '3px'
+	                borderRadius: '10px'
 	            } },
 	        _react2.default.createElement(
 	            'div',
@@ -41357,10 +41404,7 @@
 	                            height: REMOVE_BUTTON_SIZE,
 	                            borderRadius: '10px',
 	                            right: '0px',
-	                            backgroundColor: 'PINK',
-	                            borderColor: 'GREY',
-	                            borderStyle: 'solid',
-	                            borderWidth: '3px'
+	                            backgroundColor: 'PINK'
 	                        }, onClick: function onClick() {
 	                            return props.remove(props.value.id);
 	                        } },

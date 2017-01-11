@@ -85,7 +85,7 @@ export default class Collection extends Component {
         if (selected) {
             let selectedNode = source[query][selected];
             if (!selectedNode) {
-                return <div className="list-item selected" key={selected}>
+            return <div className={'list-item selected '+query} key={selected}>
                     {template.call(this, selectedNode)}
                     <aside>
                         <button onClick={this.unselect.bind(this)}>
@@ -94,7 +94,7 @@ export default class Collection extends Component {
                     </aside>
                 </div>;
             }
-            return <div className="list-item selected" key={selected}>
+        return <div className={'list-item selected '+query} key={selected}>
                     <div>
                         {template.call(this, selectedNode)}
                         <aside>
@@ -117,7 +117,7 @@ export default class Collection extends Component {
                     <MDIcon>edit</MDIcon>
                 </button>;
             }
-            return <div className="list-item" key={key}>
+            return <div className={'list-item '+query} key={key}>
                 <div>
                     {template.call(this, node, key, this)}
                     <aside>
@@ -131,19 +131,31 @@ export default class Collection extends Component {
         });
     }
     render () {
+        console.log('render');
         let {props: {addable, options, query}, state: {selected, selectedAdd}, tiles} = this;
         if (!selected && addable && options) {
             tiles.unshift(<div className="selectbox">
-                <Select
-                    name={query}
-                    options={options}
-                    value={selectedAdd}
-                    onChange={(selected) => this.setState({selectedAdd: selected})}
-                />
-                <button className="raised" onClick={() => {
-                    this.setState({selectedAdd: undefined});
-                    this.add(selectedAdd.value);
-                }}>Add</button>
+            <button className='add-item' src={'/img/cross.png'} onClick={()=>{
+                (document.querySelector('.add-item')).classList.add('hidden');
+                (document.querySelector('#hide-me-please')).classList.remove('hidden');
+                console.log('add-item-button');
+            }}>
+            <i className='md-icon'>add</i>
+                    <p>add a category</p>
+            </button>
+                <div className={'hidden'} id={'hide-me-please'} style={{width:'100%'}}>            
+                    <Select
+                        name={query}
+                        options={options}
+                        value={selectedAdd}
+                        onChange={(selected) => this.setState({selectedAdd: selected})}
+                    />
+                    <button className="raised" onClick={() => {
+                        console.log('add-button');
+                        this.setState({selectedAdd: undefined});
+                        this.add(selectedAdd.value);
+                    }}>Add</button>
+                </div>
             </div>);
         }
         return <ReactCSSTransitionGroup

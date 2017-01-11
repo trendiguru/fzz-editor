@@ -1,23 +1,31 @@
 .result-form {
-    @include card (1, white, false);
-    padding: .5em;
-    max-width: 20em;
-
+    @include card (4, white, false);
+    margin-top:1em;
+    text-align: center;
+    width:100%;
+    
     label {
         display: block;
         margin: .5em 0;
     }
 
     input {
-        width: 100%;
-        padding: .5em;
+        width: 80%;
+        padding-top: .5em;
+        padding-bottom: .5em;
+        padding-left:8%;
+        padding-right:8%;
         font: inherit;
         background: #eee;
-        border-bottom: 2px solid $indigo500;
-        display: block;
+        border-bottom: 2px solid grey//$indigo500;
     }
 
     .raised {
+        background-color: black;
+        border-radius: '10px';
+        border-color: 'GREY';
+        border-style: 'solid';
+        border-width: '3px';
         margin: 1em 0;
         transform: translateY(0);
     }
