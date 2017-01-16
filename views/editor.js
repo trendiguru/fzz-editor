@@ -22,10 +22,6 @@ export default class Editor extends Component {
         };
     }
     set (transform, fetchSettings, additionalKeys = [], callback) {
-        console.log('transform');
-        console.log(transform);
-        console.log('fetchSettings');
-        console.log(fetchSettings);
         fetchSettings.credentials = 'include';
         fetch([API_URL, ...this.path].concat(additionalKeys).join('/'), fetchSettings);
         return this.context.setImages(images => {
