@@ -51,17 +51,17 @@ export default class Results extends Editor {
             () => results,
             {
                 method: 'PUT',
-                body: JSON.stringify({ data: results })
+                body: JSON.stringify({ data: results })//TODO:there may me the same problem that was in add function (data - ruins it all...)
             }
         );
     }
 
     add(result) {
         this.set(
-            (results) => results.concat(result),
+            (results) => [result].concat(results),
             {
                 method: 'POST',
-                body: JSON.stringify({ data: result })
+                body: JSON.stringify(result)
             }
         );
     }
