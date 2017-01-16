@@ -41219,7 +41219,7 @@
 	        key: 'add',
 	        value: function add(result) {
 	            this.set(function (results) {
-	                return results.concat(result);
+	                return [result].concat(results);
 	            }, {
 	                method: 'POST',
 	                body: JSON.stringify(result)

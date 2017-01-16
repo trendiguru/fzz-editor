@@ -58,7 +58,7 @@ export default class Results extends Editor {
 
     add(result) {
         this.set(
-            (results) => results.concat(result),
+            (results) => [result].concat(results),
             {
                 method: 'POST',
                 body: JSON.stringify(result)
