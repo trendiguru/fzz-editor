@@ -34307,6 +34307,10 @@
 	            var additionalKeys = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 	            var callback = arguments[3];
 	
+	            console.log('transform');
+	            console.log(transform);
+	            console.log('fetchSettings');
+	            console.log(fetchSettings);
 	            fetchSettings.credentials = 'include';
 	            fetch([_package.api].concat(_toConsumableArray(this.path)).concat(additionalKeys).join('/'), fetchSettings);
 	            return this.context.setImages(function (images) {
@@ -41208,7 +41212,7 @@
 	                return results;
 	            }, {
 	                method: 'PUT',
-	                body: JSON.stringify({ data: results })
+	                body: JSON.stringify({ data: results }) //TODO:there may me the same problem that was in add function (data - ruins it all...)
 	            });
 	        }
 	    }, {
@@ -41218,7 +41222,7 @@
 	                return results.concat(result);
 	            }, {
 	                method: 'POST',
-	                body: JSON.stringify({ data: result })
+	                body: JSON.stringify(result)
 	            });
 	        }
 	    }, {
