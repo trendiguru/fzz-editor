@@ -41208,17 +41208,17 @@
 	                return results;
 	            }, {
 	                method: 'PUT',
-	                body: JSON.stringify({ data: results })
+	                body: JSON.stringify({ data: results }) //TODO:there may me the same problem that was in add function (data - ruins it all...)
 	            });
 	        }
 	    }, {
 	        key: 'add',
 	        value: function add(result) {
 	            this.set(function (results) {
-	                return results.concat(result);
+	                return [result].concat(results);
 	            }, {
 	                method: 'POST',
-	                body: JSON.stringify({ data: result })
+	                body: JSON.stringify(result)
 	            });
 	        }
 	    }, {
