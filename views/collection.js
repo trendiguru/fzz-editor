@@ -162,7 +162,7 @@ export default class Collection extends Component {
         }
         return <ReactCSSTransitionGroup
             component="div"
-            className={selected ? 'selected list' : 'list'}
+            className={this.selected ? 'selected list' : 'list'}
             transitionName="collection-item"
             transitionEnterTimeout={400}
             transitionLeaveTimeout={400}
