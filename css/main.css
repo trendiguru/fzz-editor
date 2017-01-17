@@ -531,12 +531,12 @@ div[data-reactroot] > .list {
     div[data-reactroot] > .list.selected > .list-item > *:first-child {
       display: inline-block;
       cursor: auto;
-      width: 40%;
+      width: 30%;
       min-height: 500px;
       height: 85vh; }
       div[data-reactroot] > .list.selected > .list-item > *:first-child > img {
         width: 100%;
-        max-width: 500px; }
+        max-width: 800px; }
     div[data-reactroot] > .list.selected > .list-item > div:nth-child(2) {
       padding: 0;
       overflow: hidden;
@@ -548,7 +548,7 @@ div[data-reactroot] > .list {
       min-height: 500px;
       overflow-y: auto;
       float: right;
-      width: 57%;
+      width: 67%;
       background-color: #DDDDDD;
       border-radius: 5px;
       margin-left: 3%; }
