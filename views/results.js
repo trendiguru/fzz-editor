@@ -133,7 +133,7 @@ export default class Results extends Editor {
 
 const SortableList = SortableContainer(({className, items, itemClass, remove, sortingIndex, shouldUseDragHandle, sortableHandlers}) => {
     return (
-        <div className={className} style={{ width: '100%', height: '100%' }} {...sortableHandlers}>
+        <div className={className} style={{ width: '100%', height: '87vh' }} {...sortableHandlers}>
             {items.map((value, index) =>
                 <Item
                     key={index}
