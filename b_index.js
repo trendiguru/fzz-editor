@@ -41336,7 +41336,7 @@
 	
 	    return _react2.default.createElement(
 	        'div',
-	        _extends({ className: className, style: { width: '100%', height: '100%' } }, sortableHandlers),
+	        _extends({ className: className, style: { width: '100%', height: '87vh' } }, sortableHandlers),
 	        items.map(function (value, index) {
 	            return _react2.default.createElement(_result2.default, {
 	                key: index,
