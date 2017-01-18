@@ -29794,6 +29794,7 @@
 	
 	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
 	            user: undefined,
+	            gateControl: undefined,
 	            images: {},
 	            selected: undefined
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -29916,6 +29917,16 @@
 	            this.selectImage(undefined);
 	        }
 	    }, {
+	        key: 'handShake',
+	        value: function handShake() {
+	            return fzzFetch('', '?last=10').then(function (res) {
+	                if (res.status >= 400 && res.status < 500) {
+	                    throw new Error(res.statusText);
+	                }
+	                return res;
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this6 = this;
@@ -29924,9 +29935,22 @@
 	            var _state = this.state;
 	            var user = _state.user;
 	            var selected = _state.selected;
+	            var gateControl = _state.gateControl;
 	
-	            if (!user) {
-	                return _react2.default.createElement(_login2.default, { handshake: fzzFetch.bind(null, '?last=10'), onAuthenticate: function onAuthenticate(user) {
+	            if (gateControl === undefined) {
+	                this.handShake().then(function () {
+	                    return _this6.setState({ gateControl: true });
+	                }).catch(function () {
+	                    return _this6.setState({ gateControl: false });
+	                });
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    'LOADING'
+	                );
+	            }
+	            if (!user && gateControl === false) {
+	                return _react2.default.createElement(_login2.default, { handshake: this.handShake, onAuthenticate: function onAuthenticate(user) {
 	                        return _this6.setState({ user: user });
 	                    } });
 	            }
@@ -30184,12 +30208,7 @@
 	            var handshake = _props.handshake;
 	            var onAuthenticate = _props.onAuthenticate;
 	
-	            handshake().then(function (res) {
-	                if (res.status >= 400 && res.status < 500) {
-	                    throw new Error(res.statusText);
-	                }
-	                return res;
-	            }).then(function () {
+	            handshake().then(function () {
 	                return onAuthenticate(true);
 	            }).catch(function () {
 	                return onAuthenticate(false);

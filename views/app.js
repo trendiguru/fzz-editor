@@ -19,6 +19,7 @@ export default class App extends Component {
     }
     state = {
         user: undefined,
+        gateControl: undefined,
         images: {},
         selected: undefined
     }
@@ -81,10 +82,24 @@ export default class App extends Component {
     unselectImage () {
         this.selectImage(undefined);
     }
+
+    handShake(){
+        return fzzFetch('', '?last=10').then((res) => {
+            if (res.status >= 400 && res.status < 500) {
+                throw new Error(res.statusText);
+            }
+            return res;
+        });
+    }
+
     render () {
-        let {state, state: {user, selected}} = this;
-        if (!user) {
-            return <Login handshake={fzzFetch.bind(null, '?last=10')} onAuthenticate={user => this.setState({user})} />;
+        let {state, state: {user, selected, gateControl}} = this;
+        if (gateControl === undefined){
+            this.handShake().then(()=>this.setState({gateControl: true})).catch(()=>this.setState({gateControl: false}));
+            return <div>LOADING</div>;
+        }
+        if (!user && gateControl === false) {
+            return <Login handshake={this.handShake} onAuthenticate={user => this.setState({user})} />;
         }
         return <div>
             <header>
@@ -114,6 +129,7 @@ export default class App extends Component {
         </div>;
     }
 }
+
 
 function fzzFetch (url, settings = {}) {
     return fetch(API_URL + url, Object.assign(settings, {
