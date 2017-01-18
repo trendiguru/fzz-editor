@@ -96,7 +96,7 @@ export default class App extends Component {
         let {state, state: {user, selected, gateControl}} = this;
         if (gateControl === undefined){
             this.handShake().then(()=>this.setState({gateControl: true})).catch(()=>this.setState({gateControl: false}));
-            return <div className='loading'>LOADING</div>;
+            return <div className={'loading'}></div>;
         }
         if (!user && gateControl === false) {
             return <Login handshake={this.handShake} onAuthenticate={user => this.setState({user})} />;
@@ -118,7 +118,7 @@ export default class App extends Component {
                 editor={Image}
                 template={(node, key, collection) => {
                     if (node === undefined) {
-                        return <span>LOADING</span>;
+                        return <span className={'loading'}></span>;
                     }
                     else if (node === null) {
                         return <span>NO DATA</span>;

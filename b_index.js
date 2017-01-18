@@ -8352,7 +8352,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(_app2.default, null), document.querySelector('div'));
-	// ReactDOM.render(<div className={'loading'} > LOADING</div>, document.querySelector('div'));
 
 /***/ },
 /* 325 */
@@ -29944,11 +29943,7 @@
 	                }).catch(function () {
 	                    return _this6.setState({ gateControl: false });
 	                });
-	                return _react2.default.createElement(
-	                    'div',
-	                    { className: 'loading' },
-	                    'LOADING'
-	                );
+	                return _react2.default.createElement('div', { className: 'loading' });
 	            }
 	            if (!user && gateControl === false) {
 	                return _react2.default.createElement(_login2.default, { handshake: this.handShake, onAuthenticate: function onAuthenticate(user) {
@@ -29980,11 +29975,7 @@
 	                    editor: _image2.default,
 	                    template: function template(node, key, collection) {
 	                        if (node === undefined) {
-	                            return _react2.default.createElement(
-	                                'span',
-	                                null,
-	                                'LOADING'
-	                            );
+	                            return _react2.default.createElement('span', { className: 'loading' });
 	                        } else if (node === null) {
 	                            return _react2.default.createElement(
 	                                'span',
@@ -34098,7 +34089,7 @@
 	            if (!people) {
 	                return _react2.default.createElement(
 	                    'div',
-	                    null,
+	                    { className: 'loading' },
 	                    'LOADING'
 	                );
 	            }

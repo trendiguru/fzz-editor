@@ -838,21 +838,6 @@ div[data-reactroot] > .list {
     transform: scale(1);
     transform: rotate(0deg); } }
 
-.loading {
-  border-radius: 6px;
-  cursor: pointer;
-  height: 95px;
-  line-height: 95px;
-  text-align: center;
-  background: #DDDDDD;
-  width: 95px;
-  animation-duration: 3s;
-  animation-name: bounceIn;
-  transition-property: background;
-  transition-duration: 2s;
-  transition-timing-function: linear;
-  animation-iteration-count: infinite; }
-
 body {
   font-family: 'Source Sans Pro', sans-serif;
   background: #f9f9f9;

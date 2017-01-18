@@ -1,6 +1,6 @@
 
 
-
+//TODO: try experiment with a loading animation.
 @keyframes bounceIn {
     0% {
     transform: scale(0.1);
@@ -18,20 +18,21 @@
 }
 
 .loading {
-    border-radius: 6px;
-    cursor: pointer;
-    height: 95px;
-    line-height: 95px;
-    text-align: center;
-    background: $MAIN_BACKGROUND_COLOR;
-    width: 95px;
-    
-    animation-duration: 3s;
-    animation-name: bounceIn;
-    transition-property: background;
-    transition-duration: 2s;
-    transition-timing-function: linear;
-    animation-iteration-count:infinite;
+    // border-radius: 6px;
+    // cursor: pointer;
+    // height: 95px;
+    // width: 95px;
+    // // max-width: 95px;
+    // // max-height: 95px;
+    // line-height: 95px;
+    // text-align: center;
+    // background: $MAIN_BACKGROUND_COLOR;
     
     
+    // animation-duration: 3s;
+    // animation-name: bounceIn;
+    // transition-property: background;
+    // transition-duration: 2s;
+    // transition-timing-function: linear;
+    // //animation-iteration-count:infinite;
 }
