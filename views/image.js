@@ -39,7 +39,7 @@ export default class Image extends Component {
     render () {
         let {props: {image_urls, element, people}} = this;
         if (!people) {
-            return <div>LOADING</div>;
+            return <div className={'loading'}>LOADING</div>;
         }
         return <div>
 
