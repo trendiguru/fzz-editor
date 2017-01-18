@@ -34,7 +34,7 @@ MSG_STYLE={
     whiteSpace:'pre-wrap', 
     position:'absolute'
 }, 
-ERROR_MSG = 'There are an internal error! please report a support group, by mail: lior@trendiguru.com. Thank you!',
+ERROR_MSG = 'There is an internal error! please report a support group, by mail: lior@trendiguru.com. Thank you!',
 DANGER_ICON = '/img/broken.png';
 
 export default SortableElement((props) => {
