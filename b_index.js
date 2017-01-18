@@ -41390,59 +41390,97 @@
 	    var children = _ref.children;
 	    return children;
 	});
+	var OVERWRITE_STYLE = {
+	    isolation: 'isolate',
+	    margin: '1em',
+	    width: '15em',
+	    height: '15em',
+	    display: 'block',
+	    overflow: 'visible',
+	    borderRadius: '10px',
+	    backgroundColor: 'white'
+	},
+	    OVERWRITE_BUTTON_STYLE = {
+	    width: REMOVE_BUTTON_SIZE,
+	    height: REMOVE_BUTTON_SIZE,
+	    borderRadius: '10px',
+	    right: '0px',
+	    backgroundColor: 'PINK'
+	},
+	    OVERWRITE_BACKGROUND_IMAGE_STYLE = {
+	    height: '100%', width: '100%',
+	    'backgroundRepeat': 'no-repeat',
+	    'backgroundPosition': 'center',
+	    'backgroundSize': 'contain'
+	};
 	
 	exports.default = (0, _reactSortableHoc.SortableElement)(function (props) {
-	    return _react2.default.createElement(
-	        'div',
-	        {
-	            className: props.className,
-	            style: {
-	                isolation: 'isolate',
-	                margin: '1em',
-	                width: '15em',
-	                height: '15em',
-	                display: 'block',
-	                overflow: 'visible',
-	                backgroundColor: 'WHITE',
-	                borderRadius: '10px'
-	            } },
-	        _react2.default.createElement(
+	    var item = void 0;
+	    try {
+	        item = _react2.default.createElement(
 	            'div',
-	            { style: { width: '100%', height: '100%' } },
+	            {
+	                className: props.className,
+	                style: OVERWRITE_STYLE },
 	            _react2.default.createElement(
-	                'aside',
-	                { style: { position: 'absolute', marging: '10px' } },
+	                'div',
+	                { style: { width: '100%', height: '100%' } },
 	                _react2.default.createElement(
-	                    'button',
-	                    { style: {
-	                            width: REMOVE_BUTTON_SIZE,
-	                            height: REMOVE_BUTTON_SIZE,
-	                            borderRadius: '10px',
-	                            right: '0px',
-	                            backgroundColor: 'PINK'
-	                        }, onClick: function onClick() {
-	                            return props.remove(props.value.id);
-	                        } },
+	                    'aside',
+	                    { style: { position: 'absolute', marging: '10px' } },
 	                    _react2.default.createElement(
-	                        _mdIcon2.default,
-	                        null,
-	                        'delete'
+	                        'button',
+	                        { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
+	                                return props.remove(props.value.id);
+	                            } },
+	                        _react2.default.createElement(
+	                            _mdIcon2.default,
+	                            null,
+	                            'delete'
+	                        )
 	                    )
+	                ),
+	                _react2.default.createElement(
+	                    DragHandle,
+	                    null,
+	                    _react2.default.createElement('div', { style: Object.assign({ backgroundImage: 'url(' + props.value.images.XLarge + ')' }, OVERWRITE_BACKGROUND_IMAGE_STYLE) })
 	                )
-	            ),
-	            _react2.default.createElement(
-	                DragHandle,
-	                null,
-	                _react2.default.createElement('div', { style: {
-	                        backgroundImage: 'url(' + props.value.images.XLarge + ')',
-	                        height: '100%', width: '100%',
-	                        'backgroundRepeat': 'no-repeat',
-	                        'backgroundPosition': 'center',
-	                        'backgroundSize': 'contain'
-	                    } })
 	            )
-	        )
-	    );
+	        );
+	    } catch (err) {
+	        console.error(err);
+	        item = _react2.default.createElement(
+	            'div',
+	            {
+	                className: props.className,
+	                style: OVERWRITE_STYLE },
+	            _react2.default.createElement(
+	                'div',
+	                { style: { width: '100%', height: '100%' } },
+	                _react2.default.createElement(
+	                    'aside',
+	                    { style: { position: 'absolute', marging: '10px' } },
+	                    _react2.default.createElement(
+	                        'button',
+	                        { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
+	                                return props.remove(props.value.id);
+	                            } },
+	                        _react2.default.createElement(
+	                            _mdIcon2.default,
+	                            null,
+	                            'delete'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    DragHandle,
+	                    null,
+	                    _react2.default.createElement('div', { style: Object.assign({ backgroundImage: 'url(/img/broken.png)' }, OVERWRITE_BACKGROUND_IMAGE_STYLE), className: 'broken-result' })
+	                )
+	            )
+	        );
+	    }
+	    return item;
 	});
 
 /***/ },

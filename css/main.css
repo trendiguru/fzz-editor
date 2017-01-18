@@ -838,6 +838,26 @@ div[data-reactroot] > .list {
     transform: scale(1);
     transform: rotate(0deg); } }
 
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.3; }
+  60% {
+    transform: scale(1);
+    opacity: 1; }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.3; } }
+
+.broken-result {
+  background: transparent;
+  animation-duration: 5s;
+  animation-name: bounceIn;
+  transition-property: background;
+  transition-duration: 2s;
+  transition-timing-function: linear;
+  animation-iteration-count: infinite; }
+
 body {
   font-family: 'Source Sans Pro', sans-serif;
   background: #f9f9f9;
