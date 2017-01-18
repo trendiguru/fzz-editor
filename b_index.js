@@ -41412,75 +41412,71 @@
 	    'backgroundRepeat': 'no-repeat',
 	    'backgroundPosition': 'center',
 	    'backgroundSize': 'contain'
-	};
+	},
+	    MSG_STYLE = {
+	    wordWrap: 'break-word',
+	    textAlign: 'justify',
+	    whiteSpace: 'pre-wrap',
+	    position: 'absolute'
+	},
+	    ERROR_MSG = 'There are an internal error! please report a support group, by mail: lior@trendiguru.com. Thank you!',
+	    DANGER_ICON = '/img/broken.png';
 	
 	exports.default = (0, _reactSortableHoc.SortableElement)(function (props) {
-	    var item = void 0;
+	    var imageSrc = void 0,
+	        errorMsg = void 0,
+	        id = void 0,
+	        classNames = '';
+	    var remove = _react2.default.createElement('div', null);
 	    try {
-	        item = _react2.default.createElement(
-	            'div',
-	            {
-	                className: props.className,
-	                style: OVERWRITE_STYLE },
+	        id = props.value.id;
+	        imageSrc = props.value.images.XLarge;
+	        remove = _react2.default.createElement(
+	            'aside',
+	            { style: { position: 'absolute', marging: '10px' } },
 	            _react2.default.createElement(
-	                'div',
-	                { style: { width: '100%', height: '100%' } },
+	                'button',
+	                { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
+	                        return props.remove(id);
+	                    } },
 	                _react2.default.createElement(
-	                    'aside',
-	                    { style: { position: 'absolute', marging: '10px' } },
-	                    _react2.default.createElement(
-	                        'button',
-	                        { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
-	                                return props.remove(props.value.id);
-	                            } },
-	                        _react2.default.createElement(
-	                            _mdIcon2.default,
-	                            null,
-	                            'delete'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    DragHandle,
+	                    _mdIcon2.default,
 	                    null,
-	                    _react2.default.createElement('div', { style: Object.assign({ backgroundImage: 'url(' + props.value.images.XLarge + ')' }, OVERWRITE_BACKGROUND_IMAGE_STYLE) })
+	                    'delete'
 	                )
 	            )
 	        );
 	    } catch (err) {
+	        classNames = 'broken-result';
+	        imageSrc = DANGER_ICON;
+	        errorMsg = ERROR_MSG;
 	        console.error(err);
-	        item = _react2.default.createElement(
+	    }
+	    return _react2.default.createElement(
+	        'div',
+	        {
+	            className: props.className,
+	            style: OVERWRITE_STYLE },
+	        _react2.default.createElement(
 	            'div',
-	            {
-	                className: props.className,
-	                style: OVERWRITE_STYLE },
+	            { style: { width: '100%', height: '100%' } },
+	            remove,
 	            _react2.default.createElement(
-	                'div',
-	                { style: { width: '100%', height: '100%' } },
+	                DragHandle,
+	                null,
 	                _react2.default.createElement(
-	                    'aside',
-	                    { style: { position: 'absolute', marging: '10px' } },
+	                    'div',
+	                    { style: Object.assign({ backgroundImage: 'url(' + imageSrc + ')' }, OVERWRITE_BACKGROUND_IMAGE_STYLE),
+	                        className: classNames },
 	                    _react2.default.createElement(
-	                        'button',
-	                        { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
-	                                return props.remove(props.value.id);
-	                            } },
-	                        _react2.default.createElement(
-	                            _mdIcon2.default,
-	                            null,
-	                            'delete'
-	                        )
+	                        'p',
+	                        { style: MSG_STYLE },
+	                        errorMsg
 	                    )
-	                ),
-	                _react2.default.createElement(
-	                    DragHandle,
-	                    null,
-	                    _react2.default.createElement('div', { style: Object.assign({ backgroundImage: 'url(/img/broken.png)' }, OVERWRITE_BACKGROUND_IMAGE_STYLE), className: 'broken-result' })
 	                )
 	            )
-	        );
-	    }
-	    return item;
+	        )
+	    );
 	});
 
 /***/ },

@@ -27,41 +27,44 @@ OVERWRITE_BACKGROUND_IMAGE_STYLE = {
     'backgroundRepeat': 'no-repeat',
     'backgroundPosition': 'center',
     'backgroundSize': 'contain'
-};
+}, 
+MSG_STYLE={
+    wordWrap: 'break-word',
+    textAlign: 'justify', 
+    whiteSpace:'pre-wrap', 
+    position:'absolute'
+}, 
+ERROR_MSG = 'There are an internal error! please report a support group, by mail: lior@trendiguru.com. Thank you!',
+DANGER_ICON = '/img/broken.png';
 
 export default SortableElement((props) => {
-    let item;
+    let imageSrc, errorMsg, id, classNames = '';
+    let remove = <div></div>;
     try{
-        item =  <div 
-        className={props.className}
-        style={OVERWRITE_STYLE}>
-        <div style={{ width: '100%', height: '100%'}}  >
-            <aside style={{ position: 'absolute', marging:'10px'}}>
-                <button style={OVERWRITE_BUTTON_STYLE} onClick={() => props.remove(props.value.id)}>
-                    <MDIcon>delete</MDIcon>
-                </button>
-            </aside>
-            <DragHandle>
-                <div style={Object.assign({backgroundImage: 'url(' + props.value.images.XLarge + ')'},OVERWRITE_BACKGROUND_IMAGE_STYLE)}/>
-            </DragHandle>
-        </div>
-    </div>;
+        id = props.value.id;
+        imageSrc = props.value.images.XLarge;
+        remove = <aside style={{ position: 'absolute', marging:'10px'}}>
+            <button style={OVERWRITE_BUTTON_STYLE} onClick={() => props.remove(id)}>
+                <MDIcon>delete</MDIcon>
+            </button>
+        </aside>
     }catch(err){
+        classNames = 'broken-result';
+        imageSrc = DANGER_ICON;
+        errorMsg = ERROR_MSG;
         console.error(err);
-        item =  <div 
+    }
+    return <div 
         className={props.className}
         style={OVERWRITE_STYLE}>
         <div style={{ width: '100%', height: '100%'}}  >
-            <aside style={{ position: 'absolute', marging:'10px'}}>
-                <button style={OVERWRITE_BUTTON_STYLE} onClick={() => props.remove(props.value.id)}>
-                    <MDIcon>delete</MDIcon>
-                </button>
-            </aside>
+            {remove}
             <DragHandle>
-                <div style={Object.assign({backgroundImage:'url(/img/broken.png)'},OVERWRITE_BACKGROUND_IMAGE_STYLE)} className={'broken-result'}/>
+                <div style={Object.assign({backgroundImage: 'url(' + imageSrc + ')'},
+                    OVERWRITE_BACKGROUND_IMAGE_STYLE)} 
+                    className={classNames}>
+                    <p style={MSG_STYLE}>{errorMsg}</p></div>
             </DragHandle>
         </div>
     </div>;
-    }
-    return item;
 });
