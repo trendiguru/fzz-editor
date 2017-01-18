@@ -30,25 +30,16 @@ OVERWRITE_BACKGROUND_IMAGE_STYLE = {
 };
 
 export default SortableElement((props) => {
-    let item;
+    let imageSrc = 'url(/img/broken.png)';
+    let errorMsg = '';
     try{
-        item =  <div 
-        className={props.className}
-        style={OVERWRITE_STYLE}>
-        <div style={{ width: '100%', height: '100%'}}  >
-            <aside style={{ position: 'absolute', marging:'10px'}}>
-                <button style={OVERWRITE_BUTTON_STYLE} onClick={() => props.remove(props.value.id)}>
-                    <MDIcon>delete</MDIcon>
-                </button>
-            </aside>
-            <DragHandle>
-                <div style={Object.assign({backgroundImage: 'url(' + props.value.images.XLarge + ')'},OVERWRITE_BACKGROUND_IMAGE_STYLE)}/>
-            </DragHandle>
-        </div>
-    </div>;
+        imageSrc = props.value.images.XLarge;
     }catch(err){
+        imageSrc = 'url(/img/broken.png)';
+        errorMsg = 'There are an internal error! please report a support group, by mail: lior@trendiguru.com.';
         console.error(err);
-        item =  <div 
+    }
+        return <div 
         className={props.className}
         style={OVERWRITE_STYLE}>
         <div style={{ width: '100%', height: '100%'}}  >
@@ -58,10 +49,12 @@ export default SortableElement((props) => {
                 </button>
             </aside>
             <DragHandle>
-                <div style={Object.assign({backgroundImage:'url(/img/broken.png)'},OVERWRITE_BACKGROUND_IMAGE_STYLE)} className={'broken-result'}/>
+                <div style={Object.assign(
+                    {backgroundImage: 'url(' + imageSrc + ')'},
+                    OVERWRITE_BACKGROUND_IMAGE_STYLE)}><text>{errorMsg}</text></div>
             </DragHandle>
         </div>
     </div>;
-    }
-    return item;
 });
+// text-align: justify;
+//     text-justify: inter-word;

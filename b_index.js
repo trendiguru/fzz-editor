@@ -41415,73 +41415,56 @@
 	};
 	
 	exports.default = (0, _reactSortableHoc.SortableElement)(function (props) {
-	    var item = void 0;
+	    var imageSrc = 'url(/img/broken.png)';
+	    var errorMsg = '';
 	    try {
-	        item = _react2.default.createElement(
-	            'div',
-	            {
-	                className: props.className,
-	                style: OVERWRITE_STYLE },
-	            _react2.default.createElement(
-	                'div',
-	                { style: { width: '100%', height: '100%' } },
-	                _react2.default.createElement(
-	                    'aside',
-	                    { style: { position: 'absolute', marging: '10px' } },
-	                    _react2.default.createElement(
-	                        'button',
-	                        { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
-	                                return props.remove(props.value.id);
-	                            } },
-	                        _react2.default.createElement(
-	                            _mdIcon2.default,
-	                            null,
-	                            'delete'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    DragHandle,
-	                    null,
-	                    _react2.default.createElement('div', { style: Object.assign({ backgroundImage: 'url(' + props.value.images.XLarge + ')' }, OVERWRITE_BACKGROUND_IMAGE_STYLE) })
-	                )
-	            )
-	        );
+	        imageSrc = props.value.images.XLarge;
 	    } catch (err) {
+	        imageSrc = 'url(/img/broken.png)';
+	        errorMsg = 'There are an internal error! please report a support group, by mail: lior@trendiguru.com.';
 	        console.error(err);
-	        item = _react2.default.createElement(
+	    }
+	    return _react2.default.createElement(
+	        'div',
+	        {
+	            className: props.className,
+	            style: OVERWRITE_STYLE },
+	        _react2.default.createElement(
 	            'div',
-	            {
-	                className: props.className,
-	                style: OVERWRITE_STYLE },
+	            { style: { width: '100%', height: '100%' } },
 	            _react2.default.createElement(
-	                'div',
-	                { style: { width: '100%', height: '100%' } },
+	                'aside',
+	                { style: { position: 'absolute', marging: '10px' } },
 	                _react2.default.createElement(
-	                    'aside',
-	                    { style: { position: 'absolute', marging: '10px' } },
+	                    'button',
+	                    { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
+	                            return props.remove(props.value.id);
+	                        } },
 	                    _react2.default.createElement(
-	                        'button',
-	                        { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
-	                                return props.remove(props.value.id);
-	                            } },
-	                        _react2.default.createElement(
-	                            _mdIcon2.default,
-	                            null,
-	                            'delete'
-	                        )
+	                        _mdIcon2.default,
+	                        null,
+	                        'delete'
 	                    )
-	                ),
+	                )
+	            ),
+	            _react2.default.createElement(
+	                DragHandle,
+	                null,
 	                _react2.default.createElement(
-	                    DragHandle,
-	                    null,
-	                    _react2.default.createElement('div', { style: Object.assign({ backgroundImage: 'url(/img/broken.png)' }, OVERWRITE_BACKGROUND_IMAGE_STYLE), className: 'broken-result' })
+	                    'div',
+	                    { style: Object.assign({ backgroundImage: 'url(' + imageSrc + ')' }, OVERWRITE_BACKGROUND_IMAGE_STYLE) },
+	                    _react2.default.createElement(
+	                        'text',
+	                        null,
+	                        errorMsg
+	                    )
 	                )
 	            )
-	        );
-	    }
-	    return item;
+	        )
+	    );
 	});
+	// text-align: justify;
+	//     text-justify: inter-word;
 
 /***/ },
 /* 533 */
