@@ -41412,16 +41412,44 @@
 	    'backgroundRepeat': 'no-repeat',
 	    'backgroundPosition': 'center',
 	    'backgroundSize': 'contain'
-	};
+	},
+	    MSG_STYLE = {
+	    wordWrap: 'break-word',
+	    textAlign: 'justify',
+	    whiteSpace: 'pre-wrap',
+	    position: 'absolute'
+	},
+	    ERROR_MSG = 'There are an internal error! please report a support group, by mail: lior@trendiguru.com. Thank you!',
+	    DANGER_ICON = '/img/broken.png';
 	
 	exports.default = (0, _reactSortableHoc.SortableElement)(function (props) {
-	    var imageSrc = 'url(/img/broken.png)';
-	    var errorMsg = '';
+	    var imageSrc = void 0,
+	        errorMsg = void 0,
+	        id = void 0,
+	        classNames = '';
+	    var remove = _react2.default.createElement('div', null);
 	    try {
+	        id = props.value.id;
 	        imageSrc = props.value.images.XLarge;
+	        remove = _react2.default.createElement(
+	            'aside',
+	            { style: { position: 'absolute', marging: '10px' } },
+	            _react2.default.createElement(
+	                'button',
+	                { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
+	                        return props.remove(id);
+	                    } },
+	                _react2.default.createElement(
+	                    _mdIcon2.default,
+	                    null,
+	                    'delete'
+	                )
+	            )
+	        );
 	    } catch (err) {
-	        imageSrc = 'url(/img/broken.png)';
-	        errorMsg = 'There are an internal error! please report a support group, by mail: lior@trendiguru.com.';
+	        classNames = 'broken-result';
+	        imageSrc = DANGER_ICON;
+	        errorMsg = ERROR_MSG;
 	        console.error(err);
 	    }
 	    return _react2.default.createElement(
@@ -41432,30 +41460,17 @@
 	        _react2.default.createElement(
 	            'div',
 	            { style: { width: '100%', height: '100%' } },
-	            _react2.default.createElement(
-	                'aside',
-	                { style: { position: 'absolute', marging: '10px' } },
-	                _react2.default.createElement(
-	                    'button',
-	                    { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
-	                            return props.remove(props.value.id);
-	                        } },
-	                    _react2.default.createElement(
-	                        _mdIcon2.default,
-	                        null,
-	                        'delete'
-	                    )
-	                )
-	            ),
+	            remove,
 	            _react2.default.createElement(
 	                DragHandle,
 	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    { style: Object.assign({ backgroundImage: 'url(' + imageSrc + ')' }, OVERWRITE_BACKGROUND_IMAGE_STYLE) },
+	                    { style: Object.assign({ backgroundImage: 'url(' + imageSrc + ')' }, OVERWRITE_BACKGROUND_IMAGE_STYLE),
+	                        className: classNames },
 	                    _react2.default.createElement(
-	                        'text',
-	                        null,
+	                        'p',
+	                        { style: MSG_STYLE },
 	                        errorMsg
 	                    )
 	                )
@@ -41463,8 +41478,6 @@
 	        )
 	    );
 	});
-	// text-align: justify;
-	//     text-justify: inter-word;
 
 /***/ },
 /* 533 */
