@@ -8352,6 +8352,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(_app2.default, null), document.querySelector('div'));
+	// ReactDOM.render(<div className={'loading'} > LOADING</div>, document.querySelector('div'));
 
 /***/ },
 /* 325 */
@@ -29945,7 +29946,7 @@
 	                });
 	                return _react2.default.createElement(
 	                    'div',
-	                    null,
+	                    { className: 'loading' },
 	                    'LOADING'
 	                );
 	            }

@@ -96,7 +96,7 @@ export default class App extends Component {
         let {state, state: {user, selected, gateControl}} = this;
         if (gateControl === undefined){
             this.handShake().then(()=>this.setState({gateControl: true})).catch(()=>this.setState({gateControl: false}));
-            return <div>LOADING</div>;
+            return <div className='loading'>LOADING</div>;
         }
         if (!user && gateControl === false) {
             return <Login handshake={this.handShake} onAuthenticate={user => this.setState({user})} />;
