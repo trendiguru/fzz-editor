@@ -41192,6 +41192,37 @@
 	            var onSortEnd = _this.props.onSortEnd;
 	        };
 	
+	        _this.submitResult = function (imageUrl, clickUrl) {
+	            if (!(0, _validURL2.default)(clickUrl.value) && clickUrl.value !== '') {
+	                clickUrl.setCustomValidity('This field is not valid!');
+	                clickUrl.addEventListener('keydown', function () {
+	                    clickUrl.setCustomValidity('');
+	                });
+	            } else {
+	                clickUrl.setCustomValidity('');
+	            }
+	            if (!(0, _validURL2.default)(imageUrl.value) && imageUrl.value !== '') {
+	                imageUrl.setCustomValidity('This field is not valid!');
+	                imageUrl.addEventListener('keydown', function () {
+	                    imageUrl.setCustomValidity('');
+	                });
+	            } else {
+	                imageUrl.setCustomValidity('');
+	            }
+	            clickUrl.reportValidity();
+	            imageUrl.reportValidity();
+	            if (clickUrl.checkValidity() && imageUrl.checkValidity()) {
+	                _this.add({
+	                    clickUrl: clickUrl.value,
+	                    images: {
+	                        XLarge: imageUrl.value
+	                    }
+	                });
+	                alert('The result was successfully added!');
+	                form.reset();
+	            }
+	        };
+	
 	        _this.state = {
 	            items: props.origin,
 	            isSorting: false
@@ -41247,6 +41278,8 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+	
 	            var isSorting = this.state.isSorting;
 	
 	            var props = {
@@ -41304,7 +41337,7 @@
 	                        { className: 'raised', type: 'button', onClick: function onClick(_ref2) {
 	                                var form = _ref2.target.parentElement;
 	
-	                                submitResult(form.elements.image, form.elements.clickUrl);
+	                                _this2.submitResult(form.elements.image, form.elements.clickUrl);
 	                            } },
 	                        'Submit'
 	                    )
@@ -41357,37 +41390,6 @@
 	        })
 	    );
 	});
-	
-	function submitResult(imageUrl, clickUrl) {
-	    if (!(0, _validURL2.default)(clickUrl.value) && clickUrl.value !== '') {
-	        clickUrl.setCustomValidity('This field is not valid!');
-	        clickUrl.addEventListener('keydown', function () {
-	            clickUrl.setCustomValidity('');
-	        });
-	    } else {
-	        clickUrl.setCustomValidity('');
-	    }
-	    if (!(0, _validURL2.default)(imageUrl.value) && imageUrl.value !== '') {
-	        imageUrl.setCustomValidity('This field is not valid!');
-	        imageUrl.addEventListener('keydown', function () {
-	            imageUrl.setCustomValidity('');
-	        });
-	    } else {
-	        imageUrl.setCustomValidity('');
-	    }
-	    clickUrl.reportValidity();
-	    imageUrl.reportValidity();
-	    if (clickUrl.checkValidity() && imageUrl.checkValidity()) {
-	        this.add({
-	            clickUrl: clickUrl.value,
-	            images: {
-	                XLarge: imageUrl.value
-	            }
-	        });
-	        alert('The result was successfully added!');
-	        form.reset();
-	    }
-	}
 
 /***/ },
 /* 532 */

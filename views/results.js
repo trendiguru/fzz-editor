@@ -82,6 +82,36 @@ export default class Results extends Editor {
         this.setState({ isSorting: false });
         let {onSortEnd} = this.props;
     };
+    submitResult = (imageUrl, clickUrl)=>{
+        if (!validURL(clickUrl.value) && clickUrl.value !== ''){
+            clickUrl.setCustomValidity('This field is not valid!');
+            clickUrl.addEventListener('keydown', ()=>{
+                clickUrl.setCustomValidity('');
+            });
+        }else{
+            clickUrl.setCustomValidity('');
+        }
+        if (!validURL(imageUrl.value) && imageUrl.value !== ''){
+            imageUrl.setCustomValidity('This field is not valid!');
+            imageUrl.addEventListener('keydown', ()=>{
+                imageUrl.setCustomValidity('');
+            });
+        }else{
+            imageUrl.setCustomValidity('');
+        }
+        clickUrl.reportValidity();
+        imageUrl.reportValidity();
+        if (clickUrl.checkValidity() && imageUrl.checkValidity()){
+            this.add({
+                clickUrl: clickUrl.value,
+                images: {
+                    XLarge: imageUrl.value
+                }
+            });
+            alert('The result was successfully added!');
+            form.reset();
+        } 
+    };
     render() {
         const {isSorting} = this.state;
         const props = {
@@ -109,7 +139,7 @@ export default class Results extends Editor {
                 <label>Click URL</label>
                 <input type="text" name="clickUrl" willValidate={true} required/>
                 <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
-                    submitResult(form.elements.image, form.elements.clickUrl);
+                    this.submitResult(form.elements.image, form.elements.clickUrl);
                 } 
             }>Submit</button>
             </form>
@@ -144,34 +174,3 @@ const SortableList = SortableContainer(({className, items, itemClass, remove, so
         </div>
     );
 });
-
-function submitResult(imageUrl, clickUrl){
-    if (!validURL(clickUrl.value) && clickUrl.value !== ''){
-        clickUrl.setCustomValidity('This field is not valid!');
-        clickUrl.addEventListener('keydown', ()=>{
-            clickUrl.setCustomValidity('');
-        });
-    }else{
-        clickUrl.setCustomValidity('');
-    }
-    if (!validURL(imageUrl.value) && imageUrl.value !== ''){
-        imageUrl.setCustomValidity('This field is not valid!');
-        imageUrl.addEventListener('keydown', ()=>{
-            imageUrl.setCustomValidity('');
-        });
-    }else{
-        imageUrl.setCustomValidity('');
-    }
-    clickUrl.reportValidity();
-    imageUrl.reportValidity();
-    if (clickUrl.checkValidity() && imageUrl.checkValidity()){
-        this.add({
-            clickUrl: clickUrl.value,
-            images: {
-                XLarge: imageUrl.value
-            }
-        });
-        alert('The result was successfully added!');
-        form.reset();
-    } 
-}
