@@ -6,6 +6,7 @@ import range from 'lodash/range';
 import random from 'lodash/random';
 import classNames from 'classnames';
 import Editor from './editor';
+import validURL from '../modules/validURL';
 
 function getItems(count, height) {
     var heights = [65, 110, 140, 65, 90, 65];
@@ -101,21 +102,16 @@ export default class Results extends Editor {
             <i className='md-icon'>add</i>
             <p>add a result</p>
             </button>
-            <form className="result-form hidden">
+            <form className="result-form hidden" willValidate={true} required>
                 <h3>Add a result</h3>
                 <label>Image</label>
-                <input type="text" name="image" />
+                <input type="text" name="image" willValidate={true} required/>
                 <label>Click URL</label>
-                <input type="text" name="clickUrl" />
+                <input type="text" name="clickUrl" willValidate={true} required/>
                 <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
-                    this.add({
-                        clickUrl: form.elements.clickUrl.value,
-                        images: {
-                            XLarge: form.elements.image.value
-                        }
-                    });
-                    form.reset();
-                } }>Submit</button>
+                    submitResult(form.elements.image, form.elements.clickUrl);
+                } 
+            }>Submit</button>
             </form>
             <SortableList
                 axis={'xy'}
@@ -148,3 +144,34 @@ const SortableList = SortableContainer(({className, items, itemClass, remove, so
         </div>
     );
 });
+
+function submitResult(imageUrl, clickUrl){
+    if (!validURL(clickUrl.value) && clickUrl.value !== ''){
+        clickUrl.setCustomValidity('This field is not valid!');
+        clickUrl.addEventListener('keydown', ()=>{
+            clickUrl.setCustomValidity('');
+        });
+    }else{
+        clickUrl.setCustomValidity('');
+    }
+    if (!validURL(imageUrl.value) && imageUrl.value !== ''){
+        imageUrl.setCustomValidity('This field is not valid!');
+        imageUrl.addEventListener('keydown', ()=>{
+            imageUrl.setCustomValidity('');
+        });
+    }else{
+        imageUrl.setCustomValidity('');
+    }
+    clickUrl.reportValidity();
+    imageUrl.reportValidity();
+    if (clickUrl.checkValidity() && imageUrl.checkValidity()){
+        this.add({
+            clickUrl: clickUrl.value,
+            images: {
+                XLarge: imageUrl.value
+            }
+        });
+        alert('The result was successfully added!');
+        form.reset();
+    } 
+}
