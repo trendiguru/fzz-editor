@@ -38,9 +38,12 @@ export default class Image extends Component {
     // }
     render () {
         let {props: {image_urls, element, people}} = this;
-        if (!people) {
-            return <div className={'loading'}>LOADING</div>;
-        }
+        // if (!people) {
+            console.log('image loading');
+            return <div>
+                    <div className={'loading'}>LOADING</div>
+                </div>;
+        // }
         return <div>
 
             <Collection source={this.props} query="people" editor={Person} template={(node) => {

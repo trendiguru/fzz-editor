@@ -1,20 +1,20 @@
 .loading {
-    isolation: isolate;
-    color: #0d0303;
-    font-size: 20px;
+   // isolation: isolate;
+    color:$LOADING_COLOR ;
+    font-size: 20px ;
     margin: 100px auto;
-    width: 1em;
-    height: 1em;
-    max-width: 50px;
-    max-height: 50px;
-    border-radius: 50%;
-    position: relative;
-    text-indent: -9999em;
-    -webkit-animation: load4 1.3s infinite linear;
-    animation: load4 1.3s infinite linear;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
+    width: 1em !important;
+    height: 1em !important;
+    max-width: 50px !important;
+    max-height: 50px!important;
+    border-radius: 50% !important;
+    position: relative !important;
+    text-indent: -9999em !important;
+    -webkit-animation: load4 1.3s infinite linear !important;
+    animation: load4 1.3s infinite linear !important;
+    -webkit-transform: translateZ(0) !important;
+    -ms-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
 }
 @-webkit-keyframes load4 {
   0%,

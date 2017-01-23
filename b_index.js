@@ -29975,6 +29975,7 @@
 	                    editor: _image2.default,
 	                    template: function template(node, key, collection) {
 	                        if (node === undefined) {
+	                            console.log('app span loading');
 	                            return _react2.default.createElement('span', { className: 'loading' });
 	                        } else if (node === null) {
 	                            return _react2.default.createElement(
@@ -34085,14 +34086,19 @@
 	            var image_urls = _props.image_urls;
 	            var element = _props.element;
 	            var people = _props.people;
+	            // if (!people) {
 	
-	            if (!people) {
-	                return _react2.default.createElement(
+	            console.log('image loading');
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'loading' },
 	                    'LOADING'
-	                );
-	            }
+	                )
+	            );
+	            // }
 	            return _react2.default.createElement(
 	                'div',
 	                null,
