@@ -15,7 +15,8 @@ export default class App extends Component {
         getImage:       PropTypes.func.isRequired,
         getImageByURL:  PropTypes.func.isRequired,
         selectImage:    PropTypes.func.isRequired,
-        unselectImage:  PropTypes.func.isRequired
+        unselectImage:  PropTypes.func.isRequired,
+        updateImage: PropTypes.func.isRequired,
     }
     state = {
         user: undefined,
@@ -31,6 +32,7 @@ export default class App extends Component {
             getImageByURL:  ::this.getImageByURL,
             selectImage:    ::this.selectImage,
             unselectImage:  ::this.unselectImage,
+            updateImage:    ::this.updateImage,
         };
     }
     componentDidMount () {
@@ -41,6 +43,11 @@ export default class App extends Component {
         if (!Object.keys(images).length) {
             this.getLastImages();
         }
+    }
+    updateImage(){
+        console.log("updateImage function");
+        let imgKey = this.state.selected;
+        this.getImageByURL (this.state.images[imgKey].image_urls[0]);
     }
     setImages (transform, callback) {
         return this.setState({images: transform(this.state.images)}, callback);

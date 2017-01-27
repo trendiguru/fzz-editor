@@ -8,7 +8,8 @@ import Select from 'react-select';
 export default class Collection extends Component {
     static contextTypes = {
         images: PropTypes.object.isRequired,
-        setImages: PropTypes.func.isRequired
+        setImages: PropTypes.func.isRequired,
+        updateImage: PropTypes.func.isRequired,
     }
     static propTypes = {
         source: PropTypes.object.isRequired,
@@ -33,6 +34,7 @@ export default class Collection extends Component {
         }
     }
     add (key, value = {}) {
+        let promise = Promise.resolve();
         let newItem = Object.assign({[this.props.title]: key}, value);
         this.context.setImages(images => {
             let path = images !== this.props.source[this.props.query]
@@ -41,15 +43,20 @@ export default class Collection extends Component {
             Object.assign(this.props.source[this.props.query], {
                 [key]: newItem
             });
-            fetch([API_URL, ...path].join('/'), {
+            promise = fetch([API_URL, ...path].join('/'), {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify({
                     data: newItem
                 })
-            });
+            }).then((imgs)=>{
+                            console.log("images from add a category");
+                            console.log(imgs);
+                            return imgs;
+                        });
             return images;
         });
+        return promise;
     }
     select (selected) {
         this.setState({selected});
@@ -155,7 +162,7 @@ export default class Collection extends Component {
                     <button className="raised" onClick={() => {
                         console.log('add-button');
                         this.setState({selectedAdd: undefined});
-                        this.add(selectedAdd.value);
+                        this.add(selectedAdd.value).then(this.context.updateImage);
                     }}>Add</button>
                 </div>
             </div>);
