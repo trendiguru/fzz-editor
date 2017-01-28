@@ -49,11 +49,7 @@ export default class Collection extends Component {
                 body: JSON.stringify({
                     data: newItem
                 })
-            }).then((imgs)=>{
-                            console.log("images from add a category");
-                            console.log(imgs);
-                            return imgs;
-                        });
+            });
             return images;
         });
         return promise;
@@ -162,7 +158,13 @@ export default class Collection extends Component {
                     <button className="raised" onClick={() => {
                         console.log('add-button');
                         this.setState({selectedAdd: undefined});
-                        this.add(selectedAdd.value).then(this.context.updateImage);
+                        this.add(selectedAdd.value).then((response)=>{
+                            console.log('firs responce:');
+                            console.log(response);
+                        }).then(this.context.updateImage).then((response)=>{
+                            console.log('second response:');
+                            console.log(response);
+                    });
                     }}>Add</button>
                 </div>
             </div>);
