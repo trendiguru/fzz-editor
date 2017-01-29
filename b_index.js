@@ -30003,7 +30003,11 @@
 	                    template: function template(node, key, collection) {
 	                        if (node === undefined) {
 	                            console.log('app span loading');
-	                            return _react2.default.createElement('span', { className: 'loading' });
+	                            return _react2.default.createElement(
+	                                'div',
+	                                null,
+	                                _react2.default.createElement('div', { className: 'loading' })
+	                            );
 	                        } else if (node === null) {
 	                            return _react2.default.createElement(
 	                                'span',

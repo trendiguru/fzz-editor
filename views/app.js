@@ -138,7 +138,7 @@ render () {
                 template={(node, key, collection) => {
                     if (node === undefined) {
                         console.log('app span loading');
-                        return <span className={'loading'}></span>;
+                        return <div><div className={'loading'}/></div>;
                     }
                     else if (node === null) {
                         return <span>NO DATA</span>;
