@@ -119,9 +119,7 @@ render () {
             return <Login handshake={this.handShake} onAuthenticate={user => this.setState({user})} />;
         }
         return <div>
-            <Shadow>
-                <div className={'loading'}></div>
-            </Shadow>        
+            <Shadow/>
             <header>
                 <Search />
             </header>
