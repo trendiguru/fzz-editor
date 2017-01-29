@@ -138,6 +138,7 @@ render () {
                 editor={Image}
                 template={(node, key, collection) => {
                     if (node === undefined) {
+                        console.log('app span loading');
                         return <span className={'loading'}></span>;
                     }
                     else if (node === null) {
