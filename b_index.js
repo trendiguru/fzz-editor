@@ -30082,8 +30082,9 @@
 	                            );
 	                        }
 	                        return _react2.default.createElement('img', { onClick: function onClick() {
-	                                return collection.select(key);
-	                            }, src: node.image_urls[0] });
+	                                _this6.selectImage(key);
+	                            },
+	                            src: node.image_urls[0] });
 	                    }
 	                })
 	            );
@@ -30551,21 +30552,18 @@
 	var Collection = function (_Component) {
 	    _inherits(Collection, _Component);
 	
-	    function Collection() {
-	        var _ref;
-	
-	        var _temp, _this, _ret;
-	
+	    function Collection(props) {
 	        _classCallCheck(this, Collection);
 	
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
+	        var _this = _possibleConstructorReturn(this, (Collection.__proto__ || Object.getPrototypeOf(Collection)).call(this, props));
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Collection.__proto__ || Object.getPrototypeOf(Collection)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	        _this.state = {
 	            selected: undefined,
 	            selectedAdd: undefined
-	        }, _temp), _possibleConstructorReturn(_this, _ret);
+	        };
+	
+	        _this.select = _this.select.bind(_this);
+	        return _this;
 	    }
 	
 	    _createClass(Collection, [{
@@ -30793,16 +30791,19 @@
 	                    }))
 	                );
 	            }
-	            return Object.entries(source[query]).reverse().map(function (_ref2) {
-	                var _ref3 = _slicedToArray(_ref2, 2),
-	                    key = _ref3[0],
-	                    node = _ref3[1];
+	            return Object.entries(source[query]).reverse().map(function (_ref) {
+	                var _ref2 = _slicedToArray(_ref, 2),
+	                    key = _ref2[0],
+	                    node = _ref2[1];
 	
 	                var edit = void 0;
 	                if (editable || editable === undefined) {
 	                    edit = _react2.default.createElement(
 	                        'button',
-	                        { onClick: _this5.select.bind(_this5, key) },
+	                        { onClick: function onClick() {
+	                                //if we select image we must change selected property in app!!!:
+	                                query === 'images' ? _this5.context.selectImage(key) : _this5.select(key);
+	                            } },
 	                        _react2.default.createElement(
 	                            _mdIcon2.default,
 	                            null,
@@ -30844,7 +30845,8 @@
 	    images: _react.PropTypes.object.isRequired,
 	    setImages: _react.PropTypes.func.isRequired,
 	    updateImage: _react.PropTypes.func.isRequired,
-	    pending: _react.PropTypes.func.isRequired
+	    pending: _react.PropTypes.func.isRequired,
+	    selectImage: _react.PropTypes.func.isRequired
 	};
 	Collection.propTypes = {
 	    source: _react.PropTypes.object.isRequired,

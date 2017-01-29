@@ -6,11 +6,16 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Select from 'react-select';
 
 export default class Collection extends Component {
+    constructor(props){
+        super(props);
+        this.select = this.select.bind(this);
+    }
     static contextTypes = {
         images:         PropTypes.object.isRequired,
         setImages:      PropTypes.func.isRequired,
         updateImage:    PropTypes.func.isRequired,
         pending:        PropTypes.func.isRequired,
+        selectImage:    PropTypes.func.isRequired,
     }
     static propTypes = {
         source: PropTypes.object.isRequired,
@@ -119,7 +124,10 @@ export default class Collection extends Component {
         .map(([key, node]) => {
             let edit;
             if (editable || editable === undefined) {
-                edit = <button onClick={this.select.bind(this, key)}>
+                edit = <button onClick={()=>{
+                    //if we select image we must change selected property in app!!!:
+                    (query==='images')? this.context.selectImage(key) : this.select(key);
+                }}>
                     <MDIcon>edit</MDIcon>
                 </button>;
             }
