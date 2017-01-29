@@ -49308,29 +49308,11 @@
 		"value": "jeans",
 		"label": "Jeans"
 	}, {
-		"value": "jacket",
-		"label": "Jacket"
-	}, {
 		"value": "blazer",
 		"label": "Blazer"
 	}, {
-		"value": "shirt",
-		"label": "Shirt"
-	}, {
-		"value": "blouse",
-		"label": "Blouse"
-	}, {
 		"value": "dress",
 		"label": "Dress"
-	}, {
-		"value": "bodysuit",
-		"label": "Bodysuit"
-	}, {
-		"value": "vest",
-		"label": "Vest"
-	}, {
-		"value": "cardigan",
-		"label": "Cardigan"
 	}, {
 		"value": "leggings",
 		"label": "Leggins"
@@ -49338,23 +49320,17 @@
 		"value": "sweater",
 		"label": "Sweater"
 	}, {
-		"value": "t-shirt",
-		"label": "T-Shirt"
-	}, {
 		"value": "coat",
 		"label": "Coat"
 	}, {
 		"value": "suit",
 		"label": "Suit"
 	}, {
-		"value": "tights",
-		"label": "Tights"
-	}, {
-		"value": "sweatshirt",
-		"label": "Sweatshirt"
-	}, {
 		"value": "stockings",
 		"label": "Stockings"
+	}, {
+		"value": "skirt",
+		"label": "Skirt"
 	}];
 
 /***/ },
