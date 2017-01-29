@@ -146,3 +146,14 @@ div[data-reactroot] {
 input:invalid{
     box-shadow: 0 0 5px 1px red;
 }
+
+.shadow{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left:0;
+    z-index: 20000;
+    background: $SHADOW_COLOR;
+
+}

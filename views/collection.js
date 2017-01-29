@@ -7,8 +7,10 @@ import Select from 'react-select';
 
 export default class Collection extends Component {
     static contextTypes = {
-        images: PropTypes.object.isRequired,
-        setImages: PropTypes.func.isRequired
+        images:         PropTypes.object.isRequired,
+        setImages:      PropTypes.func.isRequired,
+        updateImage:    PropTypes.func.isRequired,
+        pending:        PropTypes.func.isRequired,
     }
     static propTypes = {
         source: PropTypes.object.isRequired,
@@ -33,6 +35,7 @@ export default class Collection extends Component {
         }
     }
     add (key, value = {}) {
+        let promise = Promise.resolve();
         let newItem = Object.assign({[this.props.title]: key}, value);
         this.context.setImages(images => {
             let path = images !== this.props.source[this.props.query]
@@ -41,7 +44,7 @@ export default class Collection extends Component {
             Object.assign(this.props.source[this.props.query], {
                 [key]: newItem
             });
-            fetch([API_URL, ...path].join('/'), {
+            promise = fetch([API_URL, ...path].join('/'), {
                 method: 'POST',
                 credentials: 'include',
                 body: JSON.stringify({
@@ -50,6 +53,7 @@ export default class Collection extends Component {
             });
             return images;
         });
+        return promise;
     }
     select (selected) {
         this.setState({selected});
@@ -153,9 +157,31 @@ export default class Collection extends Component {
                         onChange={(selected) => this.setState({selectedAdd: selected})}
                     />
                     <button className="raised" onClick={() => {
-                        console.log('add-button');
                         this.setState({selectedAdd: undefined});
-                        this.add(selectedAdd.value);
+                        this.context.pending(true);//set up a loading animation. 
+                        this.add(selectedAdd.value).then((response)=>{
+                            console.log('firs responce:');
+                            console.log(response);
+                            if (!response.ok){//TODO: check an additional factors of failed response 
+                                throw new Error('we cannot add this category.');
+                            }
+                        }).then(this.context.updateImage).then((response)=>{
+                            console.log('second response:');
+                            console.log(response);
+                            if (!response.num_of_people > 0){//TODO: check an additional factors of failed response 
+                                throw new Error('we cannot add this category.');
+                            }
+                            this.context.pending(false);
+                            alert('new category was successfully added.');
+                        }).catch((err)=>{
+                            console.error(err);//TODO: FIRE ERROR API!!!
+                            // if the addition of the new category failed => refresh the react components.
+                        this.context.updateImage().then((response)=>{
+                            console.log('response3');
+                            console.log(response);
+                            this.context.pending(false);
+                        }).then(()=>{alert(err.message);});
+                        });
                     }}>Add</button>
                 </div>
             </div>);

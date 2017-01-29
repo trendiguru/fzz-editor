@@ -7,6 +7,7 @@ import Search from './search';
 import Collection from './collection';
 import Image from './image';
 import Query from 'query-class';
+import Shadow from './shadow.js';
 
 export default class App extends Component {
     static childContextTypes = {
@@ -15,13 +16,16 @@ export default class App extends Component {
         getImage:       PropTypes.func.isRequired,
         getImageByURL:  PropTypes.func.isRequired,
         selectImage:    PropTypes.func.isRequired,
-        unselectImage:  PropTypes.func.isRequired
+        unselectImage:  PropTypes.func.isRequired,
+        updateImage:    PropTypes.func.isRequired,
+        pending:        PropTypes.func.isRequired,
     }
     state = {
         user: undefined,
         gateControl: undefined,
         images: {},
-        selected: undefined
+        selected: undefined,
+        pending: false,
     }
     getChildContext () {
         return {
@@ -31,6 +35,8 @@ export default class App extends Component {
             getImageByURL:  ::this.getImageByURL,
             selectImage:    ::this.selectImage,
             unselectImage:  ::this.unselectImage,
+            updateImage:    ::this.updateImage,
+            pending:        ::this.pending,
         };
     }
     componentDidMount () {
@@ -41,6 +47,11 @@ export default class App extends Component {
         if (!Object.keys(images).length) {
             this.getLastImages();
         }
+    }
+    updateImage(){
+        console.log("updateImage function");
+        let imgKey = this.state.selected;
+        return this.getImageByURL (this.state.images[imgKey].image_urls[0]);
     }
     setImages (transform, callback) {
         return this.setState({images: transform(this.state.images)}, callback);
@@ -92,7 +103,14 @@ export default class App extends Component {
         });
     }
 
-    render () {
+    pending(stateFlag){
+        if (typeof(stateFlag)!=='boolean'){
+            throw new TypeError('not suitable type of stateFlag variable', 'app.js');
+        }
+        this.setState({pending: stateFlag});
+    }
+
+render () {
         let {state, state: {user, selected, gateControl}} = this;
         if (gateControl === undefined){
             this.handShake().then(()=>this.setState({gateControl: true})).catch(()=>this.setState({gateControl: false}));
@@ -102,6 +120,7 @@ export default class App extends Component {
             return <Login handshake={this.handShake} onAuthenticate={user => this.setState({user})} />;
         }
         return <div>
+            <Shadow style={{visibility: (this.state.pending ? 'visible': 'hidden')}}/>
             <header>
                 <Search />
             </header>
@@ -118,7 +137,8 @@ export default class App extends Component {
                 editor={Image}
                 template={(node, key, collection) => {
                     if (node === undefined) {
-                        return <span className={'loading'}></span>;
+                        console.log('app span loading');
+                        return <div><div className={'loading'}/></div>;
                     }
                     else if (node === null) {
                         return <span>NO DATA</span>;

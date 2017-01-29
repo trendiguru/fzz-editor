@@ -8349,6 +8349,10 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
+	var _shadow = __webpack_require__(707);
+	
+	var _shadow2 = _interopRequireDefault(_shadow);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(_app2.default, null), document.querySelector('div'));
@@ -29768,6 +29772,10 @@
 	
 	var _queryClass2 = _interopRequireDefault(_queryClass);
 	
+	var _shadow = __webpack_require__(707);
+	
+	var _shadow2 = _interopRequireDefault(_shadow);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -29796,7 +29804,8 @@
 	            user: undefined,
 	            gateControl: undefined,
 	            images: {},
-	            selected: undefined
+	            selected: undefined,
+	            pending: false
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
@@ -29809,7 +29818,9 @@
 	                getImage: this.getImage.bind(this),
 	                getImageByURL: this.getImageByURL.bind(this),
 	                selectImage: this.selectImage.bind(this),
-	                unselectImage: this.unselectImage.bind(this)
+	                unselectImage: this.unselectImage.bind(this),
+	                updateImage: this.updateImage.bind(this),
+	                pending: this.pending.bind(this)
 	            };
 	        }
 	    }, {
@@ -29825,6 +29836,13 @@
 	            if (!Object.keys(images).length) {
 	                this.getLastImages();
 	            }
+	        }
+	    }, {
+	        key: 'updateImage',
+	        value: function updateImage() {
+	            console.log("updateImage function");
+	            var imgKey = this.state.selected;
+	            return this.getImageByURL(this.state.images[imgKey].image_urls[0]);
 	        }
 	    }, {
 	        key: 'setImages',
@@ -29927,6 +29945,14 @@
 	            });
 	        }
 	    }, {
+	        key: 'pending',
+	        value: function pending(stateFlag) {
+	            if (typeof stateFlag !== 'boolean') {
+	                throw new TypeError('not suitable type of stateFlag variable', 'app.js');
+	            }
+	            this.setState({ pending: stateFlag });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this6 = this;
@@ -29953,6 +29979,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
+	                _react2.default.createElement(_shadow2.default, { style: { visibility: this.state.pending ? 'visible' : 'hidden' } }),
 	                _react2.default.createElement(
 	                    'header',
 	                    null,
@@ -29975,7 +30002,12 @@
 	                    editor: _image2.default,
 	                    template: function template(node, key, collection) {
 	                        if (node === undefined) {
-	                            return _react2.default.createElement('span', { className: 'loading' });
+	                            console.log('app span loading');
+	                            return _react2.default.createElement(
+	                                'div',
+	                                null,
+	                                _react2.default.createElement('div', { className: 'loading' })
+	                            );
 	                        } else if (node === null) {
 	                            return _react2.default.createElement(
 	                                'span',
@@ -30001,7 +30033,9 @@
 	    getImage: _react.PropTypes.func.isRequired,
 	    getImageByURL: _react.PropTypes.func.isRequired,
 	    selectImage: _react.PropTypes.func.isRequired,
-	    unselectImage: _react.PropTypes.func.isRequired
+	    unselectImage: _react.PropTypes.func.isRequired,
+	    updateImage: _react.PropTypes.func.isRequired,
+	    pending: _react.PropTypes.func.isRequired
 	};
 	exports.default = App;
 	
@@ -30063,7 +30097,7 @@
 			"react-dom": "^15.3.2",
 			"react-grid-layout": "^0.13.6",
 			"react-select": "^1.0.0-rc.2",
-			"react-sortable-hoc": "^0.1.0",
+			"react-sortable-hoc": "^0.4.5",
 			"web-core": "^0.0.4",
 			"whatwg-fetch": "^1.0.0"
 		}
@@ -30483,11 +30517,12 @@
 	
 	            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 	
+	            var promise = Promise.resolve();
 	            var newItem = Object.assign(_defineProperty({}, this.props.title, key), value);
 	            this.context.setImages(function (images) {
 	                var path = images !== _this2.props.source[_this2.props.query] ? (0, _path2.default)(_this2.context.images, _this2.props.source[_this2.props.query]) : [];
 	                Object.assign(_this2.props.source[_this2.props.query], _defineProperty({}, key, newItem));
-	                fetch([_package.api].concat(_toConsumableArray(path)).join('/'), {
+	                promise = fetch([_package.api].concat(_toConsumableArray(path)).join('/'), {
 	                    method: 'POST',
 	                    credentials: 'include',
 	                    body: JSON.stringify({
@@ -30496,6 +30531,7 @@
 	                });
 	                return images;
 	            });
+	            return promise;
 	        }
 	    }, {
 	        key: 'select',
@@ -30571,9 +30607,35 @@
 	                        _react2.default.createElement(
 	                            'button',
 	                            { className: 'raised', onClick: function onClick() {
-	                                    console.log('add-button');
 	                                    _this4.setState({ selectedAdd: undefined });
-	                                    _this4.add(selectedAdd.value);
+	                                    _this4.context.pending(true); //set up a loading animation. 
+	                                    _this4.add(selectedAdd.value).then(function (response) {
+	                                        console.log('firs responce:');
+	                                        console.log(response);
+	                                        if (!response.ok) {
+	                                            //TODO: check an additional factors of failed response 
+	                                            throw new Error('we cannot add this category.');
+	                                        }
+	                                    }).then(_this4.context.updateImage).then(function (response) {
+	                                        console.log('second response:');
+	                                        console.log(response);
+	                                        if (!response.num_of_people > 0) {
+	                                            //TODO: check an additional factors of failed response 
+	                                            throw new Error('we cannot add this category.');
+	                                        }
+	                                        _this4.context.pending(false);
+	                                        alert('new category was successfully added.');
+	                                    }).catch(function (err) {
+	                                        console.error(err); //TODO: FIRE ERROR API!!!
+	                                        // if the addition of the new category failed => refresh the react components.
+	                                        _this4.context.updateImage().then(function (response) {
+	                                            console.log('response3');
+	                                            console.log(response);
+	                                            _this4.context.pending(false);
+	                                        }).then(function () {
+	                                            alert(err.message);
+	                                        });
+	                                    });
 	                                } },
 	                            'Add'
 	                        )
@@ -30715,7 +30777,9 @@
 	
 	Collection.contextTypes = {
 	    images: _react.PropTypes.object.isRequired,
-	    setImages: _react.PropTypes.func.isRequired
+	    setImages: _react.PropTypes.func.isRequired,
+	    updateImage: _react.PropTypes.func.isRequired,
+	    pending: _react.PropTypes.func.isRequired
 	};
 	Collection.propTypes = {
 	    source: _react.PropTypes.object.isRequired,
@@ -34087,10 +34151,15 @@
 	            var people = _props.people;
 	
 	            if (!people) {
+	                console.log('image loading');
 	                return _react2.default.createElement(
 	                    'div',
-	                    { className: 'loading' },
-	                    'LOADING'
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'loading' },
+	                        'LOADING'
+	                    )
 	                );
 	            }
 	            return _react2.default.createElement(
@@ -48411,6 +48480,59 @@
 	    }
 	};
 
+
+/***/ },
+/* 707 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(325);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactAddonsCssTransitionGroup = __webpack_require__(507);
+	
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Shadow = function (_Component) {
+	    _inherits(Shadow, _Component);
+	
+	    function Shadow() {
+	        _classCallCheck(this, Shadow);
+	
+	        return _possibleConstructorReturn(this, (Shadow.__proto__ || Object.getPrototypeOf(Shadow)).apply(this, arguments));
+	    }
+	
+	    _createClass(Shadow, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'shadow', style: this.props.style },
+	                _react2.default.createElement('div', { className: 'loading' })
+	            );
+	        }
+	    }]);
+	
+	    return Shadow;
+	}(_react.Component);
+	
+	exports.default = Shadow;
 
 /***/ }
 /******/ ]);
