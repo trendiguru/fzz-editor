@@ -34086,19 +34086,19 @@
 	            var image_urls = _props.image_urls;
 	            var element = _props.element;
 	            var people = _props.people;
-	            // if (!people) {
 	
-	            console.log('image loading');
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
+	            if (!people) {
+	                console.log('image loading');
+	                return _react2.default.createElement(
 	                    'div',
-	                    { className: 'loading' },
-	                    'LOADING'
-	                )
-	            );
-	            // }
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'loading' },
+	                        'LOADING'
+	                    )
+	                );
+	            }
 	            return _react2.default.createElement(
 	                'div',
 	                null,
