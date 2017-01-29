@@ -8349,8 +8349,13 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
+	var _shadow = __webpack_require__(705);
+	
+	var _shadow2 = _interopRequireDefault(_shadow);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	// ReactDOM.render((<div children={[<App />]}/>), document.querySelector('body'));
 	_reactDom2.default.render(_react2.default.createElement(_app2.default, null), document.querySelector('div'));
 
 /***/ },
@@ -29835,6 +29840,10 @@
 	
 	var _queryClass2 = _interopRequireDefault(_queryClass);
 	
+	var _shadow = __webpack_require__(705);
+	
+	var _shadow2 = _interopRequireDefault(_shadow);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -29877,7 +29886,8 @@
 	                getImageByURL: this.getImageByURL.bind(this),
 	                selectImage: this.selectImage.bind(this),
 	                unselectImage: this.unselectImage.bind(this),
-	                updateImage: this.updateImage.bind(this)
+	                updateImage: this.updateImage.bind(this),
+	                pending: this.pending.bind(this)
 	            };
 	        }
 	    }, {
@@ -29899,7 +29909,7 @@
 	        value: function updateImage() {
 	            console.log("updateImage function");
 	            var imgKey = this.state.selected;
-	            this.getImageByURL(this.state.images[imgKey].image_urls[0]);
+	            return this.getImageByURL(this.state.images[imgKey].image_urls[0]);
 	        }
 	    }, {
 	        key: 'setImages',
@@ -30001,6 +30011,14 @@
 	            });
 	        }
 	    }, {
+	        key: 'pending',
+	        value: function pending(stateFlag) {
+	            if (typeof stateFlag !== 'boolean') {
+	                throw new TypeError('not suitable type of stateFlag variable', 'app.js');
+	            }
+	            document.querySelector('.shadow').style.visibility = stateFlag ? 'visible' : 'hidden';
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this6 = this;
@@ -30027,6 +30045,11 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
+	                _react2.default.createElement(
+	                    _shadow2.default,
+	                    null,
+	                    _react2.default.createElement('div', { className: 'loading' })
+	                ),
 	                _react2.default.createElement(
 	                    'header',
 	                    null,
@@ -30076,7 +30099,8 @@
 	    getImageByURL: _react.PropTypes.func.isRequired,
 	    selectImage: _react.PropTypes.func.isRequired,
 	    unselectImage: _react.PropTypes.func.isRequired,
-	    updateImage: _react.PropTypes.func.isRequired
+	    updateImage: _react.PropTypes.func.isRequired,
+	    pending: _react.PropTypes.func.isRequired
 	};
 	exports.default = App;
 	
@@ -30569,10 +30593,6 @@
 	                    body: JSON.stringify({
 	                        data: newItem
 	                    })
-	                }).then(function (imgs) {
-	                    console.log("images from add a category");
-	                    console.log(imgs);
-	                    return imgs;
 	                });
 	                return images;
 	            });
@@ -30652,9 +30672,31 @@
 	                        _react2.default.createElement(
 	                            'button',
 	                            { className: 'raised', onClick: function onClick() {
-	                                    console.log('add-button');
 	                                    _this4.setState({ selectedAdd: undefined });
-	                                    _this4.add(selectedAdd.value).then(_this4.context.updateImage);
+	                                    _this4.context.pending(true); //set up a loading animation. 
+	                                    _this4.add(selectedAdd.value).then(function (response) {
+	                                        console.log('firs responce:');
+	                                        console.log(response);
+	                                        if (!response.ok) {
+	                                            //TODO: check an additional factors of failed response 
+	                                            throw new Error('we cannot add this category.');
+	                                        }
+	                                    }).then(_this4.context.updateImage).then(function (response) {
+	                                        console.log('second response:');
+	                                        console.log(response);
+	                                        if (!response.num_of_people > 0) {
+	                                            //TODO: check an additional factors of failed response 
+	                                            throw new Error('we cannot add this category.');
+	                                        }
+	                                        _this4.context.pending(false);
+	                                        alert('new category was successfully added.');
+	                                    }).catch(function (err) {
+	                                        console.error(err); //TODO: FIRE ERROR API!!!
+	                                        // if the addition of the new category failed => refresh the react components.
+	                                        Promise.resolve(_this4.context.updateImage).then(_this4.pending(false)).then(function () {
+	                                            alert(err.message);
+	                                        });
+	                                    });
 	                                } },
 	                            'Add'
 	                        )
@@ -30796,7 +30838,8 @@
 	Collection.contextTypes = {
 	    images: _react.PropTypes.object.isRequired,
 	    setImages: _react.PropTypes.func.isRequired,
-	    updateImage: _react.PropTypes.func.isRequired
+	    updateImage: _react.PropTypes.func.isRequired,
+	    pending: _react.PropTypes.func.isRequired
 	};
 	Collection.propTypes = {
 	    source: _react.PropTypes.object.isRequired,
@@ -49361,6 +49404,55 @@
 	    }
 	};
 
+
+/***/ },
+/* 705 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(325);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactAddonsCssTransitionGroup = __webpack_require__(513);
+	
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Shadow = function (_Component) {
+	    _inherits(Shadow, _Component);
+	
+	    function Shadow() {
+	        _classCallCheck(this, Shadow);
+	
+	        return _possibleConstructorReturn(this, (Shadow.__proto__ || Object.getPrototypeOf(Shadow)).apply(this, arguments));
+	    }
+	
+	    _createClass(Shadow, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement('div', { className: 'shadow', style: { visibility: 'hidden' } });
+	        }
+	    }]);
+	
+	    return Shadow;
+	}(_react.Component);
+	
+	exports.default = Shadow;
 
 /***/ }
 /******/ ]);

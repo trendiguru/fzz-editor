@@ -7,6 +7,7 @@ import Search from './search';
 import Collection from './collection';
 import Image from './image';
 import Query from 'query-class';
+import Shadow from './shadow.js';
 
 export default class App extends Component {
     static childContextTypes = {
@@ -16,13 +17,14 @@ export default class App extends Component {
         getImageByURL:  PropTypes.func.isRequired,
         selectImage:    PropTypes.func.isRequired,
         unselectImage:  PropTypes.func.isRequired,
-        updateImage: PropTypes.func.isRequired,
+        updateImage:    PropTypes.func.isRequired,
+        pending:        PropTypes.func.isRequired,
     }
     state = {
         user: undefined,
         gateControl: undefined,
         images: {},
-        selected: undefined
+        selected: undefined,
     }
     getChildContext () {
         return {
@@ -33,6 +35,7 @@ export default class App extends Component {
             selectImage:    ::this.selectImage,
             unselectImage:  ::this.unselectImage,
             updateImage:    ::this.updateImage,
+            pending:        ::this.pending,
         };
     }
     componentDidMount () {
@@ -47,7 +50,7 @@ export default class App extends Component {
     updateImage(){
         console.log("updateImage function");
         let imgKey = this.state.selected;
-        this.getImageByURL (this.state.images[imgKey].image_urls[0]);
+        return this.getImageByURL (this.state.images[imgKey].image_urls[0]);
     }
     setImages (transform, callback) {
         return this.setState({images: transform(this.state.images)}, callback);
@@ -99,7 +102,14 @@ export default class App extends Component {
         });
     }
 
-    render () {
+    pending(stateFlag){
+        if (typeof(stateFlag)!=='boolean'){
+            throw new TypeError('not suitable type of stateFlag variable', 'app.js');
+        }
+        (document.querySelector('.shadow')).style.visibility = stateFlag? 'visible': 'hidden';
+    }
+
+render () {
         let {state, state: {user, selected, gateControl}} = this;
         if (gateControl === undefined){
             this.handShake().then(()=>this.setState({gateControl: true})).catch(()=>this.setState({gateControl: false}));
@@ -109,6 +119,9 @@ export default class App extends Component {
             return <Login handshake={this.handShake} onAuthenticate={user => this.setState({user})} />;
         }
         return <div>
+            <Shadow>
+                <div className={'loading'}></div>
+            </Shadow>        
             <header>
                 <Search />
             </header>
