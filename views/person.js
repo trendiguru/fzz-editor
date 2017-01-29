@@ -28,11 +28,33 @@ export default class Person extends Editor {
             <div className='gender'>
                 <p>gender:</p>
                 <div>
-                    <input checked={gender === 'Male'} id="male" type="radio" onChange={e => this.changeGender(e.target.value)} value="Male" name="gender" />
+                    <input 
+                        checked={gender === 'Male'} 
+                        id="male" 
+                        type="radio" 
+                        onChange={(e) => {
+                            if (e.target.value!==gender){
+                                this.changeGender(e.target.value);
+                            }
+                        }} 
+                        value="Male"
+                        name="gender" 
+                    />
                     <label htmlFor="male">Male</label>
                 </div>
                 <div>
-                    <input checked={gender === 'Female'} id="female" type="radio" onChange={e => this.changeGender(e.target.value)} value="Female" name="gender" />
+                    <input 
+                        checked={gender === 'Female'} 
+                        id="female"
+                        type="radio"
+                        onChange={(e) => {
+                            if (e.target.value!==gender){
+                                this.changeGender(e.target.value);
+                            }
+                        }} 
+                        value="Female" 
+                        name="gender" 
+                        />
                     <label htmlFor="female">Female</label>
                 </div>
             </div>
