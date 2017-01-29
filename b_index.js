@@ -29804,7 +29804,8 @@
 	            user: undefined,
 	            gateControl: undefined,
 	            images: {},
-	            selected: undefined
+	            selected: undefined,
+	            pending: false
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	
@@ -29949,7 +29950,7 @@
 	            if (typeof stateFlag !== 'boolean') {
 	                throw new TypeError('not suitable type of stateFlag variable', 'app.js');
 	            }
-	            document.querySelector('.shadow').style.visibility = stateFlag ? 'visible' : 'hidden';
+	            this.setState({ pending: stateFlag });
 	        }
 	    }, {
 	        key: 'render',
@@ -29978,7 +29979,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_shadow2.default, null),
+	                _react2.default.createElement(_shadow2.default, { style: { visibility: this.state.pending ? 'visible' : 'hidden' } }),
 	                _react2.default.createElement(
 	                    'header',
 	                    null,
@@ -30623,7 +30624,11 @@
 	                                    }).catch(function (err) {
 	                                        console.error(err); //TODO: FIRE ERROR API!!!
 	                                        // if the addition of the new category failed => refresh the react components.
-	                                        Promise.resolve(_this4.context.updateImage).then(_this4.pending(false)).then(function () {
+	                                        _this4.context.updateImage().then(function (response) {
+	                                            console.log('response3');
+	                                            console.log(response);
+	                                            _this4.context.pending(false);
+	                                        }).then(function () {
 	                                            alert(err.message);
 	                                        });
 	                                    });
@@ -48514,7 +48519,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'shadow', style: { visibility: 'hidden' } },
+	                { className: 'shadow', style: this.props.style },
 	                _react2.default.createElement('div', { className: 'loading' })
 	            );
 	        }

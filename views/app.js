@@ -25,6 +25,7 @@ export default class App extends Component {
         gateControl: undefined,
         images: {},
         selected: undefined,
+        pending: false,
     }
     getChildContext () {
         return {
@@ -106,7 +107,7 @@ export default class App extends Component {
         if (typeof(stateFlag)!=='boolean'){
             throw new TypeError('not suitable type of stateFlag variable', 'app.js');
         }
-        (document.querySelector('.shadow')).style.visibility = stateFlag? 'visible': 'hidden';
+        this.setState({pending: stateFlag});
     }
 
 render () {
@@ -119,7 +120,7 @@ render () {
             return <Login handshake={this.handShake} onAuthenticate={user => this.setState({user})} />;
         }
         return <div>
-            <Shadow/>
+            <Shadow style={{visibility: (this.state.pending ? 'visible': 'hidden')}}/>
             <header>
                 <Search />
             </header>

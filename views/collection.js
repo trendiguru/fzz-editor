@@ -176,9 +176,11 @@ export default class Collection extends Component {
                         }).catch((err)=>{
                             console.error(err);//TODO: FIRE ERROR API!!!
                             // if the addition of the new category failed => refresh the react components.
-                            Promise.resolve(this.context.updateImage)
-                            .then(this.pending(false))
-                            .then(()=>{alert(err.message);});
+                        this.context.updateImage().then((response)=>{
+                            console.log('response3');
+                            console.log(response);
+                            this.context.pending(false);
+                        }).then(()=>{alert(err.message);});
                         });
                     }}>Add</button>
                 </div>
