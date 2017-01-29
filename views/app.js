@@ -143,7 +143,10 @@ render () {
                     else if (node === null) {
                         return <span>NO DATA</span>;
                     }
-                    return <img onClick={() => collection.select(key)} src={node.image_urls[0]}/>;
+                    return <img onClick={() => {
+                        this.selectImage(key);
+                    }} 
+                    src={node.image_urls[0]}/>;
                 }}
             />
         </div>;
