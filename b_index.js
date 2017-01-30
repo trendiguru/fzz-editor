@@ -30709,6 +30709,7 @@
 	            return _react2.default.createElement(
 	                _reactAddonsCssTransitionGroup2.default,
 	                {
+	                    key: query,
 	                    component: 'div',
 	                    className: this.selected ? 'selected list' : 'list',
 	                    transitionName: 'collection-item',
@@ -42632,7 +42633,7 @@
 	            var onSortEnd = _this.props.onSortEnd;
 	        };
 	
-	        _this.submitResult = function (imageUrl, clickUrl) {
+	        _this.submitResult = function (imageUrl, clickUrl, form) {
 	            if (!(0, _validURL2.default)(clickUrl.value) && clickUrl.value !== '') {
 	                clickUrl.setCustomValidity('This field is not valid!');
 	                clickUrl.addEventListener('keydown', function () {
@@ -42754,7 +42755,7 @@
 	                ),
 	                _react2.default.createElement(
 	                    'form',
-	                    { className: 'result-form hidden', willValidate: true, required: true },
+	                    { className: 'result-form hidden', required: true },
 	                    _react2.default.createElement(
 	                        'h3',
 	                        null,
@@ -42765,19 +42766,19 @@
 	                        null,
 	                        'Image'
 	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'image', willValidate: true, required: true }),
+	                    _react2.default.createElement('input', { type: 'text', name: 'image', required: true }),
 	                    _react2.default.createElement(
 	                        'label',
 	                        null,
 	                        'Click URL'
 	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'clickUrl', willValidate: true, required: true }),
+	                    _react2.default.createElement('input', { type: 'text', name: 'clickUrl', required: true }),
 	                    _react2.default.createElement(
 	                        'button',
 	                        { className: 'raised', type: 'button', onClick: function onClick(_ref2) {
 	                                var form = _ref2.target.parentElement;
 	
-	                                _this2.submitResult(form.elements.image, form.elements.clickUrl);
+	                                _this2.submitResult(form.elements.image, form.elements.clickUrl, form);
 	                            } },
 	                        'Submit'
 	                    )

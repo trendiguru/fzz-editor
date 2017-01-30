@@ -82,7 +82,7 @@ export default class Results extends Editor {
         this.setState({ isSorting: false });
         let {onSortEnd} = this.props;
     };
-    submitResult = (imageUrl, clickUrl)=>{
+    submitResult = (imageUrl, clickUrl, form)=>{
         if (!validURL(clickUrl.value) && clickUrl.value !== ''){
             clickUrl.setCustomValidity('This field is not valid!');
             clickUrl.addEventListener('keydown', ()=>{
@@ -132,14 +132,14 @@ export default class Results extends Editor {
             <i className='md-icon'>add</i>
             <p>add a result</p>
             </button>
-            <form className="result-form hidden" willValidate={true} required>
+            <form className="result-form hidden" required>
                 <h3>Add a result</h3>
                 <label>Image</label>
-                <input type="text" name="image" willValidate={true} required/>
+                <input type="text" name="image" required/>
                 <label>Click URL</label>
-                <input type="text" name="clickUrl" willValidate={true} required/>
+                <input type="text" name="clickUrl" required/>
                 <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
-                    this.submitResult(form.elements.image, form.elements.clickUrl);
+                    this.submitResult(form.elements.image, form.elements.clickUrl, form);
                 } 
             }>Submit</button>
             </form>

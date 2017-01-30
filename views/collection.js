@@ -194,7 +194,8 @@ export default class Collection extends Component {
                 </div>
             </div>);
         }
-        return <ReactCSSTransitionGroup
+        return <ReactCSSTransitionGroup 
+            key={query}
             component="div"
             className={this.selected ? 'selected list' : 'list'}
             transitionName="collection-item"
