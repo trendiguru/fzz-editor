@@ -12,6 +12,8 @@ export default class Editor extends Component {
     static get contextTypes () {
         return {
             setImages: PropTypes.func.isRequired,
+            updateImage:    PropTypes.func.isRequired,
+            pending:        PropTypes.func.isRequired,
             images: PropTypes.object.isRequired,
             image: PropTypes.object.isRequired,
         };
@@ -22,11 +24,11 @@ export default class Editor extends Component {
         };
     }
     set (transform, fetchSettings, additionalKeys = [], callback) {
-        fetchSettings.credentials = 'include';
-        fetch([API_URL, ...this.path].concat(additionalKeys).join('/'), fetchSettings);
-        return this.context.setImages(images => {
+        this.context.setImages(images => {
             jp.apply(images, jp.stringify(['$'].concat(this.path)), transform);
             return images;
         }, callback);
+        fetchSettings.credentials = 'include';
+        return fetch([API_URL, ...this.path].concat(additionalKeys).join('/'), fetchSettings);
     }
 }

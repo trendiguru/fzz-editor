@@ -51,6 +51,8 @@ export default class App extends Component {
     updateImage(){
         console.log("updateImage function");
         let imgKey = this.state.selected;
+        console.log('imgKey');
+        console.log(imgKey);
         return this.getImageByURL (this.state.images[imgKey].image_urls[0]);
     }
     setImages (transform, callback) {
