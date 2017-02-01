@@ -29909,6 +29909,8 @@
 	        value: function updateImage() {
 	            console.log("updateImage function");
 	            var imgKey = this.state.selected;
+	            console.log('imgKey');
+	            console.log(imgKey);
 	            return this.getImageByURL(this.state.images[imgKey].image_urls[0]);
 	        }
 	    }, {
@@ -35613,6 +35615,8 @@
 	    _createClass(Person, [{
 	        key: 'changeGender',
 	        value: function changeGender(gender) {
+	            var _this2 = this;
+	
 	            this.setState({ changedGender: true });
 	            this.set(function (person) {
 	                person.gender = gender;
@@ -35621,12 +35625,38 @@
 	            }, {
 	                method: 'PATCH',
 	                body: JSON.stringify({ data: gender })
+	            }).then(function (response) {
+	                console.log('first response');
+	                console.log(response);
+	                if (!response.ok) {
+	                    //TODO: check an additional factors of failed response 
+	                    throw new Error('we cannot change the gender.');
+	                }
+	            }).then(this.context.updateImage).then(function (response) {
+	                console.log('second response:');
+	                console.log(response);
+	                if (!response.num_of_people > 0) {
+	                    //TODO: check an additional factors of failed response 
+	                    throw new Error('we cannot change the gender.');
+	                }
+	                _this2.setState({ changedGender: false });
+	                alert('gender was successfully added.');
+	            }).catch(function (err) {
+	                console.error(err); //TODO: FIRE ERROR API!!!
+	                // if changing of the gender failed => refresh the react components.
+	                _this2.context.updateImage().then(function (response) {
+	                    console.log('response3');
+	                    console.log(response);
+	                    _this2.setState({ changedGender: false });
+	                }).then(function () {
+	                    alert(err.message);
+	                });
 	            });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
+	            var _this3 = this;
 	
 	            var gender = this.props.gender;
 	
@@ -35649,8 +35679,8 @@
 	                            id: 'male',
 	                            type: 'radio',
 	                            onChange: function onChange(e) {
-	                                if (e.target.value !== gender) {
-	                                    _this2.changeGender(e.target.value);
+	                                if (e.target.value !== gender && !_this3.state.changedGender) {
+	                                    _this3.changeGender(e.target.value);
 	                                }
 	                            },
 	                            value: 'Male',
@@ -35670,8 +35700,8 @@
 	                            id: 'female',
 	                            type: 'radio',
 	                            onChange: function onChange(e) {
-	                                if (e.target.value !== gender) {
-	                                    _this2.changeGender(e.target.value);
+	                                if (e.target.value !== gender && !_this3.state.changedGender) {
+	                                    _this3.changeGender(e.target.value);
 	                                }
 	                            },
 	                            value: 'Female',
@@ -35684,7 +35714,11 @@
 	                        )
 	                    )
 	                ),
-	                this.state.changedGender ? 'Proccessing new gender' : _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, options: _categories2.default, editor: _item2.default })
+	                this.state.changedGender ? _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement('div', { className: 'loading' })
+	                ) : _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, options: _categories2.default, editor: _item2.default })
 	            );
 	        }
 	    }]);
@@ -35750,18 +35784,20 @@
 	            var additionalKeys = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 	            var callback = arguments[3];
 	
-	            fetchSettings.credentials = 'include';
-	            fetch([_package.api].concat(_toConsumableArray(this.path)).concat(additionalKeys).join('/'), fetchSettings);
-	            return this.context.setImages(function (images) {
+	            this.context.setImages(function (images) {
 	                jp.apply(images, jp.stringify(['$'].concat(_this2.path)), transform);
 	                return images;
 	            }, callback);
+	            fetchSettings.credentials = 'include';
+	            return fetch([_package.api].concat(_toConsumableArray(this.path)).concat(additionalKeys).join('/'), fetchSettings);
 	        }
 	    }], [{
 	        key: 'contextTypes',
 	        get: function get() {
 	            return {
 	                setImages: _react.PropTypes.func.isRequired,
+	                updateImage: _react.PropTypes.func.isRequired,
+	                pending: _react.PropTypes.func.isRequired,
 	                images: _react.PropTypes.object.isRequired,
 	                image: _react.PropTypes.object.isRequired
 	            };
