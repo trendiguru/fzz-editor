@@ -49352,7 +49352,7 @@
 		"label": "Dress"
 	}, {
 		"value": "leggings",
-		"label": "Leggins"
+		"label": "Leggings"
 	}, {
 		"value": "sweater",
 		"label": "Sweater"
