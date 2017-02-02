@@ -164,32 +164,34 @@ export default class Collection extends Component {
                         value={selectedAdd}
                         onChange={(selected) => this.setState({selectedAdd: selected})}
                     />
-                    <button className="raised" onClick={() => {
-                        this.setState({selectedAdd: undefined});
-                        this.context.pending(true);//set up a loading animation. 
-                        this.add(selectedAdd.value).then((response)=>{
-                            console.log('firs responce:');
-                            console.log(response);
-                            if (!response.ok){//TODO: check an additional factors of failed response 
-                                throw new Error('we cannot add this category.');
-                            }
-                        }).then(this.context.updateImage).then((response)=>{
-                            console.log('second response:');
-                            console.log(response);
-                            if (!response.num_of_people > 0){//TODO: check an additional factors of failed response 
-                                throw new Error('we cannot add this category.');
-                            }
-                            this.context.pending(false);
-                            alert('new category was successfully added.');
-                        }).catch((err)=>{
-                            console.error(err);//TODO: FIRE ERROR API!!!
-                            // if the addition of the new category failed => refresh the react components.
-                            this.context.updateImage().then((response)=>{
-                                console.log('response3');
+                    <button className="raised" onClick={() => {    
+                        if (selectedAdd && selectedAdd.value){
+                            this.setState({selectedAdd: undefined});
+                            this.context.pending(true);//set up a loading animation. 
+                            this.add(selectedAdd.value).then((response)=>{
+                                console.log('firs responce:');
                                 console.log(response);
+                                if (!response.ok){//TODO: check an additional factors of failed response 
+                                    throw new Error('we cannot add this category.');
+                                }
+                            }).then(this.context.updateImage).then((response)=>{
+                                console.log('second response:');
+                                console.log(response);
+                                if (!response.num_of_people > 0){//TODO: check an additional factors of failed response 
+                                    throw new Error('we cannot add this category.');
+                                }
                                 this.context.pending(false);
-                            }).then(()=>{alert(err.message);});
-                        });
+                                alert('new category was successfully added.');
+                            }).catch((err)=>{
+                                console.error(err);//TODO: FIRE ERROR API!!!
+                                // if the addition of the new category failed => refresh the react components.
+                                this.context.updateImage().then((response)=>{
+                                    console.log('response3');
+                                    console.log(response);
+                                    this.context.pending(false);
+                                }).then(()=>{alert(err.message);});
+                            });
+                        }
                     }}>Add</button>
                 </div>
             </div>);

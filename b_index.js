@@ -30673,35 +30673,37 @@
 	                        _react2.default.createElement(
 	                            'button',
 	                            { className: 'raised', onClick: function onClick() {
-	                                    _this4.setState({ selectedAdd: undefined });
-	                                    _this4.context.pending(true); //set up a loading animation. 
-	                                    _this4.add(selectedAdd.value).then(function (response) {
-	                                        console.log('firs responce:');
-	                                        console.log(response);
-	                                        if (!response.ok) {
-	                                            //TODO: check an additional factors of failed response 
-	                                            throw new Error('we cannot add this category.');
-	                                        }
-	                                    }).then(_this4.context.updateImage).then(function (response) {
-	                                        console.log('second response:');
-	                                        console.log(response);
-	                                        if (!response.num_of_people > 0) {
-	                                            //TODO: check an additional factors of failed response 
-	                                            throw new Error('we cannot add this category.');
-	                                        }
-	                                        _this4.context.pending(false);
-	                                        alert('new category was successfully added.');
-	                                    }).catch(function (err) {
-	                                        console.error(err); //TODO: FIRE ERROR API!!!
-	                                        // if the addition of the new category failed => refresh the react components.
-	                                        _this4.context.updateImage().then(function (response) {
-	                                            console.log('response3');
+	                                    if (selectedAdd && selectedAdd.value) {
+	                                        _this4.setState({ selectedAdd: undefined });
+	                                        _this4.context.pending(true); //set up a loading animation. 
+	                                        _this4.add(selectedAdd.value).then(function (response) {
+	                                            console.log('firs responce:');
 	                                            console.log(response);
+	                                            if (!response.ok) {
+	                                                //TODO: check an additional factors of failed response 
+	                                                throw new Error('we cannot add this category.');
+	                                            }
+	                                        }).then(_this4.context.updateImage).then(function (response) {
+	                                            console.log('second response:');
+	                                            console.log(response);
+	                                            if (!response.num_of_people > 0) {
+	                                                //TODO: check an additional factors of failed response 
+	                                                throw new Error('we cannot add this category.');
+	                                            }
 	                                            _this4.context.pending(false);
-	                                        }).then(function () {
-	                                            alert(err.message);
+	                                            alert('new category was successfully added.');
+	                                        }).catch(function (err) {
+	                                            console.error(err); //TODO: FIRE ERROR API!!!
+	                                            // if the addition of the new category failed => refresh the react components.
+	                                            _this4.context.updateImage().then(function (response) {
+	                                                console.log('response3');
+	                                                console.log(response);
+	                                                _this4.context.pending(false);
+	                                            }).then(function () {
+	                                                alert(err.message);
+	                                            });
 	                                        });
-	                                    });
+	                                    }
 	                                } },
 	                            'Add'
 	                        )
