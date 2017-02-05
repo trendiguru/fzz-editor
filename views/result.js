@@ -15,16 +15,16 @@ export default SortableElement((props) => {
     let buy = <div></div>;
     let children = [];
     try{
-        console.log('props.value');
-        console.log(props.value);
         id = props.value.id;
         imageSrc = props.value.images.XLarge;
-        remove = (<button onClick={() => props.remove(id)}>
+        remove = (<button onClick={() => props.remove(id)} key={1}>
                     <MDIcon>delete</MDIcon>
                 </button>);
-        buy = (<button onClick={() => {}}>
-                <MDIcon>shop</MDIcon>
-            </button>);
+        buy = (<a href={props.value.clickUrl} target="_blank" key={2}>
+                <button onClick={() => {}}>
+                    <MDIcon>shop</MDIcon>
+                </button>
+            </a>);
         info = (<aside style={{bottom:'0px', right:'0px'}}>
                     <Price data={props.value.price} />
                     <span className="brand">{props.value.brand}</span>

@@ -8349,7 +8349,7 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _shadow = __webpack_require__(705);
+	var _shadow = __webpack_require__(706);
 	
 	var _shadow2 = _interopRequireDefault(_shadow);
 	
@@ -29835,11 +29835,11 @@
 	
 	var _image2 = _interopRequireDefault(_image);
 	
-	var _queryClass = __webpack_require__(704);
+	var _queryClass = __webpack_require__(705);
 	
 	var _queryClass2 = _interopRequireDefault(_queryClass);
 	
-	var _shadow = __webpack_require__(705);
+	var _shadow = __webpack_require__(706);
 	
 	var _shadow2 = _interopRequireDefault(_shadow);
 	
@@ -35450,7 +35450,7 @@
 	
 	var _person2 = _interopRequireDefault(_person);
 	
-	var _face = __webpack_require__(703);
+	var _face = __webpack_require__(704);
 	
 	var _face2 = _interopRequireDefault(_face);
 	
@@ -35583,7 +35583,7 @@
 	
 	var _item2 = _interopRequireDefault(_item);
 	
-	var _categories = __webpack_require__(702);
+	var _categories = __webpack_require__(703);
 	
 	var _categories2 = _interopRequireDefault(_categories);
 	
@@ -42610,11 +42610,11 @@
 	
 	var _reactSortableHoc = __webpack_require__(545);
 	
-	var _range = __webpack_require__(696);
+	var _range = __webpack_require__(697);
 	
 	var _range2 = _interopRequireDefault(_range);
 	
-	var _random = __webpack_require__(699);
+	var _random = __webpack_require__(700);
 	
 	var _random2 = _interopRequireDefault(_random);
 	
@@ -42626,7 +42626,7 @@
 	
 	var _editor2 = _interopRequireDefault(_editor);
 	
-	var _validURL = __webpack_require__(701);
+	var _validURL = __webpack_require__(702);
 	
 	var _validURL2 = _interopRequireDefault(_validURL);
 	
@@ -42890,7 +42890,7 @@
 	
 	var _reactSortableHoc = __webpack_require__(545);
 	
-	var _price = __webpack_require__(706);
+	var _price = __webpack_require__(696);
 	
 	var _price2 = _interopRequireDefault(_price);
 	
@@ -42914,15 +42914,13 @@
 	    var buy = _react2.default.createElement('div', null);
 	    var children = [];
 	    try {
-	        console.log('props.value');
-	        console.log(props.value);
 	        id = props.value.id;
 	        imageSrc = props.value.images.XLarge;
 	        remove = _react2.default.createElement(
 	            'button',
 	            { onClick: function onClick() {
 	                    return props.remove(id);
-	                } },
+	                }, key: 1 },
 	            _react2.default.createElement(
 	                _mdIcon2.default,
 	                null,
@@ -42930,12 +42928,16 @@
 	            )
 	        );
 	        buy = _react2.default.createElement(
-	            'button',
-	            { onClick: function onClick() {} },
+	            'a',
+	            { href: props.value.clickUrl, target: '_blank', key: 2 },
 	            _react2.default.createElement(
-	                _mdIcon2.default,
-	                null,
-	                'shop'
+	                'button',
+	                { onClick: function onClick() {} },
+	                _react2.default.createElement(
+	                    _mdIcon2.default,
+	                    null,
+	                    'shop'
+	                )
 	            )
 	        );
 	        info = _react2.default.createElement(
@@ -48992,7 +48994,46 @@
 /* 696 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createRange = __webpack_require__(697);
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = Price;
+	
+	var _react = __webpack_require__(325);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Price(_ref) {
+	    var _ref$data = _ref.data,
+	        currency = _ref$data.currency,
+	        price = _ref$data.price;
+	
+	    return _react2.default.createElement(
+	        'span',
+	        { className: 'price', 'data-currency': CURRENCIES[currency] },
+	        price
+	    );
+	}
+	
+	Price.propTypes = {
+	    data: _react2.default.PropTypes.object.isRequired
+	};
+	
+	var CURRENCIES = {
+	    USD: '$',
+	    Yen: '‎¥',
+	    EUR: '€'
+	};
+
+/***/ },
+/* 697 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var createRange = __webpack_require__(698);
 	
 	/**
 	 * Creates an array of numbers (positive and/or negative) progressing from
@@ -49041,10 +49082,10 @@
 
 
 /***/ },
-/* 697 */
+/* 698 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRange = __webpack_require__(698),
+	var baseRange = __webpack_require__(699),
 	    isIterateeCall = __webpack_require__(693),
 	    toFinite = __webpack_require__(670);
 	
@@ -49077,7 +49118,7 @@
 
 
 /***/ },
-/* 698 */
+/* 699 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -49111,10 +49152,10 @@
 
 
 /***/ },
-/* 699 */
+/* 700 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRandom = __webpack_require__(700),
+	var baseRandom = __webpack_require__(701),
 	    isIterateeCall = __webpack_require__(693),
 	    toFinite = __webpack_require__(670);
 	
@@ -49199,7 +49240,7 @@
 
 
 /***/ },
-/* 700 */
+/* 701 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -49223,7 +49264,7 @@
 
 
 /***/ },
-/* 701 */
+/* 702 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -49328,7 +49369,7 @@
 	"(?:[/?#]\\S*)?" + "$", "i");
 
 /***/ },
-/* 702 */
+/* 703 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -49372,7 +49413,7 @@
 	}];
 
 /***/ },
-/* 703 */
+/* 704 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49412,7 +49453,7 @@
 	};
 
 /***/ },
-/* 704 */
+/* 705 */
 /***/ function(module, exports) {
 
 	module.exports = class Query {
@@ -49450,7 +49491,7 @@
 
 
 /***/ },
-/* 705 */
+/* 706 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49501,45 +49542,6 @@
 	}(_react.Component);
 	
 	exports.default = Shadow;
-
-/***/ },
-/* 706 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = Price;
-	
-	var _react = __webpack_require__(325);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Price(_ref) {
-	    var _ref$data = _ref.data,
-	        currency = _ref$data.currency,
-	        price = _ref$data.price;
-	
-	    return _react2.default.createElement(
-	        'span',
-	        { className: 'price', 'data-currency': CURRENCIES[currency] },
-	        price
-	    );
-	}
-	
-	Price.propTypes = {
-	    data: _react2.default.PropTypes.object.isRequired
-	};
-	
-	var CURRENCIES = {
-	    USD: '$',
-	    Yen: '‎¥',
-	    EUR: '€'
-	};
 
 /***/ }
 /******/ ]);
