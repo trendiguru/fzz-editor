@@ -42890,35 +42890,17 @@
 	
 	var _reactSortableHoc = __webpack_require__(545);
 	
+	var _price = __webpack_require__(706);
+	
+	var _price2 = _interopRequireDefault(_price);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var REMOVE_BUTTON_SIZE = '40px';
-	
-	var DragHandle = (0, _reactSortableHoc.SortableHandle)(function (_ref) {
+	var REMOVE_BUTTON_SIZE = '40px',
+	    DragHandle = (0, _reactSortableHoc.SortableHandle)(function (_ref) {
 	    var children = _ref.children;
 	    return children;
-	});
-	var OVERWRITE_STYLE = {},
-	    OVERWRITE_BUTTON_STYLE = {
-	    width: REMOVE_BUTTON_SIZE,
-	    height: REMOVE_BUTTON_SIZE,
-	    borderRadius: '10px',
-	    // right: '0px',
-	    backgroundColor: 'PINK',
-	    marginRight: '10px'
-	},
-	    OVERWRITE_BACKGROUND_IMAGE_STYLE = {
-	    height: '100%', width: '100%',
-	    'backgroundRepeat': 'no-repeat',
-	    'backgroundPosition': 'center',
-	    'backgroundSize': 'contain'
-	},
-	    MSG_STYLE = {
-	    wordWrap: 'break-word',
-	    textAlign: 'justify',
-	    whiteSpace: 'pre-wrap',
-	    position: 'absolute'
-	},
+	}),
 	    ERROR_MSG = 'There is an internal error! please report a support group, by mail: lior@trendiguru.com. Thank you!',
 	    DANGER_ICON = '/img/broken.png';
 	
@@ -42932,11 +42914,13 @@
 	    var buy = _react2.default.createElement('div', null);
 	    var children = [];
 	    try {
+	        console.log('props.value');
+	        console.log(props.value);
 	        id = props.value.id;
 	        imageSrc = props.value.images.XLarge;
 	        remove = _react2.default.createElement(
 	            'button',
-	            { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
+	            { onClick: function onClick() {
 	                    return props.remove(id);
 	                } },
 	            _react2.default.createElement(
@@ -42947,7 +42931,7 @@
 	        );
 	        buy = _react2.default.createElement(
 	            'button',
-	            { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {} },
+	            { onClick: function onClick() {} },
 	            _react2.default.createElement(
 	                _mdIcon2.default,
 	                null,
@@ -42955,15 +42939,16 @@
 	            )
 	        );
 	        info = _react2.default.createElement(
-	            'button',
-	            { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {} },
+	            'aside',
+	            { style: { bottom: '0px', right: '0px' } },
+	            _react2.default.createElement(_price2.default, { data: props.value.price }),
 	            _react2.default.createElement(
-	                _mdIcon2.default,
-	                null,
-	                'info'
+	                'span',
+	                { className: 'brand' },
+	                props.value.brand
 	            )
 	        );
-	        children = [buy, remove];
+	        children = [remove, buy];
 	    } catch (err) {
 	        classNames = 'broken-result';
 	        imageSrc = DANGER_ICON;
@@ -42973,31 +42958,26 @@
 	    return _react2.default.createElement(
 	        'div',
 	        {
-	            className: props.className + " result",
-	            style: OVERWRITE_STYLE },
+	            className: props.className + " result" },
 	        _react2.default.createElement(
 	            'div',
-	            { style: { width: '100%', height: '100%', position: 'relative' } },
+	            null,
 	            _react2.default.createElement(
 	                'aside',
-	                { style: { position: 'absolute', marging: '10px' } },
+	                null,
 	                children
 	            ),
-	            _react2.default.createElement(
-	                'aside',
-	                { style: { position: 'absolute', marging: '10px', bottom: '0px' } },
-	                info
-	            ),
+	            info,
 	            _react2.default.createElement(
 	                DragHandle,
 	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    { style: Object.assign({ backgroundImage: 'url(' + imageSrc + ')' }, OVERWRITE_BACKGROUND_IMAGE_STYLE),
+	                    { style: Object.assign({ backgroundImage: 'url(' + imageSrc + ')' }, {}),
 	                        className: classNames },
 	                    _react2.default.createElement(
 	                        'p',
-	                        { style: MSG_STYLE },
+	                        null,
 	                        errorMsg
 	                    )
 	                )
@@ -49521,6 +49501,45 @@
 	}(_react.Component);
 	
 	exports.default = Shadow;
+
+/***/ },
+/* 706 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = Price;
+	
+	var _react = __webpack_require__(325);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Price(_ref) {
+	    var _ref$data = _ref.data,
+	        currency = _ref$data.currency,
+	        price = _ref$data.price;
+	
+	    return _react2.default.createElement(
+	        'span',
+	        { className: 'price', 'data-currency': CURRENCIES[currency] },
+	        price
+	    );
+	}
+	
+	Price.propTypes = {
+	    data: _react2.default.PropTypes.object.isRequired
+	};
+	
+	var CURRENCIES = {
+	    USD: '$',
+	    Yen: '‎¥',
+	    EUR: '€'
+	};
 
 /***/ }
 /******/ ]);

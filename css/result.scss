@@ -7,24 +7,53 @@
     overflow: visible;
     border-radius: 10px;
     background-color: white !important;
-    .tag {
+
+    div{
         width: 100%;
-        padding: .5em;
-        background-color: white;
-        text-align: center;
-        box-sizing: border-box;
+        height: 100%;
+        position:relative;
 
-        .price {
-            font-size: 1.4em;
-            font-family: 'Rozha One', serif;
-            color: hotpink;
-            display: block;
+        aside{
+            z-index: 100;
+            position: absolute;
+            margin-right:10px;
+            text-align: center;
 
-            &::before {
-                content: attr(data-currency);
-                font-family: 'Source Sans Pro', sans-serif;
-                font-size: .75em;
-                font-weight: bold;
+            button{
+                width: $REMOVE_BUTTON_SIZE;
+                height: $REMOVE_BUTTON_SIZE; 
+                border-radius: 10px;
+                background-color: PINK;
+                margin-right: 10px; 
+            }
+
+            .price {
+                font-size: 1.4em;
+                font-family: 'Rozha One', serif;
+                color: hotpink;
+                display: block;
+
+                &::before {
+                    content: attr(data-currency);
+                    font-family: 'Source Sans Pro', sans-serif;
+                    font-size: .75em;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        div{
+            height: 100%; 
+            width: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+
+            p{
+                word-wrap: break-word;
+                text-align: justify; 
+                white-space:pre-wrap;
+                position:absolute;
             }
         }
     }
