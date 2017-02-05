@@ -42898,22 +42898,14 @@
 	    var children = _ref.children;
 	    return children;
 	});
-	var OVERWRITE_STYLE = {
-	    isolation: 'isolate',
-	    margin: '1em',
-	    width: '15em',
-	    height: '15em',
-	    display: 'block',
-	    overflow: 'visible',
-	    borderRadius: '10px',
-	    backgroundColor: 'white'
-	},
+	var OVERWRITE_STYLE = {},
 	    OVERWRITE_BUTTON_STYLE = {
 	    width: REMOVE_BUTTON_SIZE,
 	    height: REMOVE_BUTTON_SIZE,
 	    borderRadius: '10px',
-	    right: '0px',
-	    backgroundColor: 'PINK'
+	    // right: '0px',
+	    backgroundColor: 'PINK',
+	    marginRight: '10px'
 	},
 	    OVERWRITE_BACKGROUND_IMAGE_STYLE = {
 	    height: '100%', width: '100%',
@@ -42936,24 +42928,42 @@
 	        id = void 0,
 	        classNames = '';
 	    var remove = _react2.default.createElement('div', null);
+	    var info = _react2.default.createElement('div', null);
+	    var buy = _react2.default.createElement('div', null);
+	    var children = [];
 	    try {
 	        id = props.value.id;
 	        imageSrc = props.value.images.XLarge;
 	        remove = _react2.default.createElement(
-	            'aside',
-	            { style: { position: 'absolute', marging: '10px' } },
+	            'button',
+	            { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
+	                    return props.remove(id);
+	                } },
 	            _react2.default.createElement(
-	                'button',
-	                { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
-	                        return props.remove(id);
-	                    } },
-	                _react2.default.createElement(
-	                    _mdIcon2.default,
-	                    null,
-	                    'delete'
-	                )
+	                _mdIcon2.default,
+	                null,
+	                'delete'
 	            )
 	        );
+	        buy = _react2.default.createElement(
+	            'button',
+	            { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {} },
+	            _react2.default.createElement(
+	                _mdIcon2.default,
+	                null,
+	                'shop'
+	            )
+	        );
+	        info = _react2.default.createElement(
+	            'button',
+	            { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {} },
+	            _react2.default.createElement(
+	                _mdIcon2.default,
+	                null,
+	                'info'
+	            )
+	        );
+	        children = [buy, remove];
 	    } catch (err) {
 	        classNames = 'broken-result';
 	        imageSrc = DANGER_ICON;
@@ -42963,12 +42973,21 @@
 	    return _react2.default.createElement(
 	        'div',
 	        {
-	            className: props.className,
+	            className: props.className + " result",
 	            style: OVERWRITE_STYLE },
 	        _react2.default.createElement(
 	            'div',
-	            { style: { width: '100%', height: '100%' } },
-	            remove,
+	            { style: { width: '100%', height: '100%', position: 'relative' } },
+	            _react2.default.createElement(
+	                'aside',
+	                { style: { position: 'absolute', marging: '10px' } },
+	                children
+	            ),
+	            _react2.default.createElement(
+	                'aside',
+	                { style: { position: 'absolute', marging: '10px', bottom: '0px' } },
+	                info
+	            ),
 	            _react2.default.createElement(
 	                DragHandle,
 	                null,

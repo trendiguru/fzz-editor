@@ -913,6 +913,32 @@ input:invalid {
   transition-timing-function: linear;
   animation-iteration-count: infinite; }
 
+.result {
+  isolation: isolate;
+  margin: 1em;
+  width: 15em !important;
+  height: 15em !important;
+  display: block;
+  overflow: visible;
+  border-radius: 10px;
+  background-color: white !important; }
+  .result .tag {
+    width: 100%;
+    padding: .5em;
+    background-color: white;
+    text-align: center;
+    box-sizing: border-box; }
+    .result .tag .price {
+      font-size: 1.4em;
+      font-family: 'Rozha One', serif;
+      color: hotpink;
+      display: block; }
+      .result .tag .price::before {
+        content: attr(data-currency);
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: .75em;
+        font-weight: bold; }
+
 body {
   font-family: 'Source Sans Pro', sans-serif;
   background: #f9f9f9;
