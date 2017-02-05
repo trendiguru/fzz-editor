@@ -8349,7 +8349,7 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _shadow = __webpack_require__(705);
+	var _shadow = __webpack_require__(706);
 	
 	var _shadow2 = _interopRequireDefault(_shadow);
 	
@@ -29835,11 +29835,11 @@
 	
 	var _image2 = _interopRequireDefault(_image);
 	
-	var _queryClass = __webpack_require__(704);
+	var _queryClass = __webpack_require__(705);
 	
 	var _queryClass2 = _interopRequireDefault(_queryClass);
 	
-	var _shadow = __webpack_require__(705);
+	var _shadow = __webpack_require__(706);
 	
 	var _shadow2 = _interopRequireDefault(_shadow);
 	
@@ -35450,7 +35450,7 @@
 	
 	var _person2 = _interopRequireDefault(_person);
 	
-	var _face = __webpack_require__(703);
+	var _face = __webpack_require__(704);
 	
 	var _face2 = _interopRequireDefault(_face);
 	
@@ -35583,7 +35583,7 @@
 	
 	var _item2 = _interopRequireDefault(_item);
 	
-	var _categories = __webpack_require__(702);
+	var _categories = __webpack_require__(703);
 	
 	var _categories2 = _interopRequireDefault(_categories);
 	
@@ -42610,11 +42610,11 @@
 	
 	var _reactSortableHoc = __webpack_require__(545);
 	
-	var _range = __webpack_require__(696);
+	var _range = __webpack_require__(697);
 	
 	var _range2 = _interopRequireDefault(_range);
 	
-	var _random = __webpack_require__(699);
+	var _random = __webpack_require__(700);
 	
 	var _random2 = _interopRequireDefault(_random);
 	
@@ -42626,7 +42626,7 @@
 	
 	var _editor2 = _interopRequireDefault(_editor);
 	
-	var _validURL = __webpack_require__(701);
+	var _validURL = __webpack_require__(702);
 	
 	var _validURL2 = _interopRequireDefault(_validURL);
 	
@@ -42890,43 +42890,17 @@
 	
 	var _reactSortableHoc = __webpack_require__(545);
 	
+	var _price = __webpack_require__(696);
+	
+	var _price2 = _interopRequireDefault(_price);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var REMOVE_BUTTON_SIZE = '40px';
-	
-	var DragHandle = (0, _reactSortableHoc.SortableHandle)(function (_ref) {
+	var REMOVE_BUTTON_SIZE = '40px',
+	    DragHandle = (0, _reactSortableHoc.SortableHandle)(function (_ref) {
 	    var children = _ref.children;
 	    return children;
-	});
-	var OVERWRITE_STYLE = {
-	    isolation: 'isolate',
-	    margin: '1em',
-	    width: '15em',
-	    height: '15em',
-	    display: 'block',
-	    overflow: 'visible',
-	    borderRadius: '10px',
-	    backgroundColor: 'white'
-	},
-	    OVERWRITE_BUTTON_STYLE = {
-	    width: REMOVE_BUTTON_SIZE,
-	    height: REMOVE_BUTTON_SIZE,
-	    borderRadius: '10px',
-	    right: '0px',
-	    backgroundColor: 'PINK'
-	},
-	    OVERWRITE_BACKGROUND_IMAGE_STYLE = {
-	    height: '100%', width: '100%',
-	    'backgroundRepeat': 'no-repeat',
-	    'backgroundPosition': 'center',
-	    'backgroundSize': 'contain'
-	},
-	    MSG_STYLE = {
-	    wordWrap: 'break-word',
-	    textAlign: 'justify',
-	    whiteSpace: 'pre-wrap',
-	    position: 'absolute'
-	},
+	}),
 	    ERROR_MSG = 'There is an internal error! please report a support group, by mail: lior@trendiguru.com. Thank you!',
 	    DANGER_ICON = '/img/broken.png';
 	
@@ -42936,24 +42910,47 @@
 	        id = void 0,
 	        classNames = '';
 	    var remove = _react2.default.createElement('div', null);
+	    var info = _react2.default.createElement('div', null);
+	    var buy = _react2.default.createElement('div', null);
+	    var children = [];
 	    try {
 	        id = props.value.id;
 	        imageSrc = props.value.images.XLarge;
 	        remove = _react2.default.createElement(
-	            'aside',
-	            { style: { position: 'absolute', marging: '10px' } },
+	            'button',
+	            { onClick: function onClick() {
+	                    return props.remove(id);
+	                }, key: 1 },
+	            _react2.default.createElement(
+	                _mdIcon2.default,
+	                null,
+	                'delete'
+	            )
+	        );
+	        buy = _react2.default.createElement(
+	            'a',
+	            { href: props.value.clickUrl, target: '_blank', key: 2 },
 	            _react2.default.createElement(
 	                'button',
-	                { style: OVERWRITE_BUTTON_STYLE, onClick: function onClick() {
-	                        return props.remove(id);
-	                    } },
+	                { onClick: function onClick() {} },
 	                _react2.default.createElement(
 	                    _mdIcon2.default,
 	                    null,
-	                    'delete'
+	                    'shop'
 	                )
 	            )
 	        );
+	        info = _react2.default.createElement(
+	            'aside',
+	            { style: { bottom: '0px', right: '0px' } },
+	            _react2.default.createElement(_price2.default, { data: props.value.price }),
+	            _react2.default.createElement(
+	                'span',
+	                { className: 'brand' },
+	                props.value.brand
+	            )
+	        );
+	        children = [remove, buy];
 	    } catch (err) {
 	        classNames = 'broken-result';
 	        imageSrc = DANGER_ICON;
@@ -42963,22 +42960,26 @@
 	    return _react2.default.createElement(
 	        'div',
 	        {
-	            className: props.className,
-	            style: OVERWRITE_STYLE },
+	            className: props.className + " result" },
 	        _react2.default.createElement(
 	            'div',
-	            { style: { width: '100%', height: '100%' } },
-	            remove,
+	            null,
+	            _react2.default.createElement(
+	                'aside',
+	                null,
+	                children
+	            ),
+	            info,
 	            _react2.default.createElement(
 	                DragHandle,
 	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    { style: Object.assign({ backgroundImage: 'url(' + imageSrc + ')' }, OVERWRITE_BACKGROUND_IMAGE_STYLE),
+	                    { style: Object.assign({ backgroundImage: 'url(' + imageSrc + ')' }, {}),
 	                        className: classNames },
 	                    _react2.default.createElement(
 	                        'p',
-	                        { style: MSG_STYLE },
+	                        null,
 	                        errorMsg
 	                    )
 	                )
@@ -48993,7 +48994,46 @@
 /* 696 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createRange = __webpack_require__(697);
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = Price;
+	
+	var _react = __webpack_require__(325);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Price(_ref) {
+	    var _ref$data = _ref.data,
+	        currency = _ref$data.currency,
+	        price = _ref$data.price;
+	
+	    return _react2.default.createElement(
+	        'span',
+	        { className: 'price', 'data-currency': CURRENCIES[currency] },
+	        price
+	    );
+	}
+	
+	Price.propTypes = {
+	    data: _react2.default.PropTypes.object.isRequired
+	};
+	
+	var CURRENCIES = {
+	    USD: '$',
+	    Yen: '‎¥',
+	    EUR: '€'
+	};
+
+/***/ },
+/* 697 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var createRange = __webpack_require__(698);
 	
 	/**
 	 * Creates an array of numbers (positive and/or negative) progressing from
@@ -49042,10 +49082,10 @@
 
 
 /***/ },
-/* 697 */
+/* 698 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRange = __webpack_require__(698),
+	var baseRange = __webpack_require__(699),
 	    isIterateeCall = __webpack_require__(693),
 	    toFinite = __webpack_require__(670);
 	
@@ -49078,7 +49118,7 @@
 
 
 /***/ },
-/* 698 */
+/* 699 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -49112,10 +49152,10 @@
 
 
 /***/ },
-/* 699 */
+/* 700 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRandom = __webpack_require__(700),
+	var baseRandom = __webpack_require__(701),
 	    isIterateeCall = __webpack_require__(693),
 	    toFinite = __webpack_require__(670);
 	
@@ -49200,7 +49240,7 @@
 
 
 /***/ },
-/* 700 */
+/* 701 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -49224,7 +49264,7 @@
 
 
 /***/ },
-/* 701 */
+/* 702 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -49329,7 +49369,7 @@
 	"(?:[/?#]\\S*)?" + "$", "i");
 
 /***/ },
-/* 702 */
+/* 703 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -49373,7 +49413,7 @@
 	}];
 
 /***/ },
-/* 703 */
+/* 704 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49413,7 +49453,7 @@
 	};
 
 /***/ },
-/* 704 */
+/* 705 */
 /***/ function(module, exports) {
 
 	module.exports = class Query {
@@ -49451,7 +49491,7 @@
 
 
 /***/ },
-/* 705 */
+/* 706 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
