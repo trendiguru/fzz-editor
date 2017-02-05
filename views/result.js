@@ -9,7 +9,8 @@ ERROR_MSG = 'There is an internal error! please report a support group, by mail:
 DANGER_ICON = '/img/broken.png';
 
 export default SortableElement((props) => {
-    let imageSrc, errorMsg, id, classNames = '';
+    let imageSrc, errorMsg, id, classNames, brand, clickUrl = '';
+    let price = {};
     let remove = <div></div>;
     let info = <div></div>;
     let buy = <div></div>;
@@ -17,17 +18,23 @@ export default SortableElement((props) => {
     try{
         id = props.value.id;
         imageSrc = props.value.images.XLarge;
+        brand = props.value.brand || 'unknown';
+        clickUrl = props.value.clickUrl || 'unknown';
+        price = props.value.price || {
+            currency: 'unknown',
+            price: 'unknown',
+        };
         remove = (<button onClick={() => props.remove(id)} key={1}>
                     <MDIcon>delete</MDIcon>
                 </button>);
-        buy = (<a href={props.value.clickUrl} target="_blank" key={2}>
-                <button onClick={() => {}}>
+        buy = (<a href={clickUrl} target="_blank" key={2}>
+                <button >
                     <MDIcon>shop</MDIcon>
                 </button>
             </a>);
         info = (<aside style={{bottom:'0px', right:'0px'}}>
-                    <Price data={props.value.price} />
-                    <span className="brand">{props.value.brand}</span>
+                    <Price data={price} />
+                    <span className="brand">{brand}</span>
                 </aside>);
         children = [remove, buy];
     }catch(err){

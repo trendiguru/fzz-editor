@@ -42908,7 +42908,10 @@
 	    var imageSrc = void 0,
 	        errorMsg = void 0,
 	        id = void 0,
-	        classNames = '';
+	        classNames = void 0,
+	        brand = void 0,
+	        clickUrl = '';
+	    var price = {};
 	    var remove = _react2.default.createElement('div', null);
 	    var info = _react2.default.createElement('div', null);
 	    var buy = _react2.default.createElement('div', null);
@@ -42916,6 +42919,12 @@
 	    try {
 	        id = props.value.id;
 	        imageSrc = props.value.images.XLarge;
+	        brand = props.value.brand || 'unknown';
+	        clickUrl = props.value.clickUrl || 'unknown';
+	        price = props.value.price || {
+	            currency: 'unknown',
+	            price: 'unknown'
+	        };
 	        remove = _react2.default.createElement(
 	            'button',
 	            { onClick: function onClick() {
@@ -42929,10 +42938,10 @@
 	        );
 	        buy = _react2.default.createElement(
 	            'a',
-	            { href: props.value.clickUrl, target: '_blank', key: 2 },
+	            { href: clickUrl, target: '_blank', key: 2 },
 	            _react2.default.createElement(
 	                'button',
-	                { onClick: function onClick() {} },
+	                null,
 	                _react2.default.createElement(
 	                    _mdIcon2.default,
 	                    null,
@@ -42943,11 +42952,11 @@
 	        info = _react2.default.createElement(
 	            'aside',
 	            { style: { bottom: '0px', right: '0px' } },
-	            _react2.default.createElement(_price2.default, { data: props.value.price }),
+	            _react2.default.createElement(_price2.default, { data: price }),
 	            _react2.default.createElement(
 	                'span',
 	                { className: 'brand' },
-	                props.value.brand
+	                brand
 	            )
 	        );
 	        children = [remove, buy];
