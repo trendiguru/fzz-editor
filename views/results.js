@@ -7,6 +7,7 @@ import random from 'lodash/random';
 import classNames from 'classnames';
 import Editor from './editor';
 import validURL from '../modules/validURL';
+import Select from 'react-select';
 
 function getItems(count, height) {
     var heights = [65, 110, 140, 65, 90, 65];
@@ -23,7 +24,8 @@ export default class Results extends Editor {
         super();
         this.state = {
             items: props.origin,
-            isSorting: false
+            isSorting: false,
+            currencyValue: undefined,
         };
         //function binding:
         this.remove = this.remove.bind(this);
@@ -113,7 +115,9 @@ export default class Results extends Editor {
         } 
     };
     render() {
-        const {isSorting} = this.state;
+        const {currencyValue, isSorting} = this.state;
+        console.log('render results');
+        console.log(currencyValue);
         const props = {
             isSorting,
             items: this.props.origin,
@@ -138,6 +142,19 @@ export default class Results extends Editor {
                 <input type="text" name="image" required/>
                 <label>Click URL</label>
                 <input type="text" name="clickUrl" required/>
+                <label>Price</label>
+                <input type="text" name="price" required/>
+                <label>Currency</label>
+                <Select
+                        name={'currency'}
+                        options={[{value:'USD', label:'USD'}, {value:'EUR', label:'EUR'}, {value:'Yen', label:'Yen'}]}
+                        value={currencyValue}
+                        onChange={(selected) => {
+                            this.setState({currencyValue:selected});
+                        }}
+                    />
+                <label>Brand</label>
+                <input type="text" name="brand" required/>
                 <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
                     this.submitResult(form.elements.image, form.elements.clickUrl, form);
                 } 

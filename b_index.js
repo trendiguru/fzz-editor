@@ -42630,6 +42630,10 @@
 	
 	var _validURL2 = _interopRequireDefault(_validURL);
 	
+	var _reactSelect = __webpack_require__(526);
+	
+	var _reactSelect2 = _interopRequireDefault(_reactSelect);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42704,7 +42708,8 @@
 	
 	        _this.state = {
 	            items: props.origin,
-	            isSorting: false
+	            isSorting: false,
+	            currencyValue: undefined
 	        };
 	        //function binding:
 	        _this.remove = _this.remove.bind(_this);
@@ -42759,8 +42764,12 @@
 	        value: function render() {
 	            var _this2 = this;
 	
-	            var isSorting = this.state.isSorting;
+	            var _state = this.state,
+	                currencyValue = _state.currencyValue,
+	                isSorting = _state.isSorting;
 	
+	            console.log('render results');
+	            console.log(currencyValue);
 	            var props = {
 	                isSorting: isSorting,
 	                items: this.props.origin,
@@ -42811,6 +42820,31 @@
 	                        'Click URL'
 	                    ),
 	                    _react2.default.createElement('input', { type: 'text', name: 'clickUrl', required: true }),
+	                    _react2.default.createElement(
+	                        'label',
+	                        null,
+	                        'Price'
+	                    ),
+	                    _react2.default.createElement('input', { type: 'text', name: 'price', required: true }),
+	                    _react2.default.createElement(
+	                        'label',
+	                        null,
+	                        'Currency'
+	                    ),
+	                    _react2.default.createElement(_reactSelect2.default, {
+	                        name: 'currency',
+	                        options: [{ value: 'USD', label: 'USD' }, { value: 'EUR', label: 'EUR' }, { value: 'Yen', label: 'Yen' }],
+	                        value: currencyValue,
+	                        onChange: function onChange(selected) {
+	                            _this2.setState({ currencyValue: selected });
+	                        }
+	                    }),
+	                    _react2.default.createElement(
+	                        'label',
+	                        null,
+	                        'Brand'
+	                    ),
+	                    _react2.default.createElement('input', { type: 'text', name: 'brand', required: true }),
 	                    _react2.default.createElement(
 	                        'button',
 	                        { className: 'raised', type: 'button', onClick: function onClick(_ref2) {
