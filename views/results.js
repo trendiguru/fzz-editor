@@ -26,6 +26,19 @@ export default class Results extends Editor {
             items: props.origin,
             isSorting: false,
             currencyValue: undefined,
+            currencyOptions: [{
+                    value:'USD', 
+                    label:'USD',
+                }, 
+                {
+                    value:'EUR',
+                    label:'EUR',
+                }, 
+                {
+                    value:'Yen',
+                    label:'Yen',
+                }
+            ]
         };
         //function binding:
         this.remove = this.remove.bind(this);
@@ -68,6 +81,7 @@ export default class Results extends Editor {
             }
         );
     }
+
     shouldCancelStart(e) {
         // Cancel sorting if the event target is a 'button':
         if (['button', 'i'].indexOf(e.target.tagName.toLowerCase()) !== -1) {
@@ -79,12 +93,16 @@ export default class Results extends Editor {
         let {onSortStart} = this.props;
         this.setState({ isSorting: true });
     };
+
     onSortEnd = ({oldIndex, newIndex}) => {
         this.update(arrayMove(this.props.origin, oldIndex, newIndex));
         this.setState({ isSorting: false });
         let {onSortEnd} = this.props;
     };
-    submitResult = (imageUrl, clickUrl, form)=>{
+
+    submitResult = (form)=>{
+        let clickUrl = form.clickUrl;
+        let imageUrl = form.image;
         if (!validURL(clickUrl.value) && clickUrl.value !== ''){
             clickUrl.setCustomValidity('This field is not valid!');
             clickUrl.addEventListener('keydown', ()=>{
@@ -104,39 +122,29 @@ export default class Results extends Editor {
         clickUrl.reportValidity();
         imageUrl.reportValidity();
         if (clickUrl.checkValidity() && imageUrl.checkValidity()){
-            this.add({
+            let sentData = {
                 clickUrl: clickUrl.value,
                 images: {
                     XLarge: imageUrl.value
-                }
-            });
+                },
+                price: {
+                    currency: form.currency.value,
+                    price: form.price.value,
+                },
+                brand: form.brand.value,
+            }
+            console.log('Submit results:');
+            console.log(sentData);
+            this.add(sentData);
             alert('The result was successfully added!');
             form.reset();
         } 
     };
-    render() {
-        const {currencyValue, isSorting} = this.state;
-        console.log('render results');
-        console.log(currencyValue);
-        const props = {
-            isSorting,
-            items: this.props.origin,
-            onSortEnd: this.onSortEnd,
-            onSortStart: this.onSortStart,
-            shouldCancelStart:this.shouldCancelStart,
-            ref: "component",
-            useDragHandle: this.props.shouldUseDragHandle,
-            remove: this.remove
-        }
-        return <div>
-        <button className='add-result gray-frame' style={{borderRadius:'10px'}} onClick={()=>{
-                (document.querySelector('.add-result')).classList.add('hidden');
-                (document.querySelector('.result-form')).classList.remove('hidden');
-            }}>
-            <i className='md-icon'>add</i>
-            <p>add a result</p>
-            </button>
-            <form className="result-form hidden" required>
+
+    createForm = ()=>{
+        const {currencyValue, currencyOptions} = this.state;
+        console.log("inside createForm");
+        return (<form className="result-form hidden" required>
                 <h3>Add a result</h3>
                 <label>Image</label>
                 <input type="text" name="image" required/>
@@ -147,7 +155,7 @@ export default class Results extends Editor {
                 <label>Currency</label>
                 <Select
                         name={'currency'}
-                        options={[{value:'USD', label:'USD'}, {value:'EUR', label:'EUR'}, {value:'Yen', label:'Yen'}]}
+                        options={currencyOptions}
                         value={currencyValue}
                         onChange={(selected) => {
                             this.setState({currencyValue:selected});
@@ -156,10 +164,34 @@ export default class Results extends Editor {
                 <label>Brand</label>
                 <input type="text" name="brand" required/>
                 <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
-                    this.submitResult(form.elements.image, form.elements.clickUrl, form);
+                    this.submitResult(form);
                 } 
             }>Submit</button>
-            </form>
+        </form>);
+    }
+
+    render() {
+        const {currencyValue, isSorting} = this.state;
+        const props = {
+            isSorting,
+            items: this.props.origin,
+            onSortEnd: this.onSortEnd,
+            onSortStart: this.onSortStart,
+            shouldCancelStart:this.shouldCancelStart,
+            ref: "component",
+            useDragHandle: this.props.shouldUseDragHandle,
+            remove: this.remove
+        }
+        let form =this.createForm();
+        return <div>
+        <button className='add-result gray-frame' style={{borderRadius:'10px'}} onClick={()=>{
+                (document.querySelector('.add-result')).classList.add('hidden');
+                (document.querySelector('.result-form')).classList.remove('hidden');
+            }}>
+            <i className='md-icon'>add</i>
+            <p>add a result</p>
+            </button>
+            {form}
             <SortableList
                 axis={'xy'}
                 helperClass={'sb_stylizedHelper'}

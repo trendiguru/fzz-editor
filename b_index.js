@@ -42675,7 +42675,9 @@
 	            var onSortEnd = _this.props.onSortEnd;
 	        };
 	
-	        _this.submitResult = function (imageUrl, clickUrl, form) {
+	        _this.submitResult = function (form) {
+	            var clickUrl = form.clickUrl;
+	            var imageUrl = form.image;
 	            if (!(0, _validURL2.default)(clickUrl.value) && clickUrl.value !== '') {
 	                clickUrl.setCustomValidity('This field is not valid!');
 	                clickUrl.addEventListener('keydown', function () {
@@ -42695,21 +42697,102 @@
 	            clickUrl.reportValidity();
 	            imageUrl.reportValidity();
 	            if (clickUrl.checkValidity() && imageUrl.checkValidity()) {
-	                _this.add({
+	                var sentData = {
 	                    clickUrl: clickUrl.value,
 	                    images: {
 	                        XLarge: imageUrl.value
-	                    }
-	                });
+	                    },
+	                    price: {
+	                        currency: form.currency.value,
+	                        price: form.price.value
+	                    },
+	                    brand: form.brand.value
+	                };
+	                console.log('Submit results:');
+	                console.log(sentData);
+	                _this.add(sentData);
 	                alert('The result was successfully added!');
 	                form.reset();
 	            }
 	        };
 	
+	        _this.createForm = function () {
+	            var _this$state = _this.state,
+	                currencyValue = _this$state.currencyValue,
+	                currencyOptions = _this$state.currencyOptions;
+	
+	            console.log("inside createForm");
+	            return _react2.default.createElement(
+	                'form',
+	                { className: 'result-form hidden', required: true },
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'Add a result'
+	                ),
+	                _react2.default.createElement(
+	                    'label',
+	                    null,
+	                    'Image'
+	                ),
+	                _react2.default.createElement('input', { type: 'text', name: 'image', required: true }),
+	                _react2.default.createElement(
+	                    'label',
+	                    null,
+	                    'Click URL'
+	                ),
+	                _react2.default.createElement('input', { type: 'text', name: 'clickUrl', required: true }),
+	                _react2.default.createElement(
+	                    'label',
+	                    null,
+	                    'Price'
+	                ),
+	                _react2.default.createElement('input', { type: 'text', name: 'price', required: true }),
+	                _react2.default.createElement(
+	                    'label',
+	                    null,
+	                    'Currency'
+	                ),
+	                _react2.default.createElement(_reactSelect2.default, {
+	                    name: 'currency',
+	                    options: currencyOptions,
+	                    value: currencyValue,
+	                    onChange: function onChange(selected) {
+	                        _this.setState({ currencyValue: selected });
+	                    }
+	                }),
+	                _react2.default.createElement(
+	                    'label',
+	                    null,
+	                    'Brand'
+	                ),
+	                _react2.default.createElement('input', { type: 'text', name: 'brand', required: true }),
+	                _react2.default.createElement(
+	                    'button',
+	                    { className: 'raised', type: 'button', onClick: function onClick(_ref2) {
+	                            var form = _ref2.target.parentElement;
+	
+	                            _this.submitResult(form);
+	                        } },
+	                    'Submit'
+	                )
+	            );
+	        };
+	
 	        _this.state = {
 	            items: props.origin,
 	            isSorting: false,
-	            currencyValue: undefined
+	            currencyValue: undefined,
+	            currencyOptions: [{
+	                value: 'USD',
+	                label: 'USD'
+	            }, {
+	                value: 'EUR',
+	                label: 'EUR'
+	            }, {
+	                value: 'Yen',
+	                label: 'Yen'
+	            }]
 	        };
 	        //function binding:
 	        _this.remove = _this.remove.bind(_this);
@@ -42762,14 +42845,10 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
-	
 	            var _state = this.state,
 	                currencyValue = _state.currencyValue,
 	                isSorting = _state.isSorting;
 	
-	            console.log('render results');
-	            console.log(currencyValue);
 	            var props = {
 	                isSorting: isSorting,
 	                items: this.props.origin,
@@ -42780,6 +42859,7 @@
 	                useDragHandle: this.props.shouldUseDragHandle,
 	                remove: this.remove
 	            };
+	            var form = this.createForm();
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -42800,61 +42880,7 @@
 	                        'add a result'
 	                    )
 	                ),
-	                _react2.default.createElement(
-	                    'form',
-	                    { className: 'result-form hidden', required: true },
-	                    _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        'Add a result'
-	                    ),
-	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        'Image'
-	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'image', required: true }),
-	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        'Click URL'
-	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'clickUrl', required: true }),
-	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        'Price'
-	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'price', required: true }),
-	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        'Currency'
-	                    ),
-	                    _react2.default.createElement(_reactSelect2.default, {
-	                        name: 'currency',
-	                        options: [{ value: 'USD', label: 'USD' }, { value: 'EUR', label: 'EUR' }, { value: 'Yen', label: 'Yen' }],
-	                        value: currencyValue,
-	                        onChange: function onChange(selected) {
-	                            _this2.setState({ currencyValue: selected });
-	                        }
-	                    }),
-	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        'Brand'
-	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'brand', required: true }),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { className: 'raised', type: 'button', onClick: function onClick(_ref2) {
-	                                var form = _ref2.target.parentElement;
-	
-	                                _this2.submitResult(form.elements.image, form.elements.clickUrl, form);
-	                            } },
-	                        'Submit'
-	                    )
-	                ),
+	                form,
 	                _react2.default.createElement(SortableList, _extends({
 	                    axis: 'xy',
 	                    helperClass: 'sb_stylizedHelper',
