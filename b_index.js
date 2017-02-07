@@ -42634,6 +42634,8 @@
 	
 	var _reactSelect2 = _interopRequireDefault(_reactSelect);
 	
+	var _utils = __webpack_require__(707);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42676,40 +42678,31 @@
 	        };
 	
 	        _this.submitResult = function (form) {
-	            var clickUrl = form.clickUrl;
-	            var imageUrl = form.image;
-	            if (!(0, _validURL2.default)(clickUrl.value) && clickUrl.value !== '') {
-	                clickUrl.setCustomValidity('This field is not valid!');
-	                clickUrl.addEventListener('keydown', function () {
-	                    clickUrl.setCustomValidity('');
-	                });
-	            } else {
-	                clickUrl.setCustomValidity('');
+	            var fields = {
+	                clickUrl: form.clickUrl,
+	                imageUrl: form.image,
+	                price: form.price,
+	                brand: form.brand,
+	                currency: form.currency
+	            };
+	            var validInput = true;
+	            var _arr = ['clickUrl', 'imageUrl'];
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var fieldName = _arr[_i];
+	                validInput = validInput && (0, _utils.inputValidate)(fields[fieldName], _validURL2.default);
 	            }
-	            if (!(0, _validURL2.default)(imageUrl.value) && imageUrl.value !== '') {
-	                imageUrl.setCustomValidity('This field is not valid!');
-	                imageUrl.addEventListener('keydown', function () {
-	                    imageUrl.setCustomValidity('');
-	                });
-	            } else {
-	                imageUrl.setCustomValidity('');
-	            }
-	            clickUrl.reportValidity();
-	            imageUrl.reportValidity();
-	            if (clickUrl.checkValidity() && imageUrl.checkValidity()) {
+	            if (validInput) {
 	                var sentData = {
-	                    clickUrl: clickUrl.value,
+	                    clickUrl: fields.clickUrl.value,
 	                    images: {
-	                        XLarge: imageUrl.value
+	                        XLarge: fields.imageUrl.value
 	                    },
 	                    price: {
-	                        currency: form.currency.value,
-	                        price: form.price.value
+	                        currency: form.currency, //fields.currency.value,
+	                        price: fields.price.value
 	                    },
-	                    brand: form.brand.value
+	                    brand: fields.brand.value
 	                };
-	                console.log('Submit results:');
-	                console.log(sentData);
 	                _this.add(sentData);
 	                alert('The result was successfully added!');
 	                form.reset();
@@ -42721,7 +42714,6 @@
 	                currencyValue = _this$state.currencyValue,
 	                currencyOptions = _this$state.currencyOptions;
 	
-	            console.log("inside createForm");
 	            return _react2.default.createElement(
 	                'form',
 	                { className: 'result-form hidden', required: true },
@@ -42772,6 +42764,8 @@
 	                    { className: 'raised', type: 'button', onClick: function onClick(_ref2) {
 	                            var form = _ref2.target.parentElement;
 	
+	                            console.log('from form:');
+	                            console.log(form.currency);
 	                            _this.submitResult(form);
 	                        } },
 	                    'Submit'
@@ -49611,6 +49605,39 @@
 	}(_react.Component);
 	
 	exports.default = Shadow;
+
+/***/ },
+/* 707 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var ERROR_MESSAGE = 'This field is not valid!';
+	
+	/**
+	 * @param iputObj - <input/> - react component.
+	 * @param validator - function wihich obtains 
+	 *        string and returns its status (valid or not).
+	 * @returns (boolean) status if current input's value is valid or not, 
+	 *        and changes input's validity status.
+	 */
+	function inputValidate(inputObj, validator) {
+	    if (!validator(inputObj.value) && inputObj.value !== '') {
+	        inputObj.setCustomValidity(ERROR_MESSAGE);
+	        inputObj.addEventListener('keydown', function () {
+	            inputObj.setCustomValidity('');
+	        });
+	    } else {
+	        inputObj.setCustomValidity('');
+	    }
+	    inputObj.reportValidity();
+	    return inputObj.checkValidity();
+	}
+	
+	exports.inputValidate = inputValidate;
 
 /***/ }
 /******/ ]);
