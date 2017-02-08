@@ -1,50 +1,86 @@
-[
-    {
-        "value": "top",
-        "label": "Top"
-    },
-    {
-        "value": "pants",
-        "label": "Pants"
-    },
-    {
-        "value": "shorts",
-        "label": "Shorts"
-    },
-    {
-        "value": "jeans",
-        "label": "Jeans"
-    },
-    {
-        "value": "blazer",
-        "label": "Blazer"
-    },
-    {
-        "value": "dress",
-        "label": "Dress"
-    },
-    {
-        "value": "leggings",
-        "label": "Leggings"
-    },
-    {
-        "value": "sweater",
-        "label": "Sweater"
-    },
-    {
-        "value": "coat",
-        "label": "Coat"
-    },
-    {
-        "value": "suit",
-        "label": "Suit"
-    },
-    {
-        "value": "stockings",
-        "label": "Stockings"
-    },
-    {
-        "value": "skirt",
-        "label": "Skirt"
-    }
-]
+{
+    "Male": [
+        {
+            "value": "top",
+            "label": "Shirt"
+        },
+        {
+            "value": "pants",
+            "label": "Pants"
+        },
+        {
+            "value": "shorts",
+            "label": "Shorts"
+        },
+        {
+            "value": "jeans",
+            "label": "Jeans"
+        },
+        {
+            "value": "blazer",
+            "label": "Blazer"
+        },
+        {
+            "value": "sweater",
+            "label": "Sweater"
+        },
+        {
+            "value": "coat",
+            "label": "Coat"
+        },
+        {
+            "value": "suit",
+            "label": "Suit"
+        }
+    ],
+    "Female": [
+        {
+            "value": "top",
+            "label": "Top"
+        },
+        {
+            "value": "pants",
+            "label": "Pants"
+        },
+        {
+            "value": "shorts",
+            "label": "Shorts"
+        },
+        {
+            "value": "jeans",
+            "label": "Jeans"
+        },
+        {
+            "value": "blazer",
+            "label": "Blazer"
+        },
+        {
+            "value": "dress",
+            "label": "Dress"
+        },
+        {
+            "value": "leggings",
+            "label": "Leggings"
+        },
+        {
+            "value": "sweater",
+            "label": "Sweater"
+        },
+        {
+            "value": "coat",
+            "label": "Coat"
+        },
+        {
+            "value": "suit",
+            "label": "Suit"
+        },
+        {
+            "value": "stockings",
+            "label": "Stockings"
+        },
+        {
+            "value": "skirt",
+            "label": "Skirt"
+        }
+    ]
+}

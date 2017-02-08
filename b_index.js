@@ -35720,7 +35720,7 @@
 	                    'div',
 	                    null,
 	                    _react2.default.createElement('div', { className: 'loading' })
-	                ) : _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, options: _categories2.default, editor: _item2.default })
+	                ) : _react2.default.createElement(_collection2.default, { source: this.props, query: 'items', title: 'category', addable: true, options: _categories2.default[gender], editor: _item2.default })
 	            );
 	        }
 	    }]);
@@ -49488,43 +49488,70 @@
 
 	"use strict";
 	
-	module.exports = [{
-		"value": "top",
-		"label": "Top"
-	}, {
-		"value": "pants",
-		"label": "Pants"
-	}, {
-		"value": "shorts",
-		"label": "Shorts"
-	}, {
-		"value": "jeans",
-		"label": "Jeans"
-	}, {
-		"value": "blazer",
-		"label": "Blazer"
-	}, {
-		"value": "dress",
-		"label": "Dress"
-	}, {
-		"value": "leggings",
-		"label": "Leggings"
-	}, {
-		"value": "sweater",
-		"label": "Sweater"
-	}, {
-		"value": "coat",
-		"label": "Coat"
-	}, {
-		"value": "suit",
-		"label": "Suit"
-	}, {
-		"value": "stockings",
-		"label": "Stockings"
-	}, {
-		"value": "skirt",
-		"label": "Skirt"
-	}];
+	module.exports = {
+		"Male": [{
+			"value": "top",
+			"label": "Shirt"
+		}, {
+			"value": "pants",
+			"label": "Pants"
+		}, {
+			"value": "shorts",
+			"label": "Shorts"
+		}, {
+			"value": "jeans",
+			"label": "Jeans"
+		}, {
+			"value": "blazer",
+			"label": "Blazer"
+		}, {
+			"value": "sweater",
+			"label": "Sweater"
+		}, {
+			"value": "coat",
+			"label": "Coat"
+		}, {
+			"value": "suit",
+			"label": "Suit"
+		}],
+		"Female": [{
+			"value": "top",
+			"label": "Top"
+		}, {
+			"value": "pants",
+			"label": "Pants"
+		}, {
+			"value": "shorts",
+			"label": "Shorts"
+		}, {
+			"value": "jeans",
+			"label": "Jeans"
+		}, {
+			"value": "blazer",
+			"label": "Blazer"
+		}, {
+			"value": "dress",
+			"label": "Dress"
+		}, {
+			"value": "leggings",
+			"label": "Leggings"
+		}, {
+			"value": "sweater",
+			"label": "Sweater"
+		}, {
+			"value": "coat",
+			"label": "Coat"
+		}, {
+			"value": "suit",
+			"label": "Suit"
+		}, {
+			"value": "stockings",
+			"label": "Stockings"
+		}, {
+			"value": "skirt",
+			"label": "Skirt"
+		}]
+	};
 
 /***/ },
 /* 705 */
