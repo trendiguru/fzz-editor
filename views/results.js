@@ -7,6 +7,8 @@ import random from 'lodash/random';
 import classNames from 'classnames';
 import Editor from './editor';
 import validURL from '../modules/validURL';
+import Select from 'react-select';
+import { inputValidate } from '../modules/utils';
 
 function getItems(count, height) {
     var heights = [65, 110, 140, 65, 90, 65];
@@ -23,7 +25,25 @@ export default class Results extends Editor {
         super();
         this.state = {
             items: props.origin,
-            isSorting: false
+            isSorting: false,
+            currencyOptions: [{
+                    value:'USD', 
+                    label:'USD',
+                    clearableValue: false,
+                }, 
+                {
+                    value:'EUR',
+                    label:'EUR',
+                    clearableValue: false,
+                    
+                }, 
+                {
+                    value:'Yen',
+                    label:'Yen',
+                    clearableValue: false,
+                }
+            ],
+            currencyValue: 'USD',
         };
         //function binding:
         this.remove = this.remove.bind(this);
@@ -66,6 +86,7 @@ export default class Results extends Editor {
             }
         );
     }
+
     shouldCancelStart(e) {
         // Cancel sorting if the event target is a 'button':
         if (['button', 'i'].indexOf(e.target.tagName.toLowerCase()) !== -1) {
@@ -77,43 +98,82 @@ export default class Results extends Editor {
         let {onSortStart} = this.props;
         this.setState({ isSorting: true });
     };
+
     onSortEnd = ({oldIndex, newIndex}) => {
         this.update(arrayMove(this.props.origin, oldIndex, newIndex));
         this.setState({ isSorting: false });
         let {onSortEnd} = this.props;
     };
-    submitResult = (imageUrl, clickUrl, form)=>{
-        if (!validURL(clickUrl.value) && clickUrl.value !== ''){
-            clickUrl.setCustomValidity('This field is not valid!');
-            clickUrl.addEventListener('keydown', ()=>{
-                clickUrl.setCustomValidity('');
-            });
-        }else{
-            clickUrl.setCustomValidity('');
+
+    submitResult = (form)=>{
+        console.debug('currency input:');
+        console.debug(form.currency);
+        let fields = {
+            clickUrl: form.clickUrl,
+            imageUrl: form.image,
+            price: form.price,
+            brand: form.brand,
+            currency: form.currency,
         }
-        if (!validURL(imageUrl.value) && imageUrl.value !== ''){
-            imageUrl.setCustomValidity('This field is not valid!');
-            imageUrl.addEventListener('keydown', ()=>{
-                imageUrl.setCustomValidity('');
-            });
-        }else{
-            imageUrl.setCustomValidity('');
+        let validInput = true;
+        for (let fieldName of [ 'imageUrl', 'clickUrl']){
+            validInput = (validInput && inputValidate(fields[fieldName], validURL));
         }
-        clickUrl.reportValidity();
-        imageUrl.reportValidity();
-        if (clickUrl.checkValidity() && imageUrl.checkValidity()){
-            this.add({
-                clickUrl: clickUrl.value,
+        validInput = (validInput && inputValidate(fields.price, Number, 'Must be a number only! '));
+        validInput = (validInput && inputValidate(fields.brand, (str)=>true));
+        validInput = (validInput && inputValidate(fields.currency, (str)=>true));
+        if (validInput){
+            let sentData = {
+                clickUrl: fields.clickUrl.value,
                 images: {
-                    XLarge: imageUrl.value
-                }
-            });
+                    XLarge: fields.imageUrl.value
+                },
+                price: {
+                    currency: fields.currency.value,
+                    price: fields.price.value,
+                },
+                brand: fields.brand.value,
+            }
+            console.debug("sent data");
+            console.debug(sentData);
+            this.add(sentData);
             alert('The result was successfully added!');
             form.reset();
         } 
     };
+
+    createForm = ()=>{
+        const {currencyValue, currencyOptions} = this.state;
+        return (<form className="result-form hidden" required>
+                <h3>Add a result</h3>
+                <label>Image</label>
+                <input type="text" name="image" required/>
+                <label>Click URL</label>
+                <input type="text" name="clickUrl" required/>
+                <label>Price</label>
+                <input type="text" name="price" required/>
+                <label>Currency</label>
+                <Select
+                        name={'currency'}
+                        options={currencyOptions}
+                        value={currencyValue}
+                        onChange={(selected) => {
+                            this.setState({currencyValue:selected});
+                        }}
+                        clearable={false}
+                        ref={(select)=>{this.select = select;}}
+                    />
+                <label>Brand</label>
+                <input type="text" name="brand" required/>
+                <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
+                    this.submitResult(form);
+                } 
+            }>Submit</button>
+        </form>);
+    }
+
     render() {
-        const {isSorting} = this.state;
+        const {currencyValue, isSorting} = this.state;
         const props = {
             isSorting,
             items: this.props.origin,
@@ -124,6 +184,7 @@ export default class Results extends Editor {
             useDragHandle: this.props.shouldUseDragHandle,
             remove: this.remove
         }
+        let form =this.createForm();
         return <div>
         <button className='add-result gray-frame' style={{borderRadius:'10px'}} onClick={()=>{
                 (document.querySelector('.add-result')).classList.add('hidden');
@@ -132,17 +193,7 @@ export default class Results extends Editor {
             <i className='md-icon'>add</i>
             <p>add a result</p>
             </button>
-            <form className="result-form hidden" required>
-                <h3>Add a result</h3>
-                <label>Image</label>
-                <input type="text" name="image" required/>
-                <label>Click URL</label>
-                <input type="text" name="clickUrl" required/>
-                <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
-                    this.submitResult(form.elements.image, form.elements.clickUrl, form);
-                } 
-            }>Submit</button>
-            </form>
+            {form}
             <SortableList
                 axis={'xy'}
                 helperClass={'sb_stylizedHelper'}

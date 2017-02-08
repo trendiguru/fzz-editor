@@ -8349,7 +8349,7 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _shadow = __webpack_require__(706);
+	var _shadow = __webpack_require__(707);
 	
 	var _shadow2 = _interopRequireDefault(_shadow);
 	
@@ -29835,11 +29835,11 @@
 	
 	var _image2 = _interopRequireDefault(_image);
 	
-	var _queryClass = __webpack_require__(705);
+	var _queryClass = __webpack_require__(706);
 	
 	var _queryClass2 = _interopRequireDefault(_queryClass);
 	
-	var _shadow = __webpack_require__(706);
+	var _shadow = __webpack_require__(707);
 	
 	var _shadow2 = _interopRequireDefault(_shadow);
 	
@@ -35450,7 +35450,7 @@
 	
 	var _person2 = _interopRequireDefault(_person);
 	
-	var _face = __webpack_require__(704);
+	var _face = __webpack_require__(705);
 	
 	var _face2 = _interopRequireDefault(_face);
 	
@@ -35583,7 +35583,7 @@
 	
 	var _item2 = _interopRequireDefault(_item);
 	
-	var _categories = __webpack_require__(703);
+	var _categories = __webpack_require__(704);
 	
 	var _categories2 = _interopRequireDefault(_categories);
 	
@@ -42630,6 +42630,12 @@
 	
 	var _validURL2 = _interopRequireDefault(_validURL);
 	
+	var _reactSelect = __webpack_require__(526);
+	
+	var _reactSelect2 = _interopRequireDefault(_reactSelect);
+	
+	var _utils = __webpack_require__(703);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42671,40 +42677,133 @@
 	            var onSortEnd = _this.props.onSortEnd;
 	        };
 	
-	        _this.submitResult = function (imageUrl, clickUrl, form) {
-	            if (!(0, _validURL2.default)(clickUrl.value) && clickUrl.value !== '') {
-	                clickUrl.setCustomValidity('This field is not valid!');
-	                clickUrl.addEventListener('keydown', function () {
-	                    clickUrl.setCustomValidity('');
-	                });
-	            } else {
-	                clickUrl.setCustomValidity('');
+	        _this.submitResult = function (form) {
+	            console.debug('currency input:');
+	            console.debug(form.currency);
+	            var fields = {
+	                clickUrl: form.clickUrl,
+	                imageUrl: form.image,
+	                price: form.price,
+	                brand: form.brand,
+	                currency: form.currency
+	            };
+	            var validInput = true;
+	            var _arr = ['imageUrl', 'clickUrl'];
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var fieldName = _arr[_i];
+	                validInput = validInput && (0, _utils.inputValidate)(fields[fieldName], _validURL2.default);
 	            }
-	            if (!(0, _validURL2.default)(imageUrl.value) && imageUrl.value !== '') {
-	                imageUrl.setCustomValidity('This field is not valid!');
-	                imageUrl.addEventListener('keydown', function () {
-	                    imageUrl.setCustomValidity('');
-	                });
-	            } else {
-	                imageUrl.setCustomValidity('');
-	            }
-	            clickUrl.reportValidity();
-	            imageUrl.reportValidity();
-	            if (clickUrl.checkValidity() && imageUrl.checkValidity()) {
-	                _this.add({
-	                    clickUrl: clickUrl.value,
+	            validInput = validInput && (0, _utils.inputValidate)(fields.price, Number, 'Must be a number only! ');
+	            validInput = validInput && (0, _utils.inputValidate)(fields.brand, function (str) {
+	                return true;
+	            });
+	            validInput = validInput && (0, _utils.inputValidate)(fields.currency, function (str) {
+	                return true;
+	            });
+	            if (validInput) {
+	                var sentData = {
+	                    clickUrl: fields.clickUrl.value,
 	                    images: {
-	                        XLarge: imageUrl.value
-	                    }
-	                });
+	                        XLarge: fields.imageUrl.value
+	                    },
+	                    price: {
+	                        currency: fields.currency.value,
+	                        price: fields.price.value
+	                    },
+	                    brand: fields.brand.value
+	                };
+	                console.debug("sent data");
+	                console.debug(sentData);
+	                _this.add(sentData);
 	                alert('The result was successfully added!');
 	                form.reset();
 	            }
 	        };
 	
+	        _this.createForm = function () {
+	            var _this$state = _this.state,
+	                currencyValue = _this$state.currencyValue,
+	                currencyOptions = _this$state.currencyOptions;
+	
+	            return _react2.default.createElement(
+	                'form',
+	                { className: 'result-form hidden', required: true },
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'Add a result'
+	                ),
+	                _react2.default.createElement(
+	                    'label',
+	                    null,
+	                    'Image'
+	                ),
+	                _react2.default.createElement('input', { type: 'text', name: 'image', required: true }),
+	                _react2.default.createElement(
+	                    'label',
+	                    null,
+	                    'Click URL'
+	                ),
+	                _react2.default.createElement('input', { type: 'text', name: 'clickUrl', required: true }),
+	                _react2.default.createElement(
+	                    'label',
+	                    null,
+	                    'Price'
+	                ),
+	                _react2.default.createElement('input', { type: 'text', name: 'price', required: true }),
+	                _react2.default.createElement(
+	                    'label',
+	                    null,
+	                    'Currency'
+	                ),
+	                _react2.default.createElement(_reactSelect2.default, {
+	                    name: 'currency',
+	                    options: currencyOptions,
+	                    value: currencyValue,
+	                    onChange: function onChange(selected) {
+	                        _this.setState({ currencyValue: selected });
+	                    },
+	                    clearable: false,
+	                    ref: function ref(select) {
+	                        _this.select = select;
+	                    }
+	                }),
+	                _react2.default.createElement(
+	                    'label',
+	                    null,
+	                    'Brand'
+	                ),
+	                _react2.default.createElement('input', { type: 'text', name: 'brand', required: true }),
+	                _react2.default.createElement(
+	                    'button',
+	                    { className: 'raised', type: 'button', onClick: function onClick(_ref2) {
+	                            var form = _ref2.target.parentElement;
+	
+	                            _this.submitResult(form);
+	                        } },
+	                    'Submit'
+	                )
+	            );
+	        };
+	
 	        _this.state = {
 	            items: props.origin,
-	            isSorting: false
+	            isSorting: false,
+	            currencyOptions: [{
+	                value: 'USD',
+	                label: 'USD',
+	                clearableValue: false
+	            }, {
+	                value: 'EUR',
+	                label: 'EUR',
+	                clearableValue: false
+	
+	            }, {
+	                value: 'Yen',
+	                label: 'Yen',
+	                clearableValue: false
+	            }],
+	            currencyValue: 'USD'
 	        };
 	        //function binding:
 	        _this.remove = _this.remove.bind(_this);
@@ -42757,9 +42856,9 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
-	
-	            var isSorting = this.state.isSorting;
+	            var _state = this.state,
+	                currencyValue = _state.currencyValue,
+	                isSorting = _state.isSorting;
 	
 	            var props = {
 	                isSorting: isSorting,
@@ -42771,6 +42870,7 @@
 	                useDragHandle: this.props.shouldUseDragHandle,
 	                remove: this.remove
 	            };
+	            var form = this.createForm();
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -42791,36 +42891,7 @@
 	                        'add a result'
 	                    )
 	                ),
-	                _react2.default.createElement(
-	                    'form',
-	                    { className: 'result-form hidden', required: true },
-	                    _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        'Add a result'
-	                    ),
-	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        'Image'
-	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'image', required: true }),
-	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        'Click URL'
-	                    ),
-	                    _react2.default.createElement('input', { type: 'text', name: 'clickUrl', required: true }),
-	                    _react2.default.createElement(
-	                        'button',
-	                        { className: 'raised', type: 'button', onClick: function onClick(_ref2) {
-	                                var form = _ref2.target.parentElement;
-	
-	                                _this2.submitResult(form.elements.image, form.elements.clickUrl, form);
-	                            } },
-	                        'Submit'
-	                    )
-	                ),
+	                form,
 	                _react2.default.createElement(SortableList, _extends({
 	                    axis: 'xy',
 	                    helperClass: 'sb_stylizedHelper',
@@ -49381,6 +49452,40 @@
 /* 703 */
 /***/ function(module, exports) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var ERROR_MESSAGE = 'This field is not valid!';
+	
+	/**
+	 * @param iputObj - <input/> - react component.
+	 * @param validator - function wihich obtains 
+	 *        string and returns its status (valid or not).
+	 * @param errorMessage - text which will be shown in err message.
+	 * @returns (boolean) status if current input's value is valid or not, 
+	 *        and changes input's validity status.
+	 */
+	function inputValidate(inputObj, validator, errorMessage) {
+	    if (!validator(inputObj.value) && inputObj.value !== '') {
+	        inputObj.setCustomValidity(errorMessage || ERROR_MESSAGE);
+	        inputObj.addEventListener('keydown', function () {
+	            inputObj.setCustomValidity('');
+	        });
+	    } else {
+	        inputObj.setCustomValidity('');
+	    }
+	    inputObj.reportValidity();
+	    return inputObj.checkValidity();
+	}
+	
+	exports.inputValidate = inputValidate;
+
+/***/ },
+/* 704 */
+/***/ function(module, exports) {
+
 	"use strict";
 	
 	module.exports = [{
@@ -49422,7 +49527,7 @@
 	}];
 
 /***/ },
-/* 704 */
+/* 705 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49462,7 +49567,7 @@
 	};
 
 /***/ },
-/* 705 */
+/* 706 */
 /***/ function(module, exports) {
 
 	module.exports = class Query {
@@ -49500,7 +49605,7 @@
 
 
 /***/ },
-/* 706 */
+/* 707 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
