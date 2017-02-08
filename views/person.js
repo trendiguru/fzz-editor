@@ -83,7 +83,7 @@ export default class Person extends Editor {
             {
                 this.state.changedGender
                 ? (<div><div className={'loading'}/></div>)
-                : (<Collection source={this.props} query="items" title="category" addable={true} options={CATEGORIES} editor={Item} />)
+                : (<Collection source={this.props} query="items" title="category" addable={true} options={CATEGORIES[gender]} editor={Item} />)
             }
         </div>;
     }
