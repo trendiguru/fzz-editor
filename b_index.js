@@ -42476,8 +42476,10 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 	
+	        var goThrough = Object.keys(props.similar_results).length === 1;
 	        _this.state = {
-	            selected: Object.keys(props.similar_results).length === 1 ? Object.keys(props.similar_results)[0] : undefined
+	            selected: goThrough ? Object.keys(props.similar_results)[0] : undefined,
+	            goThrough: goThrough
 	        };
 	        return _this;
 	    }
@@ -42517,6 +42519,13 @@
 	                selected = this.state.selected;
 	
 	            if (selected) {
+	                if (this.state.goThrough) {
+	                    return _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement(_results2.default, { origin: similar_results[selected] })
+	                    );
+	                }
 	                return _react2.default.createElement(
 	                    'div',
 	                    { className: 'list-item' },

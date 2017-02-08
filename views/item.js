@@ -6,10 +6,10 @@ import MDIcon from './md-icon';
 export default class Item extends Editor {
     constructor(props){
         super(props);
+        let goThrough = (Object.keys(props.similar_results).length===1);
         this.state = {
-            selected:(Object.keys(props.similar_results).length===1)
-            ?Object.keys(props.similar_results)[0]
-            : undefined,
+            selected:(goThrough)?Object.keys(props.similar_results)[0] : undefined,
+            goThrough
         }
     }
     unselect () {
@@ -25,6 +25,9 @@ export default class Item extends Editor {
     get tiles () {
         let {props: {similar_results}, state: {selected}} = this;
         if (selected) {
+            if (this.state.goThrough){
+                return <div><Results origin={similar_results[selected]} /></div>;
+            }
             return <div className="list-item">
                 <div>
                     <div>{selected}</div>
