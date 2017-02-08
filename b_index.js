@@ -8349,7 +8349,7 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _shadow = __webpack_require__(706);
+	var _shadow = __webpack_require__(707);
 	
 	var _shadow2 = _interopRequireDefault(_shadow);
 	
@@ -29835,11 +29835,11 @@
 	
 	var _image2 = _interopRequireDefault(_image);
 	
-	var _queryClass = __webpack_require__(705);
+	var _queryClass = __webpack_require__(706);
 	
 	var _queryClass2 = _interopRequireDefault(_queryClass);
 	
-	var _shadow = __webpack_require__(706);
+	var _shadow = __webpack_require__(707);
 	
 	var _shadow2 = _interopRequireDefault(_shadow);
 	
@@ -35450,7 +35450,7 @@
 	
 	var _person2 = _interopRequireDefault(_person);
 	
-	var _face = __webpack_require__(704);
+	var _face = __webpack_require__(705);
 	
 	var _face2 = _interopRequireDefault(_face);
 	
@@ -35583,7 +35583,7 @@
 	
 	var _item2 = _interopRequireDefault(_item);
 	
-	var _categories = __webpack_require__(703);
+	var _categories = __webpack_require__(704);
 	
 	var _categories2 = _interopRequireDefault(_categories);
 	
@@ -42634,7 +42634,7 @@
 	
 	var _reactSelect2 = _interopRequireDefault(_reactSelect);
 	
-	var _utils = __webpack_require__(707);
+	var _utils = __webpack_require__(703);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -42678,6 +42678,8 @@
 	        };
 	
 	        _this.submitResult = function (form) {
+	            console.debug('currency input:');
+	            console.debug(form.currency);
 	            var fields = {
 	                clickUrl: form.clickUrl,
 	                imageUrl: form.image,
@@ -42686,11 +42688,18 @@
 	                currency: form.currency
 	            };
 	            var validInput = true;
-	            var _arr = ['clickUrl', 'imageUrl'];
+	            var _arr = ['imageUrl', 'clickUrl'];
 	            for (var _i = 0; _i < _arr.length; _i++) {
 	                var fieldName = _arr[_i];
 	                validInput = validInput && (0, _utils.inputValidate)(fields[fieldName], _validURL2.default);
 	            }
+	            validInput = validInput && (0, _utils.inputValidate)(fields.price, Number, 'Must be a number only! ');
+	            validInput = validInput && (0, _utils.inputValidate)(fields.brand, function (str) {
+	                return true;
+	            });
+	            validInput = validInput && (0, _utils.inputValidate)(fields.currency, function (str) {
+	                return true;
+	            });
 	            if (validInput) {
 	                var sentData = {
 	                    clickUrl: fields.clickUrl.value,
@@ -42698,11 +42707,13 @@
 	                        XLarge: fields.imageUrl.value
 	                    },
 	                    price: {
-	                        currency: form.currency, //fields.currency.value,
+	                        currency: fields.currency.value,
 	                        price: fields.price.value
 	                    },
 	                    brand: fields.brand.value
 	                };
+	                console.debug("sent data");
+	                console.debug(sentData);
 	                _this.add(sentData);
 	                alert('The result was successfully added!');
 	                form.reset();
@@ -42751,6 +42762,10 @@
 	                    value: currencyValue,
 	                    onChange: function onChange(selected) {
 	                        _this.setState({ currencyValue: selected });
+	                    },
+	                    clearable: false,
+	                    ref: function ref(select) {
+	                        _this.select = select;
 	                    }
 	                }),
 	                _react2.default.createElement(
@@ -42764,8 +42779,6 @@
 	                    { className: 'raised', type: 'button', onClick: function onClick(_ref2) {
 	                            var form = _ref2.target.parentElement;
 	
-	                            console.log('from form:');
-	                            console.log(form.currency);
 	                            _this.submitResult(form);
 	                        } },
 	                    'Submit'
@@ -42776,17 +42789,21 @@
 	        _this.state = {
 	            items: props.origin,
 	            isSorting: false,
-	            currencyValue: undefined,
 	            currencyOptions: [{
 	                value: 'USD',
-	                label: 'USD'
+	                label: 'USD',
+	                clearableValue: false
 	            }, {
 	                value: 'EUR',
-	                label: 'EUR'
+	                label: 'EUR',
+	                clearableValue: false
+	
 	            }, {
 	                value: 'Yen',
-	                label: 'Yen'
-	            }]
+	                label: 'Yen',
+	                clearableValue: false
+	            }],
+	            currencyValue: 'USD'
 	        };
 	        //function binding:
 	        _this.remove = _this.remove.bind(_this);
@@ -49435,6 +49452,40 @@
 /* 703 */
 /***/ function(module, exports) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var ERROR_MESSAGE = 'This field is not valid!';
+	
+	/**
+	 * @param iputObj - <input/> - react component.
+	 * @param validator - function wihich obtains 
+	 *        string and returns its status (valid or not).
+	 * @param errorMessage - text which will be shown in err message.
+	 * @returns (boolean) status if current input's value is valid or not, 
+	 *        and changes input's validity status.
+	 */
+	function inputValidate(inputObj, validator, errorMessage) {
+	    if (!validator(inputObj.value) && inputObj.value !== '') {
+	        inputObj.setCustomValidity(errorMessage || ERROR_MESSAGE);
+	        inputObj.addEventListener('keydown', function () {
+	            inputObj.setCustomValidity('');
+	        });
+	    } else {
+	        inputObj.setCustomValidity('');
+	    }
+	    inputObj.reportValidity();
+	    return inputObj.checkValidity();
+	}
+	
+	exports.inputValidate = inputValidate;
+
+/***/ },
+/* 704 */
+/***/ function(module, exports) {
+
 	"use strict";
 	
 	module.exports = [{
@@ -49476,7 +49527,7 @@
 	}];
 
 /***/ },
-/* 704 */
+/* 705 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49516,7 +49567,7 @@
 	};
 
 /***/ },
-/* 705 */
+/* 706 */
 /***/ function(module, exports) {
 
 	module.exports = class Query {
@@ -49554,7 +49605,7 @@
 
 
 /***/ },
-/* 706 */
+/* 707 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49605,39 +49656,6 @@
 	}(_react.Component);
 	
 	exports.default = Shadow;
-
-/***/ },
-/* 707 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var ERROR_MESSAGE = 'This field is not valid!';
-	
-	/**
-	 * @param iputObj - <input/> - react component.
-	 * @param validator - function wihich obtains 
-	 *        string and returns its status (valid or not).
-	 * @returns (boolean) status if current input's value is valid or not, 
-	 *        and changes input's validity status.
-	 */
-	function inputValidate(inputObj, validator) {
-	    if (!validator(inputObj.value) && inputObj.value !== '') {
-	        inputObj.setCustomValidity(ERROR_MESSAGE);
-	        inputObj.addEventListener('keydown', function () {
-	            inputObj.setCustomValidity('');
-	        });
-	    } else {
-	        inputObj.setCustomValidity('');
-	    }
-	    inputObj.reportValidity();
-	    return inputObj.checkValidity();
-	}
-	
-	exports.inputValidate = inputValidate;
 
 /***/ }
 /******/ ]);

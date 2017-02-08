@@ -26,20 +26,24 @@ export default class Results extends Editor {
         this.state = {
             items: props.origin,
             isSorting: false,
-            currencyValue: undefined,
             currencyOptions: [{
                     value:'USD', 
                     label:'USD',
+                    clearableValue: false,
                 }, 
                 {
                     value:'EUR',
                     label:'EUR',
+                    clearableValue: false,
+                    
                 }, 
                 {
                     value:'Yen',
                     label:'Yen',
+                    clearableValue: false,
                 }
-            ]
+            ],
+            currencyValue: 'USD',
         };
         //function binding:
         this.remove = this.remove.bind(this);
@@ -102,6 +106,8 @@ export default class Results extends Editor {
     };
 
     submitResult = (form)=>{
+        console.debug('currency input:');
+        console.debug(form.currency);
         let fields = {
             clickUrl: form.clickUrl,
             imageUrl: form.image,
@@ -110,9 +116,12 @@ export default class Results extends Editor {
             currency: form.currency,
         }
         let validInput = true;
-        for (let fieldName of ['clickUrl', 'imageUrl']){
+        for (let fieldName of [ 'imageUrl', 'clickUrl']){
             validInput = (validInput && inputValidate(fields[fieldName], validURL));
         }
+        validInput = (validInput && inputValidate(fields.price, Number, 'Must be a number only! '));
+        validInput = (validInput && inputValidate(fields.brand, (str)=>true));
+        validInput = (validInput && inputValidate(fields.currency, (str)=>true));
         if (validInput){
             let sentData = {
                 clickUrl: fields.clickUrl.value,
@@ -120,11 +129,13 @@ export default class Results extends Editor {
                     XLarge: fields.imageUrl.value
                 },
                 price: {
-                    currency: form.currency,//fields.currency.value,
+                    currency: fields.currency.value,
                     price: fields.price.value,
                 },
                 brand: fields.brand.value,
             }
+            console.debug("sent data");
+            console.debug(sentData);
             this.add(sentData);
             alert('The result was successfully added!');
             form.reset();
@@ -149,12 +160,12 @@ export default class Results extends Editor {
                         onChange={(selected) => {
                             this.setState({currencyValue:selected});
                         }}
+                        clearable={false}
+                        ref={(select)=>{this.select = select;}}
                     />
                 <label>Brand</label>
                 <input type="text" name="brand" required/>
                 <button className="raised" type="button" onClick={({target: {parentElement: form}}) => {
-                    console.log('from form:');
-                    console.log(form.currency);
                     this.submitResult(form);
                 } 
             }>Submit</button>
