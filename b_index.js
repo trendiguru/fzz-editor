@@ -8349,7 +8349,7 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _shadow = __webpack_require__(706);
+	var _shadow = __webpack_require__(707);
 	
 	var _shadow2 = _interopRequireDefault(_shadow);
 	
@@ -29835,11 +29835,11 @@
 	
 	var _image2 = _interopRequireDefault(_image);
 	
-	var _queryClass = __webpack_require__(705);
+	var _queryClass = __webpack_require__(706);
 	
 	var _queryClass2 = _interopRequireDefault(_queryClass);
 	
-	var _shadow = __webpack_require__(706);
+	var _shadow = __webpack_require__(707);
 	
 	var _shadow2 = _interopRequireDefault(_shadow);
 	
@@ -35450,7 +35450,7 @@
 	
 	var _person2 = _interopRequireDefault(_person);
 	
-	var _face = __webpack_require__(704);
+	var _face = __webpack_require__(705);
 	
 	var _face2 = _interopRequireDefault(_face);
 	
@@ -35583,7 +35583,7 @@
 	
 	var _item2 = _interopRequireDefault(_item);
 	
-	var _categories = __webpack_require__(703);
+	var _categories = __webpack_require__(704);
 	
 	var _categories2 = _interopRequireDefault(_categories);
 	
@@ -42634,6 +42634,8 @@
 	
 	var _reactSelect2 = _interopRequireDefault(_reactSelect);
 	
+	var _utils = __webpack_require__(703);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42676,40 +42678,42 @@
 	        };
 	
 	        _this.submitResult = function (form) {
-	            var clickUrl = form.clickUrl;
-	            var imageUrl = form.image;
-	            if (!(0, _validURL2.default)(clickUrl.value) && clickUrl.value !== '') {
-	                clickUrl.setCustomValidity('This field is not valid!');
-	                clickUrl.addEventListener('keydown', function () {
-	                    clickUrl.setCustomValidity('');
-	                });
-	            } else {
-	                clickUrl.setCustomValidity('');
+	            console.debug('currency input:');
+	            console.debug(form.currency);
+	            var fields = {
+	                clickUrl: form.clickUrl,
+	                imageUrl: form.image,
+	                price: form.price,
+	                brand: form.brand,
+	                currency: form.currency
+	            };
+	            var validInput = true;
+	            var _arr = ['imageUrl', 'clickUrl'];
+	            for (var _i = 0; _i < _arr.length; _i++) {
+	                var fieldName = _arr[_i];
+	                validInput = validInput && (0, _utils.inputValidate)(fields[fieldName], _validURL2.default);
 	            }
-	            if (!(0, _validURL2.default)(imageUrl.value) && imageUrl.value !== '') {
-	                imageUrl.setCustomValidity('This field is not valid!');
-	                imageUrl.addEventListener('keydown', function () {
-	                    imageUrl.setCustomValidity('');
-	                });
-	            } else {
-	                imageUrl.setCustomValidity('');
-	            }
-	            clickUrl.reportValidity();
-	            imageUrl.reportValidity();
-	            if (clickUrl.checkValidity() && imageUrl.checkValidity()) {
+	            validInput = validInput && (0, _utils.inputValidate)(fields.price, Number, 'Must be a number only! ');
+	            validInput = validInput && (0, _utils.inputValidate)(fields.brand, function (str) {
+	                return true;
+	            });
+	            validInput = validInput && (0, _utils.inputValidate)(fields.currency, function (str) {
+	                return true;
+	            });
+	            if (validInput) {
 	                var sentData = {
-	                    clickUrl: clickUrl.value,
+	                    clickUrl: fields.clickUrl.value,
 	                    images: {
-	                        XLarge: imageUrl.value
+	                        XLarge: fields.imageUrl.value
 	                    },
 	                    price: {
-	                        currency: form.currency.value,
-	                        price: form.price.value
+	                        currency: fields.currency.value,
+	                        price: fields.price.value
 	                    },
-	                    brand: form.brand.value
+	                    brand: fields.brand.value
 	                };
-	                console.log('Submit results:');
-	                console.log(sentData);
+	                console.debug("sent data");
+	                console.debug(sentData);
 	                _this.add(sentData);
 	                alert('The result was successfully added!');
 	                form.reset();
@@ -42721,7 +42725,6 @@
 	                currencyValue = _this$state.currencyValue,
 	                currencyOptions = _this$state.currencyOptions;
 	
-	            console.log("inside createForm");
 	            return _react2.default.createElement(
 	                'form',
 	                { className: 'result-form hidden', required: true },
@@ -42759,6 +42762,10 @@
 	                    value: currencyValue,
 	                    onChange: function onChange(selected) {
 	                        _this.setState({ currencyValue: selected });
+	                    },
+	                    clearable: false,
+	                    ref: function ref(select) {
+	                        _this.select = select;
 	                    }
 	                }),
 	                _react2.default.createElement(
@@ -42782,17 +42789,21 @@
 	        _this.state = {
 	            items: props.origin,
 	            isSorting: false,
-	            currencyValue: undefined,
 	            currencyOptions: [{
 	                value: 'USD',
-	                label: 'USD'
+	                label: 'USD',
+	                clearableValue: false
 	            }, {
 	                value: 'EUR',
-	                label: 'EUR'
+	                label: 'EUR',
+	                clearableValue: false
+	
 	            }, {
 	                value: 'Yen',
-	                label: 'Yen'
-	            }]
+	                label: 'Yen',
+	                clearableValue: false
+	            }],
+	            currencyValue: 'USD'
 	        };
 	        //function binding:
 	        _this.remove = _this.remove.bind(_this);
@@ -49441,6 +49452,40 @@
 /* 703 */
 /***/ function(module, exports) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var ERROR_MESSAGE = 'This field is not valid!';
+	
+	/**
+	 * @param iputObj - <input/> - react component.
+	 * @param validator - function wihich obtains 
+	 *        string and returns its status (valid or not).
+	 * @param errorMessage - text which will be shown in err message.
+	 * @returns (boolean) status if current input's value is valid or not, 
+	 *        and changes input's validity status.
+	 */
+	function inputValidate(inputObj, validator, errorMessage) {
+	    if (!validator(inputObj.value) && inputObj.value !== '') {
+	        inputObj.setCustomValidity(errorMessage || ERROR_MESSAGE);
+	        inputObj.addEventListener('keydown', function () {
+	            inputObj.setCustomValidity('');
+	        });
+	    } else {
+	        inputObj.setCustomValidity('');
+	    }
+	    inputObj.reportValidity();
+	    return inputObj.checkValidity();
+	}
+	
+	exports.inputValidate = inputValidate;
+
+/***/ },
+/* 704 */
+/***/ function(module, exports) {
+
 	"use strict";
 	
 	module.exports = [{
@@ -49482,7 +49527,7 @@
 	}];
 
 /***/ },
-/* 704 */
+/* 705 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -49522,7 +49567,7 @@
 	};
 
 /***/ },
-/* 705 */
+/* 706 */
 /***/ function(module, exports) {
 
 	module.exports = class Query {
@@ -49560,7 +49605,7 @@
 
 
 /***/ },
-/* 706 */
+/* 707 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

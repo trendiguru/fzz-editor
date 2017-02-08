@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import Editor from './editor';
 import validURL from '../modules/validURL';
 import Select from 'react-select';
+import { inputValidate } from '../modules/utils';
 
 function getItems(count, height) {
     var heights = [65, 110, 140, 65, 90, 65];
@@ -25,20 +26,24 @@ export default class Results extends Editor {
         this.state = {
             items: props.origin,
             isSorting: false,
-            currencyValue: undefined,
             currencyOptions: [{
                     value:'USD', 
                     label:'USD',
+                    clearableValue: false,
                 }, 
                 {
                     value:'EUR',
                     label:'EUR',
+                    clearableValue: false,
+                    
                 }, 
                 {
                     value:'Yen',
                     label:'Yen',
+                    clearableValue: false,
                 }
-            ]
+            ],
+            currencyValue: 'USD',
         };
         //function binding:
         this.remove = this.remove.bind(this);
@@ -101,40 +106,36 @@ export default class Results extends Editor {
     };
 
     submitResult = (form)=>{
-        let clickUrl = form.clickUrl;
-        let imageUrl = form.image;
-        if (!validURL(clickUrl.value) && clickUrl.value !== ''){
-            clickUrl.setCustomValidity('This field is not valid!');
-            clickUrl.addEventListener('keydown', ()=>{
-                clickUrl.setCustomValidity('');
-            });
-        }else{
-            clickUrl.setCustomValidity('');
+        console.debug('currency input:');
+        console.debug(form.currency);
+        let fields = {
+            clickUrl: form.clickUrl,
+            imageUrl: form.image,
+            price: form.price,
+            brand: form.brand,
+            currency: form.currency,
         }
-        if (!validURL(imageUrl.value) && imageUrl.value !== ''){
-            imageUrl.setCustomValidity('This field is not valid!');
-            imageUrl.addEventListener('keydown', ()=>{
-                imageUrl.setCustomValidity('');
-            });
-        }else{
-            imageUrl.setCustomValidity('');
+        let validInput = true;
+        for (let fieldName of [ 'imageUrl', 'clickUrl']){
+            validInput = (validInput && inputValidate(fields[fieldName], validURL));
         }
-        clickUrl.reportValidity();
-        imageUrl.reportValidity();
-        if (clickUrl.checkValidity() && imageUrl.checkValidity()){
+        validInput = (validInput && inputValidate(fields.price, Number, 'Must be a number only! '));
+        validInput = (validInput && inputValidate(fields.brand, (str)=>true));
+        validInput = (validInput && inputValidate(fields.currency, (str)=>true));
+        if (validInput){
             let sentData = {
-                clickUrl: clickUrl.value,
+                clickUrl: fields.clickUrl.value,
                 images: {
-                    XLarge: imageUrl.value
+                    XLarge: fields.imageUrl.value
                 },
                 price: {
-                    currency: form.currency.value,
-                    price: form.price.value,
+                    currency: fields.currency.value,
+                    price: fields.price.value,
                 },
-                brand: form.brand.value,
+                brand: fields.brand.value,
             }
-            console.log('Submit results:');
-            console.log(sentData);
+            console.debug("sent data");
+            console.debug(sentData);
             this.add(sentData);
             alert('The result was successfully added!');
             form.reset();
@@ -143,7 +144,6 @@ export default class Results extends Editor {
 
     createForm = ()=>{
         const {currencyValue, currencyOptions} = this.state;
-        console.log("inside createForm");
         return (<form className="result-form hidden" required>
                 <h3>Add a result</h3>
                 <label>Image</label>
@@ -160,6 +160,8 @@ export default class Results extends Editor {
                         onChange={(selected) => {
                             this.setState({currencyValue:selected});
                         }}
+                        clearable={false}
+                        ref={(select)=>{this.select = select;}}
                     />
                 <label>Brand</label>
                 <input type="text" name="brand" required/>
