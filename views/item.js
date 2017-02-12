@@ -4,8 +4,13 @@ import Results from './results';
 import MDIcon from './md-icon';
 
 export default class Item extends Editor {
-    state = {
-        selected: undefined,
+    constructor(props){
+        super(props);
+        this.state = {
+            selected:(Object.keys(props.similar_results).length===1)
+            ?Object.keys(props.similar_results)[0]
+            : undefined,
+        }
     }
     unselect () {
         this.setState({selected: undefined});

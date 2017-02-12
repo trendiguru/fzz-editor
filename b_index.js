@@ -30559,11 +30559,12 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Collection.__proto__ || Object.getPrototypeOf(Collection)).call(this, props));
 	
+	        var elemsKeys = Object.keys(_this.props.source[_this.props.query]);
+	        var goThrough = elemsKeys.length == 1;
 	        _this.state = {
-	            selected: undefined,
+	            selected: goThrough ? elemsKeys[0] : undefined,
 	            selectedAdd: undefined
 	        };
-	
 	        _this.select = _this.select.bind(_this);
 	        return _this;
 	    }
@@ -42471,20 +42472,15 @@
 	var Item = function (_Editor) {
 	    _inherits(Item, _Editor);
 	
-	    function Item() {
-	        var _ref;
-	
-	        var _temp, _this, _ret;
-	
+	    function Item(props) {
 	        _classCallCheck(this, Item);
 	
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
+	        var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 	
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Item.__proto__ || Object.getPrototypeOf(Item)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-	            selected: undefined
-	        }, _temp), _possibleConstructorReturn(_this, _ret);
+	        _this.state = {
+	            selected: Object.keys(props.similar_results).length === 1 ? Object.keys(props.similar_results)[0] : undefined
+	        };
+	        return _this;
 	    }
 	
 	    _createClass(Item, [{

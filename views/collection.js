@@ -8,6 +8,12 @@ import Select from 'react-select';
 export default class Collection extends Component {
     constructor(props){
         super(props);
+        let elemsKeys = Object.keys(this.props.source[this.props.query]);
+        let goThrough = elemsKeys.length==1;
+        this.state = {
+            selected: (goThrough)? elemsKeys[0]: undefined,
+            selectedAdd: undefined, 
+        }
         this.select = this.select.bind(this);
     }
     static contextTypes = {
@@ -28,10 +34,6 @@ export default class Collection extends Component {
         selected: PropTypes.string,
         unselect: PropTypes.func,
         options: PropTypes.object
-    }
-    state = {
-        selected: undefined,
-        selectedAdd: undefined
     }
     unselect () {
         this.select(undefined);
