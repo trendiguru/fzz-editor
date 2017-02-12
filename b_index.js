@@ -30559,11 +30559,12 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Collection.__proto__ || Object.getPrototypeOf(Collection)).call(this, props));
 	
+	        var elemsKeys = Object.keys(_this.props.source[_this.props.query]);
+	        var goThrough = elemsKeys.length == 1;
 	        _this.state = {
-	            selected: undefined,
+	            selected: goThrough ? elemsKeys[0] : undefined,
 	            selectedAdd: undefined
 	        };
-	
 	        _this.select = _this.select.bind(_this);
 	        return _this;
 	    }
