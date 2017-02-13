@@ -30001,7 +30001,7 @@
 	        value: function selectImage(selected) {
 	            var _this6 = this;
 	
-	            _router2.default.next(selected, function () {
+	            _router2.default.doNext(selected, function () {
 	                _this6.setState({ selected: selected });
 	            });
 	        }
@@ -30589,42 +30589,28 @@
 	    _createClass(Collection, [{
 	        key: 'initSelected',
 	        value: function initSelected() {
+	            var _this2 = this;
+	
 	            var elemsKeys = Object.keys(this.props.source[this.props.query]);
 	            //If the key is already in URL:
-	            var _iteratorNormalCompletion = true;
-	            var _didIteratorError = false;
-	            var _iteratorError = undefined;
-	
-	            try {
-	                for (var _iterator = elemsKeys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var key = _step.value;
-	
-	                    if (_router2.default.inRoute(key)) {
-	                        console.log('key');
-	                        console.log(key);
-	                        return key;
-	                    }
-	                }
-	                //If there only one element:
-	            } catch (err) {
-	                _didIteratorError = true;
-	                _iteratorError = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion && _iterator.return) {
-	                        _iterator.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError) {
-	                        throw _iteratorError;
-	                    }
-	                }
+	            // for (let key of elemsKeys){
+	            //     if (router.inRoute(key)){
+	            //         console.log('key');
+	            //         console.log(key);
+	            //         router.nextDo(key, ()=>{
+	            //             this.setState({selected: key});
+	            //         });
+	            //         return key;
+	            //     }
+	            // }
+	            //If there only one element:
+	            if (elemsKeys.length === 1) {
+	                _router2.default.nextDo(elemsKeys[0], function () {
+	                    _this2.setState({ selected: elemsKeys[0] });
+	                });
+	                return elemsKeys[0];
 	            }
-	
-	            var selected = elemsKeys.length == 1 ? elemsKeys[0] : undefined;
-	            console.log('selected');
-	            console.log(selected);
-	            return selected;
+	            return undefined;
 	        }
 	    }, {
 	        key: 'unselect',
@@ -30637,15 +30623,15 @@
 	    }, {
 	        key: 'add',
 	        value: function add(key) {
-	            var _this2 = this;
+	            var _this3 = this;
 	
 	            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 	
 	            var promise = Promise.resolve();
 	            var newItem = Object.assign(_defineProperty({}, this.props.title, key), value);
 	            this.context.setImages(function (images) {
-	                var path = images !== _this2.props.source[_this2.props.query] ? (0, _path2.default)(_this2.context.images, _this2.props.source[_this2.props.query]) : [];
-	                Object.assign(_this2.props.source[_this2.props.query], _defineProperty({}, key, newItem));
+	                var path = images !== _this3.props.source[_this3.props.query] ? (0, _path2.default)(_this3.context.images, _this3.props.source[_this3.props.query]) : [];
+	                Object.assign(_this3.props.source[_this3.props.query], _defineProperty({}, key, newItem));
 	                promise = fetch([_package.api].concat(_toConsumableArray(path)).join('/'), {
 	                    method: 'POST',
 	                    credentials: 'include',
@@ -30660,22 +30646,22 @@
 	    }, {
 	        key: 'select',
 	        value: function select(selected) {
-	            var _this3 = this;
+	            var _this4 = this;
 	
-	            _router2.default.next(selected, function () {
-	                _this3.setState({ selected: selected });
+	            _router2.default.doNext(selected, function () {
+	                _this4.setState({ selected: selected });
 	            });
 	        }
 	    }, {
 	        key: 'remove',
 	        value: function remove(key) {
-	            var _this4 = this;
+	            var _this5 = this;
 	
 	            if (confirm('Are you sure you want to delete this item?')) {
 	                this.unselect(key);
 	                this.context.setImages(function (images) {
-	                    var path = images !== _this4.props.source[_this4.props.query] ? (0, _path2.default)(_this4.context.images, _this4.props.source[_this4.props.query]) : [];
-	                    delete _this4.props.source[_this4.props.query][key];
+	                    var path = images !== _this5.props.source[_this5.props.query] ? (0, _path2.default)(_this5.context.images, _this5.props.source[_this5.props.query]) : [];
+	                    delete _this5.props.source[_this5.props.query][key];
 	                    fetch([_package.api].concat(_toConsumableArray(path), [key]).join('/'), {
 	                        method: 'DELETE',
 	                        credentials: 'include'
@@ -30687,7 +30673,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this5 = this;
+	            var _this6 = this;
 	
 	            console.log('render');
 	            var _props = this.props,
@@ -30729,38 +30715,38 @@
 	                            options: options,
 	                            value: selectedAdd,
 	                            onChange: function onChange(selected) {
-	                                return _this5.setState({ selectedAdd: selected });
+	                                return _this6.setState({ selectedAdd: selected });
 	                            }
 	                        }),
 	                        _react2.default.createElement(
 	                            'button',
 	                            { className: 'raised', onClick: function onClick() {
 	                                    if (selectedAdd && selectedAdd.value) {
-	                                        _this5.setState({ selectedAdd: undefined });
-	                                        _this5.context.pending(true); //set up a loading animation. 
-	                                        _this5.add(selectedAdd.value).then(function (response) {
+	                                        _this6.setState({ selectedAdd: undefined });
+	                                        _this6.context.pending(true); //set up a loading animation. 
+	                                        _this6.add(selectedAdd.value).then(function (response) {
 	                                            console.log('firs responce:');
 	                                            console.log(response);
 	                                            if (!response.ok) {
 	                                                //TODO: check an additional factors of failed response 
 	                                                throw new Error('we cannot add this category.');
 	                                            }
-	                                        }).then(_this5.context.updateImage).then(function (response) {
+	                                        }).then(_this6.context.updateImage).then(function (response) {
 	                                            console.log('second response:');
 	                                            console.log(response);
 	                                            if (!response.num_of_people > 0) {
 	                                                //TODO: check an additional factors of failed response 
 	                                                throw new Error('we cannot add this category.');
 	                                            }
-	                                            _this5.context.pending(false);
+	                                            _this6.context.pending(false);
 	                                            alert('new category was successfully added.');
 	                                        }).catch(function (err) {
 	                                            console.error(err); //TODO: FIRE ERROR API!!!
 	                                            // if the addition of the new category failed => refresh the react components.
-	                                            _this5.context.updateImage().then(function (response) {
+	                                            _this6.context.updateImage().then(function (response) {
 	                                                console.log('response3');
 	                                                console.log(response);
-	                                                _this5.context.pending(false);
+	                                                _this6.context.pending(false);
 	                                            }).then(function () {
 	                                                alert(err.message);
 	                                            });
@@ -30793,7 +30779,7 @@
 	    }, {
 	        key: 'tiles',
 	        get: function get() {
-	            var _this6 = this;
+	            var _this7 = this;
 	
 	            var selected = this.selected,
 	                _props2 = this.props,
@@ -30871,7 +30857,7 @@
 	                                console.log('function');
 	                                console.log(_router2.default);
 	                                //if we select image we must change selected property in app!!!:
-	                                query === 'images' ? _this6.context.selectImage(key) : _this6.select(key);
+	                                query === 'images' ? _this7.context.selectImage(key) : _this7.select(key);
 	                            } },
 	                        _react2.default.createElement(
 	                            _mdIcon2.default,
@@ -30886,14 +30872,14 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
-	                        template.call(_this6, node, key, _this6),
+	                        template.call(_this7, node, key, _this7),
 	                        _react2.default.createElement(
 	                            'aside',
 	                            null,
 	                            edit,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: _this6.remove.bind(_this6, key) },
+	                                { onClick: _this7.remove.bind(_this7, key) },
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
@@ -35697,37 +35683,46 @@
 	        this.currentRoute = '';
 	        this.routesStorage = {};
 	
-	        this.next = this.next.bind(this);
-	        this.next(ROOT, function () {
+	        this._setRoute = this._setRoute.bind(this);
+	        this.nextDo = this.nextDo.bind(this);
+	        this.doNext = this.doNext.bind(this);
+	        this.backTo = this.backTo.bind(this);
+	        this.inRoute = this.inRoute.bind(this);
+	
+	        this.doNext(ROOT, function () {
 	            console.log('the router is initialised.');
 	        });
 	    }
+	    //Immediately calls to calback.
+	
 	
 	    _createClass(Router, [{
-	        key: 'next',
-	        value: function next(key, callback) {
+	        key: 'doNext',
+	        value: function doNext(key, callback) {
 	            if (key) {
 	                this.currentRoute += "/" + key;
-	                /*if does not exist a callback for the currntRoute =>
-	                attech the callback to currentRoute*/
-	                // if (!this.routesStorage[this.currentRoute]) {
-	                //     this.navigator.on(this.currentRoute, callback).resolve();
-	                //     this.routesStorage[this.currentRoute] = callback;
-	                // }
-	                setRoute(this.currentRoute, callback);
+	                this._setRoute(this.currentRoute, callback);
 	                this.navigator.navigate(this.currentRoute);
 	            }
 	        }
+	
+	        //Calls to the callback only on event.
+	
 	    }, {
-	        key: 'navigateToNext',
-	        value: function navigateToNext(key) {
-	            this.currentRoute += "/" + key;
-	            this.navigator.navigate(this.currentRoute);
+	        key: 'nextDo',
+	        value: function nextDo(key, callback) {
+	            if (key) {
+	                this.currentRoute += "/" + key;
+	                this.navigator.navigate(this.currentRoute);
+	                this._setRoute(this.currentRoute, callback);
+	            }
 	        }
 	    }, {
-	        key: 'setRoute',
-	        value: function setRoute(route, callback) {
+	        key: '_setRoute',
+	        value: function _setRoute(route, callback) {
 	            route = route || this.currentRoute;
+	            /*if does not exist a callback for the currntRoute =>
+	                attech the callback to currentRoute*/
 	            if (!this.routesStorage[route]) {
 	                this.navigator.on(route, callback).resolve();
 	                this.routesStorage[route] = callback;
@@ -43355,7 +43350,7 @@
 	        value: function select(selected) {
 	            var _this2 = this;
 	
-	            _router2.default.next(selected, function () {
+	            _router2.default.doNext(selected, function () {
 	                _this2.setState({ selected: selected });
 	            });
 	        }

@@ -17,7 +17,7 @@ export default class Item extends Editor {
         this.setState({selected: undefined});
     }
     select (selected) {
-        router.next(selected,()=>{
+        router.doNext(selected,()=>{
             this.setState({selected});
         });
     }

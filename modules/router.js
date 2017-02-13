@@ -9,30 +9,38 @@ class Router {
         this.currentRoute = '';
         this.routesStorage = {};
 
-        this.next = this.next.bind(this);
-        this.next(ROOT, () => {
+        this._setRoute = this._setRoute.bind(this);
+        this.nextDo = this.nextDo.bind(this);
+        this.doNext = this.doNext.bind(this);
+        this.backTo = this.backTo.bind(this);
+        this.inRoute = this.inRoute.bind(this);
+
+        this.doNext(ROOT, () => {
             console.log('the router is initialised.')
         });
     }
-    next(key, callback) {
+    //Immediately calls to calback.
+    doNext(key, callback) {
         if (key) {
             this.currentRoute += "/" + key;
-            /*if does not exist a callback for the currntRoute =>
-            attech the callback to currentRoute*/
-            // if (!this.routesStorage[this.currentRoute]) {
-            //     this.navigator.on(this.currentRoute, callback).resolve();
-            //     this.routesStorage[this.currentRoute] = callback;
-            // }
-            setRoute(this.currentRoute, callback);
+            this._setRoute(this.currentRoute, callback);
             this.navigator.navigate(this.currentRoute);
         }
     }
-    navigateToNext(key){
-        this.currentRoute += "/" + key;
-        this.navigator.navigate(this.currentRoute);
+
+    //Calls to the callback only on event.
+    nextDo(key, callback) {
+        if (key) {
+            this.currentRoute += "/" + key;
+            this.navigator.navigate(this.currentRoute);
+            this._setRoute(this.currentRoute, callback);
+        }
     }
-    setRoute(route, callback){
+
+    _setRoute(route, callback){
         route = route || this.currentRoute;
+        /*if does not exist a callback for the currntRoute =>
+            attech the callback to currentRoute*/
         if (!this.routesStorage[route]) {
             this.navigator.on(route, callback).resolve();
             this.routesStorage[route] = callback;
@@ -54,6 +62,7 @@ class Router {
             this.navigator.navigate(ROOT);
         }
     }
+
     inRoute(key) {
         console.log("inRoute");
         console.log(key);
@@ -63,4 +72,3 @@ class Router {
 
 let router = router || (new Router());
 export default router;
-

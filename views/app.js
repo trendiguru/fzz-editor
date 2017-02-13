@@ -91,7 +91,7 @@ export default class App extends Component {
         });
     }
     selectImage (selected) {
-        router.next(selected, ()=>{
+        router.doNext(selected, ()=>{
             this.setState({selected});
         });
     }

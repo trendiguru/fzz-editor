@@ -39,18 +39,24 @@ export default class Collection extends Component {
     initSelected(){
         let elemsKeys = Object.keys(this.props.source[this.props.query]);
         //If the key is already in URL:
-        for (let key of elemsKeys){
-            if (router.inRoute(key)){
-                console.log('key');
-                console.log(key);
-                return key;
-            }
-        }
+        // for (let key of elemsKeys){
+        //     if (router.inRoute(key)){
+        //         console.log('key');
+        //         console.log(key);
+        //         router.nextDo(key, ()=>{
+        //             this.setState({selected: key});
+        //         });
+        //         return key;
+        //     }
+        // }
         //If there only one element:
-        let selected = (elemsKeys.length==1)? elemsKeys[0]: undefined;
-        console.log('selected');
-        console.log(selected);
-        return selected;
+        if (elemsKeys.length===1){
+             router.nextDo(elemsKeys[0], ()=>{
+                 this.setState({selected: elemsKeys[0]});
+            });
+             return elemsKeys[0];
+        }
+        return undefined;
     }
     unselect () {
         this.select(undefined);
@@ -80,7 +86,7 @@ export default class Collection extends Component {
         return promise;
     }
     select (selected) {
-        router.next(selected, ()=>{
+        router.doNext(selected, ()=>{
             this.setState({selected})
         });
     }
