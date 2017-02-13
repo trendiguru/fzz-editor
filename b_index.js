@@ -30576,17 +30576,57 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Collection.__proto__ || Object.getPrototypeOf(Collection)).call(this, props));
 	
-	        var elemsKeys = Object.keys(_this.props.source[_this.props.query]);
-	        var goThrough = elemsKeys.length == 1;
 	        _this.state = {
-	            selected: goThrough ? elemsKeys[0] : undefined,
+	            selected: _this.initSelected(),
 	            selectedAdd: undefined
 	        };
+	        console.log("collection's constructor");
+	        console.log(_this.state);
 	        _this.select = _this.select.bind(_this);
 	        return _this;
 	    }
 	
 	    _createClass(Collection, [{
+	        key: 'initSelected',
+	        value: function initSelected() {
+	            var elemsKeys = Object.keys(this.props.source[this.props.query]);
+	            //If the key is already in URL:
+	            var _iteratorNormalCompletion = true;
+	            var _didIteratorError = false;
+	            var _iteratorError = undefined;
+	
+	            try {
+	                for (var _iterator = elemsKeys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                    var key = _step.value;
+	
+	                    if (_router2.default.inRoute(key)) {
+	                        console.log('key');
+	                        console.log(key);
+	                        return key;
+	                    }
+	                }
+	                //If there only one element:
+	            } catch (err) {
+	                _didIteratorError = true;
+	                _iteratorError = err;
+	            } finally {
+	                try {
+	                    if (!_iteratorNormalCompletion && _iterator.return) {
+	                        _iterator.return();
+	                    }
+	                } finally {
+	                    if (_didIteratorError) {
+	                        throw _iteratorError;
+	                    }
+	                }
+	            }
+	
+	            var selected = elemsKeys.length == 1 ? elemsKeys[0] : undefined;
+	            console.log('selected');
+	            console.log(selected);
+	            return selected;
+	        }
+	    }, {
 	        key: 'unselect',
 	        value: function unselect() {
 	            this.select(undefined);
@@ -35670,11 +35710,27 @@
 	                this.currentRoute += "/" + key;
 	                /*if does not exist a callback for the currntRoute =>
 	                attech the callback to currentRoute*/
-	                if (!this.routesStorage[this.currentRoute]) {
-	                    this.navigator.on(this.currentRoute, callback).resolve();
-	                    this.routesStorage[this.currentRoute] = callback;
-	                }
+	                // if (!this.routesStorage[this.currentRoute]) {
+	                //     this.navigator.on(this.currentRoute, callback).resolve();
+	                //     this.routesStorage[this.currentRoute] = callback;
+	                // }
+	                setRoute(this.currentRoute, callback);
 	                this.navigator.navigate(this.currentRoute);
+	            }
+	        }
+	    }, {
+	        key: 'navigateToNext',
+	        value: function navigateToNext(key) {
+	            this.currentRoute += "/" + key;
+	            this.navigator.navigate(this.currentRoute);
+	        }
+	    }, {
+	        key: 'setRoute',
+	        value: function setRoute(route, callback) {
+	            route = route || this.currentRoute;
+	            if (!this.routesStorage[route]) {
+	                this.navigator.on(route, callback).resolve();
+	                this.routesStorage[route] = callback;
 	            }
 	        }
 	    }, {
@@ -35697,6 +35753,8 @@
 	    }, {
 	        key: 'inRoute',
 	        value: function inRoute(key) {
+	            console.log("inRoute");
+	            console.log(key);
 	            return this.currentRoute.split('/').indexOf(key);
 	        }
 	    }]);

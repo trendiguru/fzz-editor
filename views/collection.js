@@ -9,12 +9,12 @@ import router from '../modules/router';
 export default class Collection extends Component {
     constructor(props){
         super(props);
-        let elemsKeys = Object.keys(this.props.source[this.props.query]);
-        let goThrough = elemsKeys.length==1;
         this.state = {
-            selected: (goThrough)? elemsKeys[0]: undefined,
+            selected: this.initSelected(), 
             selectedAdd: undefined, 
         }
+        console.log("collection's constructor");
+        console.log(this.state);
         this.select = this.select.bind(this);
     }
     static contextTypes = {
@@ -35,6 +35,22 @@ export default class Collection extends Component {
         selected: PropTypes.string,
         unselect: PropTypes.func,
         options: PropTypes.object
+    }
+    initSelected(){
+        let elemsKeys = Object.keys(this.props.source[this.props.query]);
+        //If the key is already in URL:
+        for (let key of elemsKeys){
+            if (router.inRoute(key)){
+                console.log('key');
+                console.log(key);
+                return key;
+            }
+        }
+        //If there only one element:
+        let selected = (elemsKeys.length==1)? elemsKeys[0]: undefined;
+        console.log('selected');
+        console.log(selected);
+        return selected;
     }
     unselect () {
         this.select(undefined);

@@ -19,13 +19,26 @@ class Router {
             this.currentRoute += "/" + key;
             /*if does not exist a callback for the currntRoute =>
             attech the callback to currentRoute*/
-            if (!this.routesStorage[this.currentRoute]) {
-                this.navigator.on(this.currentRoute, callback).resolve();
-                this.routesStorage[this.currentRoute] = callback;
-            }
+            // if (!this.routesStorage[this.currentRoute]) {
+            //     this.navigator.on(this.currentRoute, callback).resolve();
+            //     this.routesStorage[this.currentRoute] = callback;
+            // }
+            setRoute(this.currentRoute, callback);
             this.navigator.navigate(this.currentRoute);
         }
     }
+    navigateToNext(key){
+        this.currentRoute += "/" + key;
+        this.navigator.navigate(this.currentRoute);
+    }
+    setRoute(route, callback){
+        route = route || this.currentRoute;
+        if (!this.routesStorage[route]) {
+            this.navigator.on(route, callback).resolve();
+            this.routesStorage[route] = callback;
+        }
+    }
+
     backTo(key) {
         if (key) {
             let route = this.currentRoute.split('/');
@@ -42,6 +55,8 @@ class Router {
         }
     }
     inRoute(key) {
+        console.log("inRoute");
+        console.log(key);
         return this.currentRoute.split('/').indexOf(key);
     }
 }
