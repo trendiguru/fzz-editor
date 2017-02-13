@@ -43335,12 +43335,38 @@
 	        var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 	
 	        _this.state = {
-	            selected: Object.keys(props.similar_results).length === 1 ? Object.keys(props.similar_results)[0] : undefined
+	            selected: _this.initSelected()
 	        };
 	        return _this;
 	    }
 	
 	    _createClass(Item, [{
+	        key: 'initSelected',
+	        value: function initSelected() {
+	            var _this2 = this;
+	
+	            var elemsKeys = Object.keys(this.props.similar_results);
+	            //If the key is already in URL:
+	            // for (let key of elemsKeys){
+	            //     if (router.inRoute(key)){
+	            //         console.log('key');
+	            //         console.log(key);
+	            //         router.nextDo(key, ()=>{
+	            //             this.setState({selected: key});
+	            //         });
+	            //         return key;
+	            //     }
+	            // }
+	            //If there only one element:
+	            if (elemsKeys.length === 1) {
+	                _router2.default.nextDo(elemsKeys[0], function () {
+	                    _this2.setState({ selected: elemsKeys[0] });
+	                });
+	                return elemsKeys[0];
+	            }
+	            return undefined;
+	        }
+	    }, {
 	        key: 'unselect',
 	        value: function unselect() {
 	            this.setState({ selected: undefined });
@@ -43348,10 +43374,10 @@
 	    }, {
 	        key: 'select',
 	        value: function select(selected) {
-	            var _this2 = this;
+	            var _this3 = this;
 	
 	            _router2.default.doNext(selected, function () {
-	                _this2.setState({ selected: selected });
+	                _this3.setState({ selected: selected });
 	            });
 	        }
 	    }, {
@@ -43373,7 +43399,7 @@
 	    }, {
 	        key: 'tiles',
 	        get: function get() {
-	            var _this3 = this;
+	            var _this4 = this;
 	
 	            var similar_results = this.props.similar_results,
 	                selected = this.state.selected;
@@ -43410,7 +43436,7 @@
 	            return Object.keys(similar_results).map(function (collection) {
 	                return _react2.default.createElement(
 	                    'div',
-	                    { className: 'list-item', key: collection, onClick: _this3.select.bind(_this3, collection) },
+	                    { className: 'list-item', key: collection, onClick: _this4.select.bind(_this4, collection) },
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,

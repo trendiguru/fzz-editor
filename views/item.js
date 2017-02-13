@@ -8,10 +8,30 @@ export default class Item extends Editor {
     constructor(props){
         super(props);
         this.state = {
-            selected:(Object.keys(props.similar_results).length===1)
-            ?Object.keys(props.similar_results)[0]
-            : undefined,
+            selected:this.initSelected()
         }
+    }
+    initSelected(){
+        let elemsKeys = (Object.keys(this.props.similar_results));
+        //If the key is already in URL:
+        // for (let key of elemsKeys){
+        //     if (router.inRoute(key)){
+        //         console.log('key');
+        //         console.log(key);
+        //         router.nextDo(key, ()=>{
+        //             this.setState({selected: key});
+        //         });
+        //         return key;
+        //     }
+        // }
+        //If there only one element:
+        if (elemsKeys.length===1){
+             router.nextDo(elemsKeys[0], ()=>{
+                 this.setState({selected: elemsKeys[0]});
+            });
+             return elemsKeys[0];
+        }
+        return undefined;
     }
     unselect () {
         this.setState({selected: undefined});
