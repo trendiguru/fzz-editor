@@ -95,8 +95,10 @@ export default class App extends Component {
             this.setState({selected});
         });
     }
-    unselectImage () {
-        this.selectImage(undefined);
+    unselectImage (key) {
+        router.backTo(key, ()=>{
+            this.selectImage(undefined);
+        });
     }
 
     handShake(){

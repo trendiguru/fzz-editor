@@ -1,4 +1,5 @@
 import Navigo from 'navigo';
+const ROOT = 'home';
 
 class Router {
     constructor() {
@@ -9,27 +10,39 @@ class Router {
         this.routesStorage = {};
 
         this.next = this.next.bind(this);
-        this.next('home', () => {
+        this.next(ROOT, () => {
             console.log('the router is initialised.')
         });
     }
     next(key, callback) {
-        this.currentRoute += "/" + key;
-        /*if does not exist a callback for the currntRoute =>
-          attech the callback to currentRoute*/
-        if (!this.routesStorage[this.currentRoute]) {
-            this.navigator.on(this.currentRoute, callback).resolve();
-            this.routesStorage[this.currentRoute] = callback;
-        }
-        this.navigator.navigate(this.currentRoute);
-    }
-    backTo(key) {
-        let route = this.currentRoute.split('/');
-        let backIndex = route.indexOf(key);
-        if (backIndex !== -1) {
-            this.currentRoute = route.slice(0,backIndex+1);
+        if (key) {
+            this.currentRoute += "/" + key;
+            /*if does not exist a callback for the currntRoute =>
+            attech the callback to currentRoute*/
+            if (!this.routesStorage[this.currentRoute]) {
+                this.navigator.on(this.currentRoute, callback).resolve();
+                this.routesStorage[this.currentRoute] = callback;
+            }
             this.navigator.navigate(this.currentRoute);
         }
+    }
+    backTo(key) {
+        if (key) {
+            let route = this.currentRoute.split('/');
+            let backIndex = route.indexOf(key);
+            if (backIndex !== -1) {
+                console.log('backTo');
+                console.log(route.slice(0, backIndex + 1));
+                this.currentRoute = route.slice(0, backIndex + 1);
+                this.navigator.navigate(this.currentRoute);
+            }
+            console.log(this.currentRoute);
+        } else {
+            this.navigator.navigate(ROOT);
+        }
+    }
+    inRoute(key) {
+        return this.currentRoute.split('/').indexOf(key);
     }
 }
 

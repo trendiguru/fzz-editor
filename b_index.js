@@ -30007,8 +30007,12 @@
 	        }
 	    }, {
 	        key: 'unselectImage',
-	        value: function unselectImage() {
-	            this.selectImage(undefined);
+	        value: function unselectImage(key) {
+	            var _this7 = this;
+	
+	            _router2.default.backTo(key, function () {
+	                _this7.selectImage(undefined);
+	            });
 	        }
 	    }, {
 	        key: 'handShake',
@@ -30031,7 +30035,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this7 = this;
+	            var _this8 = this;
 	
 	            var state = this.state,
 	                _state = this.state,
@@ -30041,15 +30045,15 @@
 	
 	            if (gateControl === undefined) {
 	                this.handShake().then(function () {
-	                    return _this7.setState({ gateControl: true });
+	                    return _this8.setState({ gateControl: true });
 	                }).catch(function () {
-	                    return _this7.setState({ gateControl: false });
+	                    return _this8.setState({ gateControl: false });
 	                });
 	                return _react2.default.createElement('div', { className: 'loading' });
 	            }
 	            if (!user && gateControl === false) {
 	                return _react2.default.createElement(_login2.default, { handshake: this.handShake, onAuthenticate: function onAuthenticate(user) {
-	                        return _this7.setState({ user: user });
+	                        return _this8.setState({ user: user });
 	                    } });
 	            }
 	            return _react2.default.createElement(
@@ -30064,8 +30068,8 @@
 	                _queryClass2.default.parse(location.search).mode === 'dev' ? _react2.default.createElement(
 	                    'button',
 	                    { onClick: function onClick() {
-	                            var image_number = Object.keys(_this7.state.images).length;
-	                            _this7.getLastImages(image_number + 10, image_number);
+	                            var image_number = Object.keys(_this8.state.images).length;
+	                            _this8.getLastImages(image_number + 10, image_number);
 	                        } },
 	                    'load more'
 	                ) : '',
@@ -30092,7 +30096,7 @@
 	                            );
 	                        }
 	                        return _react2.default.createElement('img', { onClick: function onClick() {
-	                                _this7.selectImage(key);
+	                                _this8.selectImage(key);
 	                            },
 	                            src: node.image_urls[0] });
 	                    }
@@ -30628,7 +30632,7 @@
 	            var _this4 = this;
 	
 	            if (confirm('Are you sure you want to delete this item?')) {
-	                this.unselect();
+	                this.unselect(key);
 	                this.context.setImages(function (images) {
 	                    var path = images !== _this4.props.source[_this4.props.query] ? (0, _path2.default)(_this4.context.images, _this4.props.source[_this4.props.query]) : [];
 	                    delete _this4.props.source[_this4.props.query][key];
@@ -30778,7 +30782,7 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this.unselect.bind(this) },
+	                                { onClick: this.unselect.bind(this, selected) },
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
@@ -30800,7 +30804,7 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this.unselect.bind(this) },
+	                                { onClick: this.unselect.bind(this, selected) },
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
@@ -35641,6 +35645,8 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
+	var ROOT = 'home';
+	
 	var Router = function () {
 	    function Router() {
 	        _classCallCheck(this, Router);
@@ -35652,7 +35658,7 @@
 	        this.routesStorage = {};
 	
 	        this.next = this.next.bind(this);
-	        this.next('home', function () {
+	        this.next(ROOT, function () {
 	            console.log('the router is initialised.');
 	        });
 	    }
@@ -35660,24 +35666,38 @@
 	    _createClass(Router, [{
 	        key: 'next',
 	        value: function next(key, callback) {
-	            this.currentRoute += "/" + key;
-	            /*if does not exist a callback for the currntRoute =>
-	              attech the callback to currentRoute*/
-	            if (!this.routesStorage[this.currentRoute]) {
-	                this.navigator.on(this.currentRoute, callback).resolve();
-	                this.routesStorage[this.currentRoute] = callback;
+	            if (key) {
+	                this.currentRoute += "/" + key;
+	                /*if does not exist a callback for the currntRoute =>
+	                attech the callback to currentRoute*/
+	                if (!this.routesStorage[this.currentRoute]) {
+	                    this.navigator.on(this.currentRoute, callback).resolve();
+	                    this.routesStorage[this.currentRoute] = callback;
+	                }
+	                this.navigator.navigate(this.currentRoute);
 	            }
-	            this.navigator.navigate(this.currentRoute);
 	        }
 	    }, {
 	        key: 'backTo',
 	        value: function backTo(key) {
-	            var route = this.currentRoute.split('/');
-	            var backIndex = route.indexOf(key);
-	            if (backIndex !== -1) {
-	                this.currentRoute = route.slice(0, backIndex + 1);
-	                this.navigator.navigate(this.currentRoute);
+	            if (key) {
+	                var route = this.currentRoute.split('/');
+	                var backIndex = route.indexOf(key);
+	                if (backIndex !== -1) {
+	                    console.log('backTo');
+	                    console.log(route.slice(0, backIndex + 1));
+	                    this.currentRoute = route.slice(0, backIndex + 1);
+	                    this.navigator.navigate(this.currentRoute);
+	                }
+	                console.log(this.currentRoute);
+	            } else {
+	                this.navigator.navigate(ROOT);
 	            }
+	        }
+	    }, {
+	        key: 'inRoute',
+	        value: function inRoute(key) {
+	            return this.currentRoute.split('/').indexOf(key);
 	        }
 	    }]);
 	

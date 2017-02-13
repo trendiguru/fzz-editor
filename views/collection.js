@@ -70,7 +70,7 @@ export default class Collection extends Component {
     }
     remove (key) {
         if (confirm('Are you sure you want to delete this item?')) {
-            this.unselect();
+            this.unselect(key);
             this.context.setImages(images => {
                 let path = images !== this.props.source[this.props.query]
                     ? findPathToValue(this.context.images, this.props.source[this.props.query])
@@ -104,17 +104,17 @@ export default class Collection extends Component {
             return <div className={'list-item selected '+query} key={selected}>
                     {template.call(this, selectedNode)}
                     <aside>
-                        <button onClick={this.unselect.bind(this)}>
+                        <button onClick={this.unselect.bind(this, selected)}>
                             <MDIcon>keyboard_arrow_up</MDIcon>
                         </button>
                     </aside>
                 </div>;
             }
-        return <div className={'list-item selected '+query} key={selected}>
+            return <div className={'list-item selected '+query} key={selected}>
                     <div>
                         {template.call(this, selectedNode)}
                         <aside>
-                            <button onClick={this.unselect.bind(this)}>
+                            <button onClick={this.unselect.bind(this, selected)}>
                                 <MDIcon>keyboard_arrow_up</MDIcon>
                             </button>
                         </aside>
