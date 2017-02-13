@@ -64,7 +64,9 @@ export default class Collection extends Component {
         return promise;
     }
     select (selected) {
-        this.setState({selected});
+        router.next(selected, ()=>{
+            this.setState({selected})
+        });
     }
     remove (key) {
         if (confirm('Are you sure you want to delete this item?')) {
@@ -131,9 +133,7 @@ export default class Collection extends Component {
                     console.log('function');
                     console.log(router);
                     //if we select image we must change selected property in app!!!:
-                    (query==='images')
-                    ? router.next(key, this.context.selectImage.bind(this, key))
-                    : router.next(key, this.select.bind(this,key));
+                    (query==='images')? this.context.selectImage(key) : this.select(key);
                 }}>
                     <MDIcon>edit</MDIcon>
                 </button>;

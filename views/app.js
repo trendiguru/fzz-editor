@@ -8,6 +8,7 @@ import Collection from './collection';
 import Image from './image';
 import Query from 'query-class';
 import Shadow from './shadow.js';
+import router from '../modules/router';
 
 export default class App extends Component {
     static childContextTypes = {
@@ -90,9 +91,9 @@ export default class App extends Component {
         });
     }
     selectImage (selected) {
-        console.log('selectImage: selected:')
-        console.log(selected);
-        this.setState({selected});
+        router.next(selected, ()=>{
+            this.setState({selected});
+        });
     }
     unselectImage () {
         this.selectImage(undefined);

@@ -6,8 +6,6 @@ import router from '../modules/router';
 
 export default class Item extends Editor {
     constructor(props){
-        console.log("From item's constructor:");
-        console.log(router);
         super(props);
         this.state = {
             selected:(Object.keys(props.similar_results).length===1)
@@ -19,7 +17,9 @@ export default class Item extends Editor {
         this.setState({selected: undefined});
     }
     select (selected) {
-        this.setState({selected});
+        router.next(selected,()=>{
+            this.setState({selected});
+        });
     }
     get width () {
         let {refs: {root}} = this;
@@ -45,7 +45,7 @@ export default class Item extends Editor {
                 <div>
                     {collection}
                     <aside>
-                        <button onClick={this.select.bind(this)}>
+                        <button>
                             <MDIcon>edit</MDIcon>
                         </button>
                     </aside>
