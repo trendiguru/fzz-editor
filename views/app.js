@@ -90,6 +90,8 @@ export default class App extends Component {
         });
     }
     selectImage (selected) {
+        console.log('selectImage: selected:')
+        console.log(selected);
         this.setState({selected});
     }
     unselectImage () {

@@ -4,6 +4,7 @@ import {api as API_URL} from '../package.json';
 import MDIcon from './md-icon';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Select from 'react-select';
+import router from '../modules/router';
 
 export default class Collection extends Component {
     constructor(props){
@@ -127,8 +128,12 @@ export default class Collection extends Component {
             let edit;
             if (editable || editable === undefined) {
                 edit = <button onClick={()=>{
+                    console.log('function');
+                    console.log(router);
                     //if we select image we must change selected property in app!!!:
-                    (query==='images')? this.context.selectImage(key) : this.select(key);
+                    (query==='images')
+                    ? router.next(key, this.context.selectImage.bind(this, key))
+                    : router.next(key, this.select.bind(this,key));
                 }}>
                     <MDIcon>edit</MDIcon>
                 </button>;

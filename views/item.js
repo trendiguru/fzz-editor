@@ -2,9 +2,12 @@ import React from 'react';
 import Editor from './editor';
 import Results from './results';
 import MDIcon from './md-icon';
+import router from '../modules/router';
 
 export default class Item extends Editor {
     constructor(props){
+        console.log("From item's constructor:");
+        console.log(router);
         super(props);
         this.state = {
             selected:(Object.keys(props.similar_results).length===1)
@@ -42,7 +45,7 @@ export default class Item extends Editor {
                 <div>
                     {collection}
                     <aside>
-                        <button onClick={::this.select}>
+                        <button onClick={this.select.bind(this)}>
                             <MDIcon>edit</MDIcon>
                         </button>
                     </aside>
