@@ -33,8 +33,10 @@ export default class Item extends Editor {
         }
         return undefined;
     }
-    unselect () {
-        this.setState({selected: undefined});
+    unselect (key) {
+        router.backTo(key, ()=>{
+            this.setState({selected: undefined})
+        });
     }
     select (selected) {
         router.doNext(selected,()=>{
@@ -52,7 +54,7 @@ export default class Item extends Editor {
                 <div>
                     <div>{selected}</div>
                     <aside>
-                        <button onClick={::this.unselect}>
+                        <button onClick={this.unselect.bind(this, selected)}>
                             <MDIcon>keyboard_arrow_up</MDIcon>
                         </button>
                     </aside>

@@ -58,11 +58,13 @@ export default class Collection extends Component {
         }
         return undefined;
     }
-    unselect () {
-        this.select(undefined);
-        if (this.props.unselect) {
-            this.props.unselect();
-        }
+    unselect (key) {
+        router.backTo(key, ()=>{
+            this.select(undefined);
+            if (this.props.unselect) {
+                this.props.unselect();
+            }
+        });
     }
     add (key, value = {}) {
         let promise = Promise.resolve();

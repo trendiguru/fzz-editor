@@ -37,7 +37,7 @@ class Router {
         }
     }
 
-    _setRoute(route, callback){
+    _setRoute(route, callback) {
         route = route || this.currentRoute;
         /*if does not exist a callback for the currntRoute =>
             attech the callback to currentRoute*/
@@ -49,15 +49,18 @@ class Router {
 
     backTo(key) {
         if (key) {
+            console.log('key from backTo');
+            console.log(key);
             let route = this.currentRoute.split('/');
             let backIndex = route.indexOf(key);
             if (backIndex !== -1) {
-                console.log('backTo');
-                console.log(route.slice(0, backIndex + 1));
-                this.currentRoute = route.slice(0, backIndex + 1);
+                let newRoute = '';
+                for (let key of route.slice(0, backIndex + 1)) {
+                    newRoute += '/' + key;
+                }
+                this.currentRoute = newRoute;
                 this.navigator.navigate(this.currentRoute);
             }
-            console.log(this.currentRoute);
         } else {
             this.navigator.navigate(ROOT);
         }

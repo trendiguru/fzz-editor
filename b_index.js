@@ -30614,24 +30614,28 @@
 	        }
 	    }, {
 	        key: 'unselect',
-	        value: function unselect() {
-	            this.select(undefined);
-	            if (this.props.unselect) {
-	                this.props.unselect();
-	            }
+	        value: function unselect(key) {
+	            var _this3 = this;
+	
+	            _router2.default.backTo(key, function () {
+	                _this3.select(undefined);
+	                if (_this3.props.unselect) {
+	                    _this3.props.unselect();
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'add',
 	        value: function add(key) {
-	            var _this3 = this;
+	            var _this4 = this;
 	
 	            var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 	
 	            var promise = Promise.resolve();
 	            var newItem = Object.assign(_defineProperty({}, this.props.title, key), value);
 	            this.context.setImages(function (images) {
-	                var path = images !== _this3.props.source[_this3.props.query] ? (0, _path2.default)(_this3.context.images, _this3.props.source[_this3.props.query]) : [];
-	                Object.assign(_this3.props.source[_this3.props.query], _defineProperty({}, key, newItem));
+	                var path = images !== _this4.props.source[_this4.props.query] ? (0, _path2.default)(_this4.context.images, _this4.props.source[_this4.props.query]) : [];
+	                Object.assign(_this4.props.source[_this4.props.query], _defineProperty({}, key, newItem));
 	                promise = fetch([_package.api].concat(_toConsumableArray(path)).join('/'), {
 	                    method: 'POST',
 	                    credentials: 'include',
@@ -30646,22 +30650,22 @@
 	    }, {
 	        key: 'select',
 	        value: function select(selected) {
-	            var _this4 = this;
+	            var _this5 = this;
 	
 	            _router2.default.doNext(selected, function () {
-	                _this4.setState({ selected: selected });
+	                _this5.setState({ selected: selected });
 	            });
 	        }
 	    }, {
 	        key: 'remove',
 	        value: function remove(key) {
-	            var _this5 = this;
+	            var _this6 = this;
 	
 	            if (confirm('Are you sure you want to delete this item?')) {
 	                this.unselect(key);
 	                this.context.setImages(function (images) {
-	                    var path = images !== _this5.props.source[_this5.props.query] ? (0, _path2.default)(_this5.context.images, _this5.props.source[_this5.props.query]) : [];
-	                    delete _this5.props.source[_this5.props.query][key];
+	                    var path = images !== _this6.props.source[_this6.props.query] ? (0, _path2.default)(_this6.context.images, _this6.props.source[_this6.props.query]) : [];
+	                    delete _this6.props.source[_this6.props.query][key];
 	                    fetch([_package.api].concat(_toConsumableArray(path), [key]).join('/'), {
 	                        method: 'DELETE',
 	                        credentials: 'include'
@@ -30673,7 +30677,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this6 = this;
+	            var _this7 = this;
 	
 	            console.log('render');
 	            var _props = this.props,
@@ -30715,38 +30719,38 @@
 	                            options: options,
 	                            value: selectedAdd,
 	                            onChange: function onChange(selected) {
-	                                return _this6.setState({ selectedAdd: selected });
+	                                return _this7.setState({ selectedAdd: selected });
 	                            }
 	                        }),
 	                        _react2.default.createElement(
 	                            'button',
 	                            { className: 'raised', onClick: function onClick() {
 	                                    if (selectedAdd && selectedAdd.value) {
-	                                        _this6.setState({ selectedAdd: undefined });
-	                                        _this6.context.pending(true); //set up a loading animation. 
-	                                        _this6.add(selectedAdd.value).then(function (response) {
+	                                        _this7.setState({ selectedAdd: undefined });
+	                                        _this7.context.pending(true); //set up a loading animation. 
+	                                        _this7.add(selectedAdd.value).then(function (response) {
 	                                            console.log('firs responce:');
 	                                            console.log(response);
 	                                            if (!response.ok) {
 	                                                //TODO: check an additional factors of failed response 
 	                                                throw new Error('we cannot add this category.');
 	                                            }
-	                                        }).then(_this6.context.updateImage).then(function (response) {
+	                                        }).then(_this7.context.updateImage).then(function (response) {
 	                                            console.log('second response:');
 	                                            console.log(response);
 	                                            if (!response.num_of_people > 0) {
 	                                                //TODO: check an additional factors of failed response 
 	                                                throw new Error('we cannot add this category.');
 	                                            }
-	                                            _this6.context.pending(false);
+	                                            _this7.context.pending(false);
 	                                            alert('new category was successfully added.');
 	                                        }).catch(function (err) {
 	                                            console.error(err); //TODO: FIRE ERROR API!!!
 	                                            // if the addition of the new category failed => refresh the react components.
-	                                            _this6.context.updateImage().then(function (response) {
+	                                            _this7.context.updateImage().then(function (response) {
 	                                                console.log('response3');
 	                                                console.log(response);
-	                                                _this6.context.pending(false);
+	                                                _this7.context.pending(false);
 	                                            }).then(function () {
 	                                                alert(err.message);
 	                                            });
@@ -30779,7 +30783,7 @@
 	    }, {
 	        key: 'tiles',
 	        get: function get() {
-	            var _this7 = this;
+	            var _this8 = this;
 	
 	            var selected = this.selected,
 	                _props2 = this.props,
@@ -30857,7 +30861,7 @@
 	                                console.log('function');
 	                                console.log(_router2.default);
 	                                //if we select image we must change selected property in app!!!:
-	                                query === 'images' ? _this7.context.selectImage(key) : _this7.select(key);
+	                                query === 'images' ? _this8.context.selectImage(key) : _this8.select(key);
 	                            } },
 	                        _react2.default.createElement(
 	                            _mdIcon2.default,
@@ -30872,14 +30876,14 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
-	                        template.call(_this7, node, key, _this7),
+	                        template.call(_this8, node, key, _this8),
 	                        _react2.default.createElement(
 	                            'aside',
 	                            null,
 	                            edit,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: _this7.remove.bind(_this7, key) },
+	                                { onClick: _this8.remove.bind(_this8, key) },
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
@@ -35732,15 +35736,40 @@
 	        key: 'backTo',
 	        value: function backTo(key) {
 	            if (key) {
+	                console.log('key from backTo');
+	                console.log(key);
 	                var route = this.currentRoute.split('/');
 	                var backIndex = route.indexOf(key);
 	                if (backIndex !== -1) {
-	                    console.log('backTo');
-	                    console.log(route.slice(0, backIndex + 1));
-	                    this.currentRoute = route.slice(0, backIndex + 1);
+	                    var newRoute = '';
+	                    var _iteratorNormalCompletion = true;
+	                    var _didIteratorError = false;
+	                    var _iteratorError = undefined;
+	
+	                    try {
+	                        for (var _iterator = route.slice(0, backIndex + 1)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                            var _key = _step.value;
+	
+	                            newRoute += '/' + _key;
+	                        }
+	                    } catch (err) {
+	                        _didIteratorError = true;
+	                        _iteratorError = err;
+	                    } finally {
+	                        try {
+	                            if (!_iteratorNormalCompletion && _iterator.return) {
+	                                _iterator.return();
+	                            }
+	                        } finally {
+	                            if (_didIteratorError) {
+	                                throw _iteratorError;
+	                            }
+	                        }
+	                    }
+	
+	                    this.currentRoute = newRoute;
 	                    this.navigator.navigate(this.currentRoute);
 	                }
-	                console.log(this.currentRoute);
 	            } else {
 	                this.navigator.navigate(ROOT);
 	            }
@@ -43368,16 +43397,20 @@
 	        }
 	    }, {
 	        key: 'unselect',
-	        value: function unselect() {
-	            this.setState({ selected: undefined });
+	        value: function unselect(key) {
+	            var _this3 = this;
+	
+	            _router2.default.backTo(key, function () {
+	                _this3.setState({ selected: undefined });
+	            });
 	        }
 	    }, {
 	        key: 'select',
 	        value: function select(selected) {
-	            var _this3 = this;
+	            var _this4 = this;
 	
 	            _router2.default.doNext(selected, function () {
-	                _this3.setState({ selected: selected });
+	                _this4.setState({ selected: selected });
 	            });
 	        }
 	    }, {
@@ -43399,7 +43432,7 @@
 	    }, {
 	        key: 'tiles',
 	        get: function get() {
-	            var _this4 = this;
+	            var _this5 = this;
 	
 	            var similar_results = this.props.similar_results,
 	                selected = this.state.selected;
@@ -43421,7 +43454,7 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                'button',
-	                                { onClick: this.unselect.bind(this) },
+	                                { onClick: this.unselect.bind(this, selected) },
 	                                _react2.default.createElement(
 	                                    _mdIcon2.default,
 	                                    null,
@@ -43436,7 +43469,7 @@
 	            return Object.keys(similar_results).map(function (collection) {
 	                return _react2.default.createElement(
 	                    'div',
-	                    { className: 'list-item', key: collection, onClick: _this4.select.bind(_this4, collection) },
+	                    { className: 'list-item', key: collection, onClick: _this5.select.bind(_this5, collection) },
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
